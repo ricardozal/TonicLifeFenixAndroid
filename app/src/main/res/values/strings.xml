@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Tonic Life Fenix</string>
+
+    <string name="id_tonic_life_str">ID Tonic Life</string>
+    <string name="password_str">Contraseña</string>
+    <string name="login_str">Iniciar sesión</string>
+    <string name="remember_str">Recordar sesión</string>
+
+</resources>
