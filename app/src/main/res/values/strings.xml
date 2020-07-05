@@ -5,5 +5,12 @@
     <string name="password_str">Contraseña</string>
     <string name="login_str">Iniciar sesión</string>
     <string name="remember_str">Recordar sesión</string>
+    <string name="products_str">Productos</string>
+    <string name="distributor_str">Mi Red</string>
+    <string name="more_str">Más</string>
+    <string name="profile_str">Perfil</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="product_desc">Imagen del producto</string>
 
 </resources>

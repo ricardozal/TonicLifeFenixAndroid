@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/products_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_shopping_basket"
+        android:title="@string/products_str"/>
+    <item
+        android:id="@+id/distributors_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_group"
+        android:title="@string/distributor_str"/>
+    <item
+        android:id="@+id/profile_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_sentiment_very_satisfied"
+        android:title="@string/profile_str"/>
+    <item
+        android:id="@+id/more_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_more_horiz"
+        android:title="@string/more_str"/>
+
+</menu>

@@ -16,6 +16,7 @@ import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.Token;
 import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
+import com.bigtechsolutions.toniclifefenix.ui.BottomNavigationActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -35,6 +36,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String token = SharedPreferencesManager.getStringValue(Constants.ACCESS_TOKEN);
+
+        if(!token.isEmpty())
+        {
+            Intent i = new Intent(MainActivity.this, BottomNavigationActivity.class);
+            startActivity(i);
+            finish();
+        }
+
 
         findViews();
         events();
@@ -113,10 +124,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             SharedPreferencesManager
                                     .setStringValue(Constants.ACCESS_TOKEN, token);
 
-//
-//                            Intent i = new Intent(MainActivity.this, MenuActivity.class);
-//                            startActivity(i);
-//                            finish();
+
+                            Intent i = new Intent(MainActivity.this, BottomNavigationActivity.class);
+                            startActivity(i);
+                            finish();
 
                         } else{
                             Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
