@@ -35,28 +35,43 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.product = mValues.get(position);
+        if(mValues != null)
+        {
+            holder.product = mValues.get(position);
 
-        String price = "Precio distribuidor: $" + holder.product.getDistributorPrice();
-        String tax = "Impuesto: $" + holder.product.getTax();
-        String total = "Precio final: $" + holder.product.getTotal();
-        String points = "Puntos: " + holder.product.getPoints();
+            String price = "Precio distribuidor: $" + holder.product.getDistributorPrice();
+            String tax = "Impuesto: $" + holder.product.getTax();
+            String total = "Precio final: $" + holder.product.getTotal();
+            String points = "Puntos: " + holder.product.getPoints();
 
-        holder.nameProduct.setText(holder.product.getName());
-        holder.priceProduct.setText(price);
-        holder.taxProduct.setText(tax);
-        holder.totalProduct.setText(total);
-        holder.pointsProduct.setText(points);
+            holder.nameProduct.setText(holder.product.getName());
+            holder.priceProduct.setText(price);
+            holder.taxProduct.setText(tax);
+            holder.totalProduct.setText(total);
+            holder.pointsProduct.setText(points);
 
-        Glide.with(ctx)
-                .load("https://picsum.photos/500/500").into(holder.imageProduct);
+            Glide.with(ctx)
+                    .load("https://picsum.photos/500/500").into(holder.imageProduct);
+        }
 
+    }
 
+    public void setDataList(List<Product> productList)
+    {
+        this.mValues = productList;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+
+        if(mValues != null)
+        {
+            return mValues.size();
+        } else {
+            return 0;
+        }
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

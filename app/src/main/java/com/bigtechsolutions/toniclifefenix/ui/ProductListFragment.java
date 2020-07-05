@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +21,7 @@ import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
+import com.bigtechsolutions.toniclifefenix.data.ProductViewModel;
 
 import java.util.List;
 
@@ -34,8 +38,7 @@ public class ProductListFragment extends Fragment {
     RecyclerView recyclerView;
     MyProductRecyclerViewAdapter adapter;
     List<Product> productList;
-    AuthApiService authApiService;
-    AuthApiClient authApiClient;
+    ProductViewModel productViewModel;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -58,6 +61,9 @@ public class ProductListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        productViewModel = new ViewModelProvider(getActivity())
+                .get(ProductViewModel.class);
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -77,52 +83,28 @@ public class ProductListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            retrofitInit();
+
+
+            adapter = new MyProductRecyclerViewAdapter(
+                    getActivity(),
+                    productList
+            );
+
+            recyclerView.setAdapter(adapter);
+
             loadProductData();
 
         }
         return view;
     }
 
-    private void retrofitInit() {
-
-        authApiClient = AuthApiClient.getInstance();
-        authApiService = authApiClient.getAuthApiService();
-
-    }
-
     private void loadProductData() {
 
-        Call<GenericResponse<List<Product>>> call = authApiService.getProducts();
-        call.enqueue(new Callback<GenericResponse<List<Product>>>() {
+        productViewModel.getProducts().observe(getActivity(), new Observer<List<Product>>() {
             @Override
-            public void onResponse(Call<GenericResponse<List<Product>>> call, Response<GenericResponse<List<Product>>> response) {
-
-                if (response.isSuccessful())
-                {
-                    if (response.body().isSuccess())
-                    {
-
-                        productList = response.body().getData();
-
-                        adapter = new MyProductRecyclerViewAdapter(
-                                getActivity(),
-                                productList
-                        );
-
-                        recyclerView.setAdapter(adapter);
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "Error en el servidor", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<GenericResponse<List<Product>>> call, Throwable t) {
-
-                Toast.makeText(getActivity(), "Error de conexión", Toast.LENGTH_SHORT).show();
-
+            public void onChanged(List<Product> products) {
+                productList = products;
+                adapter.setDataList(productList);
             }
         });
 
