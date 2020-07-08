@@ -15,6 +15,7 @@
     <style name="Theme.TonicLife" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:fontFamily">@font/montserrat</item>
+<!--        <item name="android:statusBarColor">@color/colorPrimary</item>-->
     </style>
 
 </resources>

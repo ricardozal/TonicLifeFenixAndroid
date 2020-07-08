@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String token = SharedPreferencesManager.getStringValue(Constants.ACCESS_TOKEN);
 
-        if(!token.isEmpty())
+        if(token != null)
         {
             Intent i = new Intent(MainActivity.this, BottomNavigationActivity.class);
             startActivity(i);

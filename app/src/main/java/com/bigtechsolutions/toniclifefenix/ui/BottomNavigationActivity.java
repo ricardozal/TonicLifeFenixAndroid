@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.bigtechsolutions.toniclifefenix.R;
+import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BottomNavigationActivity extends AppCompatActivity {
@@ -42,14 +44,35 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-//
-//                    switch (item.getItemId())
-//                    {
-//                        case R.id.products_page:
-//
-//                    }
+                    Fragment fragmentSelected = null;
 
-                    return true;
+                    switch (item.getItemId())
+                    {
+                        case R.id.products_page:
+                            fragmentSelected = new ProductListFragment();
+                            break;
+                        case R.id.distributors_page:
+                            fragmentSelected = new DistributorsFragment();
+                            break;
+                        case R.id.profile_page:
+                            return true;
+                        case R.id.more_page:
+                            fragmentSelected = new MoreFragment();
+                            break;
+
+                    }
+
+                    if (fragmentSelected != null)
+                    {
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, fragmentSelected)
+                                .commit();
+
+                        return true;
+                    }
+
+                    return false;
                 }
             };
 
