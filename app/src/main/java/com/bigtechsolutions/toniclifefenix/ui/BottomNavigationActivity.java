@@ -55,7 +55,8 @@ public class BottomNavigationActivity extends AppCompatActivity {
                             fragmentSelected = new DistributorsFragment();
                             break;
                         case R.id.profile_page:
-                            return true;
+                            fragmentSelected = new ProfileFragment();
+                            break;
                         case R.id.more_page:
                             fragmentSelected = new MoreFragment();
                             break;
