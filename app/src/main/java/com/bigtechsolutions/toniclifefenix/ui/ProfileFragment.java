@@ -1,5 +1,6 @@
 package com.bigtechsolutions.toniclifefenix.ui;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -127,6 +128,7 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
     {
 
         Call<GenericResponse<String>> call = authApiService.logout();
+        final ProgressDialog loading = ProgressDialog.show(getContext(), "Cargando", "Por favor espere...", false, false);
 
         call.enqueue(new Callback<GenericResponse<String>>() {
             @Override
@@ -138,11 +140,14 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
                     {
                         SharedPreferencesManager.removeValue(Constants.ACCESS_TOKEN);
 
+                        loading.dismiss();
+
                         Intent i = new Intent(MyFenixApp.getContext(), MainActivity.class);
                         startActivity(i);
                         getActivity().finish();
                     }
                 } else{
+                    loading.dismiss();
                     Toast.makeText(MyFenixApp.getContext(), "Error en el servidor", Toast.LENGTH_LONG).show();
                 }
 
@@ -150,6 +155,7 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
 
             @Override
             public void onFailure(Call<GenericResponse<String>> call, Throwable t) {
+                loading.dismiss();
                 Toast.makeText(MyFenixApp.getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
             }
         });

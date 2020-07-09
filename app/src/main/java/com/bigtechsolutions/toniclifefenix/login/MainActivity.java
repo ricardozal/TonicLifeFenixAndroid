@@ -2,6 +2,7 @@ package com.bigtechsolutions.toniclifefenix.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.bigtechsolutions.toniclifefenix.api.requests.AuthRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.Token;
 import com.bigtechsolutions.toniclifefenix.commons.Constants;
+import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.ui.BottomNavigationActivity;
 import com.google.android.material.button.MaterialButton;
@@ -102,6 +104,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             Call<GenericResponse<Token>> call = apiService.login(authRequest);
 
+            final ProgressDialog loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
+
+
             call.enqueue(new Callback<GenericResponse<Token>>() {
                 @Override
                 public void onResponse(Call<GenericResponse<Token>> call, Response<GenericResponse<Token>> response) {
@@ -124,18 +129,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             SharedPreferencesManager
                                     .setStringValue(Constants.ACCESS_TOKEN, token);
 
+                            loading.dismiss();
 
                             Intent i = new Intent(MainActivity.this, BottomNavigationActivity.class);
                             startActivity(i);
                             finish();
 
                         } else{
+                            loading.dismiss();
                             Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
 
                     } else {
-
+                        loading.dismiss();
                         Toast.makeText(MainActivity.this, "Error en el servidor", Toast.LENGTH_SHORT).show();
 
                     }
