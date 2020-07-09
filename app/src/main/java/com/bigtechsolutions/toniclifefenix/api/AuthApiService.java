@@ -13,4 +13,7 @@ public interface AuthApiService {
     @GET("products")
     Call<GenericResponse<List<Product>>> getProducts();
 
+    @GET("auth/logout")
+    Call<GenericResponse<String>> logout();
+
 }

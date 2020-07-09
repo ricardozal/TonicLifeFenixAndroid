@@ -2,29 +2,37 @@ package com.bigtechsolutions.toniclifefenix.ui;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigtechsolutions.toniclifefenix.R;
+import com.bigtechsolutions.toniclifefenix.commons.Constants;
+import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
+import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
+import com.bigtechsolutions.toniclifefenix.login.MainActivity;
 
 import java.util.List;
 
 public class MyOptionRecyclerViewAdapter extends RecyclerView.Adapter<MyOptionRecyclerViewAdapter.ViewHolder> {
 
     private final List<String> mValues;
+    private OnOptionlistener mOnOptionListener;
 
-    public MyOptionRecyclerViewAdapter(List<String> items) {
+    public MyOptionRecyclerViewAdapter(List<String> items, OnOptionlistener onOptionlistener) {
         mValues = items;
+        this.mOnOptionListener = onOptionlistener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_option, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnOptionListener);
     }
 
     @Override
@@ -63,22 +71,38 @@ public class MyOptionRecyclerViewAdapter extends RecyclerView.Adapter<MyOptionRe
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final View mView;
         public final ImageView icon;
         public final TextView text;
         public String mItem;
+        OnOptionlistener onOptionlistener;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, OnOptionlistener onOptionlistener) {
             super(view);
             mView = view;
             icon = view.findViewById(R.id.item_icon);
             text= view.findViewById(R.id.item_text);
+            this.onOptionlistener = onOptionlistener;
+
+            view.setOnClickListener(this);
+
         }
 
         @Override
         public String toString() {
             return super.toString() + " '" + text.getText() + "'";
         }
+
+        @Override
+        public void onClick(View v) {
+
+            onOptionlistener.onOptionClick(getAdapterPosition());
+
+        }
+    }
+
+    public interface OnOptionlistener {
+        void onOptionClick(int position);
     }
 }
