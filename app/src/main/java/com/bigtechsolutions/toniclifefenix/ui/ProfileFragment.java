@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,14 +81,14 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
         View view = inflater.inflate(R.layout.fragment_profile_list, container, false);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
+//        if (view instanceof RecyclerView) {
+//            Context context = view.getContext();
+            RecyclerView recyclerView = view.findViewById(R.id.list_op);
+//            if (mColumnCount <= 1) {
+//                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+//            } else {
+//                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+//            }
 
             options.add("Promociones");
             options.add("Mis compras");
@@ -96,7 +97,7 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
             options.add("Cerrar sesión");
 
             recyclerView.setAdapter(new MyOptionRecyclerViewAdapter(options, this));
-        }
+//        }
         return view;
     }
 
