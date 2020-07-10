@@ -38,31 +38,34 @@ public class MyOptionRecyclerViewAdapter extends RecyclerView.Adapter<MyOptionRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        holder.mItem = mValues.get(position);
-
-        int imageResource = 0;
-
-        switch (position)
+        if(mValues != null)
         {
-            case 0:
-                imageResource = R.drawable.baseline_loyalty_black_18dp;
-                break;
-            case 1:
-                imageResource = R.drawable.baseline_shopping_bag_black_18dp;
-                break;
-            case 2:
-                imageResource = R.drawable.baseline_address_black_18dp;
-                break;
-            case 3:
-                imageResource = R.drawable.baseline_payment_black_18dp;
-                break;
-            case 4:
-                imageResource = R.drawable.baseline_logout_black_18dp;
-                break;
-        }
+            holder.mItem = mValues.get(position);
 
-        holder.icon.setImageResource(imageResource);
-        holder.text.setText(holder.mItem);
+            int imageResource = 0;
+
+            switch (position)
+            {
+                case 0:
+                    imageResource = R.drawable.baseline_loyalty_black_18dp;
+                    break;
+                case 1:
+                    imageResource = R.drawable.baseline_shopping_bag_black_18dp;
+                    break;
+                case 2:
+                    imageResource = R.drawable.baseline_address_black_18dp;
+                    break;
+                case 3:
+                    imageResource = R.drawable.baseline_payment_black_18dp;
+                    break;
+                case 4:
+                    imageResource = R.drawable.baseline_logout_black_18dp;
+                    break;
+            }
+
+            holder.icon.setImageResource(imageResource);
+            holder.text.setText(holder.mItem);
+        }
 
     }
 
