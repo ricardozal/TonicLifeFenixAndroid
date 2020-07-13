@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigtechsolutions.toniclifefenix.R;
@@ -32,35 +33,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A fragment representing a list of Items.
- */
 public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAdapter.OnOptionlistener {
-
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
 
     public ArrayList<String> options = new ArrayList<>();
 
     AuthApiClient authApiClient;
     AuthApiService authApiService;
+    RecyclerView recyclerView;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ProfileFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static ProfileFragment newInstance(int columnCount) {
         ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -70,9 +56,6 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
 
         retrofitInit();
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
@@ -80,24 +63,24 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_list, container, false);
 
-        // Set the adapter
-//        if (view instanceof RecyclerView) {
-//            Context context = view.getContext();
-            RecyclerView recyclerView = view.findViewById(R.id.list_op);
-//            if (mColumnCount <= 1) {
-//                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//            } else {
-//                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-//            }
+        recyclerView = view.findViewById(R.id.list_op);
 
-            options.add("Promociones");
-            options.add("Mis compras");
-            options.add("Direcciones");
-            options.add("Métodos de pago");
-            options.add("Cerrar sesión");
+        TextView distributorName = view.findViewById(R.id.distributor_name_profile);
+        TextView distributorPoints = view.findViewById(R.id.accumulated_points_profile);
 
-            recyclerView.setAdapter(new MyOptionRecyclerViewAdapter(options, this));
-//        }
+        String greetings = "Hola, " + SharedPreferencesManager.getStringValue(Constants.DISTRIBUTOR_NAME);
+
+        distributorName.setText(greetings);
+        distributorPoints.setText("Puntos acumulados en este mes: 1524");
+
+        options.add("Promociones");
+        options.add("Mis compras");
+        options.add("Direcciones");
+        options.add("Métodos de pago");
+        options.add("Cerrar sesión");
+
+        recyclerView.setAdapter(new MyOptionRecyclerViewAdapter(options, this));
+
         return view;
     }
 

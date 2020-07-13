@@ -8,6 +8,9 @@ public class Product {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("image_url")
     @Expose
     private String imageUrl;
@@ -33,6 +36,7 @@ public class Product {
 
     /**
      *
+     * @param id
      * @param total
      * @param imageUrl
      * @param name
@@ -40,14 +44,23 @@ public class Product {
      * @param tax
      * @param points
      */
-    public Product(String name, String imageUrl, Double distributorPrice, Double tax, Double total, Integer points) {
+    public Product(int id, String name, String imageUrl, Double distributorPrice, Double tax, Double total, Integer points) {
         super();
+        this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
         this.distributorPrice = distributorPrice;
         this.tax = tax;
         this.total = total;
         this.points = points;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

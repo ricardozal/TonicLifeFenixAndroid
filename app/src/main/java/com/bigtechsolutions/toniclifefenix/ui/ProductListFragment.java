@@ -1,12 +1,12 @@
 package com.bigtechsolutions.toniclifefenix.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,43 +17,26 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bigtechsolutions.toniclifefenix.R;
-import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
-import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
-import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
+import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.data.ProductViewModel;
+import com.bigtechsolutions.toniclifefenix.login.MainActivity;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+public class ProductListFragment extends Fragment implements MyProductRecyclerViewAdapter.OnProductlistener {
 
-public class ProductListFragment extends Fragment {
-
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
     RecyclerView recyclerView;
     MyProductRecyclerViewAdapter adapter;
     List<Product> productList;
     ProductViewModel productViewModel;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ProductListFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static ProductListFragment newInstance(int columnCount) {
         ProductListFragment fragment = new ProductListFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -64,9 +47,6 @@ public class ProductListFragment extends Fragment {
         productViewModel = new ViewModelProvider(getActivity())
                 .get(ProductViewModel.class);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
@@ -74,27 +54,21 @@ public class ProductListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
+
+        recyclerView = view.findViewById(R.id.products_list);
 
 
-            adapter = new MyProductRecyclerViewAdapter(
-                    getActivity(),
-                    productList
-            );
+        adapter = new MyProductRecyclerViewAdapter(
+                getActivity(),
+                productList,
+                this
+        );
 
-            recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
 
-            loadProductData();
+        loadProductData();
 
-        }
+
         return view;
     }
 
@@ -108,5 +82,14 @@ public class ProductListFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onProductClick(int position) {
+
+        Intent i = new Intent(MyFenixApp.getContext(), ProductDetailActivity.class);
+        startActivity(i);
+
+        Toast.makeText(MyFenixApp.getContext(), String.valueOf(productList.get(position).getId()), Toast.LENGTH_LONG).show();
     }
 }

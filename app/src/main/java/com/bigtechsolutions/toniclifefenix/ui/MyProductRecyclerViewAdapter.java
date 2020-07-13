@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
 import com.bumptech.glide.Glide;
-
+import java.util.Random;
 import java.util.List;
 
 
@@ -20,17 +20,19 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
 
     private Context ctx;
     private List<Product> mValues;
+    private OnProductlistener mOnProductListener;
 
-    public MyProductRecyclerViewAdapter(Context context, List<Product> items) {
+    public MyProductRecyclerViewAdapter(Context context, List<Product> items, OnProductlistener onProductListener) {
         mValues = items;
         ctx = context;
+        this.mOnProductListener = onProductListener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_product, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnProductListener);
     }
 
     @Override
@@ -50,8 +52,14 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
             holder.totalProduct.setText(total);
             holder.pointsProduct.setText(points);
 
+            Random rand = new Random();
+            int n = rand.nextInt(300);
+            n+=1;
+
+            String urlImage = "https://picsum.photos/id/"+ n +"/500/500";
+
             Glide.with(ctx)
-                    .load("https://picsum.photos/500/500").into(holder.imageProduct);
+                    .load(urlImage).into(holder.imageProduct);
         }
 
     }
@@ -74,7 +82,7 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
 
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final View mView;
         public final ImageView imageProduct;
         public final TextView nameProduct;
@@ -83,8 +91,9 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
         public final TextView totalProduct;
         public final TextView pointsProduct;
         public Product product;
+        OnProductlistener onProductlistener;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, OnProductlistener onProductlistener) {
             super(view);
             mView = view;
             imageProduct = view.findViewById(R.id.product_image);
@@ -93,11 +102,24 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
             taxProduct = view.findViewById(R.id.product_tax);
             totalProduct = view.findViewById(R.id.product_total);
             pointsProduct = view.findViewById(R.id.points);
+            this.onProductlistener = onProductlistener;
+
+            view.setOnClickListener(this);
+
         }
 
         @Override
         public String toString() {
             return super.toString() + " '" + nameProduct.getText() + "'";
         }
+
+        @Override
+        public void onClick(View v) {
+            onProductlistener.onProductClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnProductlistener {
+        void onProductClick(int position);
     }
 }
