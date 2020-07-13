@@ -26,6 +26,10 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         toolbarLayout.setTitle("Nombre del producto");
+        toolbarLayout.setExpandedTitleTextAppearance(R.style.Theme_TonicLife);
+        toolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorWhite));
+        toolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.colorWhite));
+        toolbarLayout.setCollapsedTitleTextAppearance(R.style.Theme_TonicLife);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

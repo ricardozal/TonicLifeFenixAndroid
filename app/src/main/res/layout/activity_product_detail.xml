@@ -11,7 +11,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/product_detail_bar"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="370dp"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -31,8 +31,9 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/image_product_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:src="@drawable/logo_tonic_life"/>
+                    android:layout_height="370dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/test"/>
 
             </FrameLayout>
 
@@ -57,7 +58,8 @@
         android:layout_margin="16dp"
         app:layout_anchor="@id/product_detail_bar"
         app:layout_anchorGravity="bottom|end"
-        android:src="@drawable/ic_shopping_cart" />
+        android:src="@drawable/ic_baseline_add_shopping_cart_24"
+        android:backgroundTint="@color/colorSecondary"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
