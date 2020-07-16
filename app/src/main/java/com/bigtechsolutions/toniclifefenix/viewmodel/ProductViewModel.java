@@ -1,4 +1,4 @@
-package com.bigtechsolutions.toniclifefenix.data;
+package com.bigtechsolutions.toniclifefenix.viewmodel;
 
 import android.app.Application;
 
@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
+import com.bigtechsolutions.toniclifefenix.data.repository.ProductRepository;
 
 import java.util.List;
 

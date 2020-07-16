@@ -1,4 +1,4 @@
-package com.bigtechsolutions.toniclifefenix.data;
+package com.bigtechsolutions.toniclifefenix.data.repository;
 
 import android.app.ProgressDialog;
 import android.widget.Toast;
@@ -24,7 +24,7 @@ public class ProductRepository {
     AuthApiClient authApiClient;
     LiveData<List<Product>> products;
 
-    ProductRepository()
+    public ProductRepository()
     {
         authApiClient = AuthApiClient.getInstance();
         authApiService = authApiClient.getAuthApiService();

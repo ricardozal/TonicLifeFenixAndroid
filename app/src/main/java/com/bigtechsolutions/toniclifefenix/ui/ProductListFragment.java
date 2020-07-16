@@ -1,14 +1,11 @@
 package com.bigtechsolutions.toniclifefenix.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -19,8 +16,7 @@ import android.widget.Toast;
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
-import com.bigtechsolutions.toniclifefenix.data.ProductViewModel;
-import com.bigtechsolutions.toniclifefenix.login.MainActivity;
+import com.bigtechsolutions.toniclifefenix.viewmodel.ProductViewModel;
 
 import java.util.List;
 
