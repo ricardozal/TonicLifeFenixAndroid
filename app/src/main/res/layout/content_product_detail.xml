@@ -27,12 +27,12 @@
             android:layout_marginBottom="10dp"/>
 
         <TextView
+            android:id="@+id/categoryDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="23sp"
             android:textColor="#000000"
             android:fontFamily="@font/montserrat"
-            android:text="Sistema Respiratorio"
             android:layout_marginBottom="30dp"/>
 
         <TextView
@@ -45,40 +45,44 @@
             android:layout_marginBottom="10dp"/>
 
         <TextView
+            android:id="@+id/distributorPriceDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="19sp"
             android:textColor="#000000"
             android:fontFamily="@font/montserrat"
             android:layout_marginBottom="10dp"
-            android:text="Precio distribuidor: $250.00 MXN"/>
+            android:text="Precio distribuidor:"/>
 
         <TextView
+            android:id="@+id/taxDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="19sp"
             android:textColor="#000000"
             android:fontFamily="@font/montserrat"
             android:layout_marginBottom="10dp"
-            android:text="Impuesto: $20.00 MXN"/>
+            android:text="Impuesto:"/>
 
         <TextView
+            android:id="@+id/totalDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="19sp"
             android:textColor="#000000"
             android:fontFamily="@font/montserrat"
             android:layout_marginBottom="10dp"
-            android:text="Precio neto: $270.00 MXN"/>
+            android:text="Precio neto:"/>
 
         <TextView
+            android:id="@+id/pointsDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="19sp"
             android:textColor="#000000"
             android:fontFamily="@font/montserrat"
             android:layout_marginBottom="30dp"
-            android:text="Puntos: 250"/>
+            android:text="Puntos:"/>
 
         <TextView
             android:layout_width="wrap_content"

@@ -84,8 +84,10 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
     public void onProductClick(int position) {
 
         Intent i = new Intent(MyFenixApp.getContext(), ProductDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("productId", productList.get(position).getId());
+        i.putExtras(bundle);
         startActivity(i);
 
-        Toast.makeText(MyFenixApp.getContext(), String.valueOf(productList.get(position).getId()), Toast.LENGTH_LONG).show();
     }
 }

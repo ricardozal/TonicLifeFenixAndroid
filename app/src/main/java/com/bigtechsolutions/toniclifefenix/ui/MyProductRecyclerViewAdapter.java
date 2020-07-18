@@ -52,14 +52,8 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
             holder.totalProduct.setText(total);
             holder.pointsProduct.setText(points);
 
-            Random rand = new Random();
-            int n = rand.nextInt(300);
-            n+=1;
-
-            String urlImage = "https://picsum.photos/id/"+ n +"/500/500";
-
             Glide.with(ctx)
-                    .load(urlImage).into(holder.imageProduct);
+                    .load(holder.product.getImageUrl()).into(holder.imageProduct);
         }
 
     }

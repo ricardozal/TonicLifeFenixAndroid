@@ -5,12 +5,15 @@ import com.google.gson.annotations.SerializedName;
 
 public class Product {
 
-    @SerializedName("name")
-    @Expose
-    private String name;
     @SerializedName("id")
     @Expose
     private int id;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("category")
+    @Expose
+    private String category;
     @SerializedName("image_url")
     @Expose
     private String imageUrl;
@@ -37,6 +40,8 @@ public class Product {
     /**
      *
      * @param id
+     * @param name
+     * @param category
      * @param total
      * @param imageUrl
      * @param name
@@ -44,10 +49,11 @@ public class Product {
      * @param tax
      * @param points
      */
-    public Product(int id, String name, String imageUrl, Double distributorPrice, Double tax, Double total, Integer points) {
+    public Product(int id, String name, String category, String imageUrl, Double distributorPrice, Double tax, Double total, Integer points) {
         super();
         this.id = id;
         this.name = name;
+        this.category = category;
         this.imageUrl = imageUrl;
         this.distributorPrice = distributorPrice;
         this.tax = tax;
@@ -69,6 +75,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getImageUrl() {

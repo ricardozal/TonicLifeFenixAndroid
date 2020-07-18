@@ -32,8 +32,7 @@
                     android:id="@+id/image_product_detail"
                     android:layout_width="match_parent"
                     android:layout_height="370dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/test"/>
+                    android:scaleType="centerCrop"/>
 
             </FrameLayout>
 
@@ -50,6 +49,36 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_product_detail" />
+
+    <EditText
+        android:id="@+id/productIdHidden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
+
+    <EditText
+        android:id="@+id/productNameHidden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
+
+    <EditText
+        android:id="@+id/productImageUrlHidden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
+
+    <EditText
+        android:id="@+id/productPriceHidden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
+
+    <EditText
+        android:id="@+id/productPointsHidden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_shopping_cart"
