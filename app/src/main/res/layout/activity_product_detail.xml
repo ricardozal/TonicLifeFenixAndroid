@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".ui.ProductDetailActivity"
-    style="@style/Theme.TonicLife">
+    android:theme="@style/Theme.TonicLife">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/product_detail_bar"
@@ -85,10 +85,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
         app:layout_anchor="@id/product_detail_bar"
         app:layout_anchorGravity="bottom|end"
-        android:src="@drawable/ic_baseline_add_shopping_cart_24"
-        android:backgroundTint="@color/colorSecondary"/>
+        app:backgroundTint="@color/colorPrimary"
+        app:tint="@color/colorWhite"
+        app:srcCompat="@drawable/baseline_add_shopping_cart_white_18dp"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

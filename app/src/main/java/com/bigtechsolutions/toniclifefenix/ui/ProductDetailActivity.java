@@ -28,6 +28,7 @@ import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +42,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     CollapsingToolbarLayout toolbarLayout;
     FloatingActionButton addToShoppingCart;
     AppCompatImageView productImage;
+    TextInputLayout quantity;
 
     ShoppingCartViewModel mViewModel;
 
@@ -82,6 +84,8 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         taxTxt = findViewById(R.id.taxDetails);
         totalTxt = findViewById(R.id.totalDetails);
         pointsTxt = findViewById(R.id.pointsDetails);
+
+        quantity = findViewById(R.id.quantity);
 
         productImage = findViewById(R.id.image_product_detail);
 
@@ -155,15 +159,13 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
 
                     } else{
                         Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
                         loading.dismiss();
-
+                        onBackPressed();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Error en el servidor", Toast.LENGTH_SHORT).show();
-
                     loading.dismiss();
-
+                    onBackPressed();
                 }
 
             }
@@ -171,8 +173,8 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onFailure(Call<GenericResponse<Product>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Error en la conexión", Toast.LENGTH_SHORT).show();
-
                 loading.dismiss();
+                onBackPressed();
             }
         });
     }
@@ -191,13 +193,20 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
 
         if (id == R.id.add_shopping_cart) {
 
-            String productName = productNameHidden.getText().toString();
-            double price = Double.parseDouble(productPriceHidden.getText().toString());
-            double points = Double.parseDouble(productPointsHidden.getText().toString());
-            String imageUrl = productImageUrlHidden.getText().toString();
-            int productId = Integer.parseInt(productIdHidden.getText().toString());
+            String quantityStr = quantity.getEditText().getText().toString();
 
-            mViewModel.insert(new ShoppingCart(productName, price,points, imageUrl, 2,productId));
+            if (quantityStr.isEmpty()){
+                quantity.setError("Debes elegir la cantidad de producto");
+            } else {
+                String productName = productNameHidden.getText().toString();
+                double price = Double.parseDouble(productPriceHidden.getText().toString());
+                double points = Double.parseDouble(productPointsHidden.getText().toString());
+                String imageUrl = productImageUrlHidden.getText().toString();
+                int productId = Integer.parseInt(productIdHidden.getText().toString());
+                int quantity = Integer.parseInt(quantityStr);
+
+                mViewModel.insert(new ShoppingCart(productName, price,points, imageUrl, quantity,productId));
+            }
         }
 
     }

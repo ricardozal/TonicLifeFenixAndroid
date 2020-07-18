@@ -6,8 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.ProductDetailActivity"
-    tools:showIn="@layout/activity_product_detail"
-    style="@style/Theme.TonicLife">
+    tools:showIn="@layout/activity_product_detail">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,9 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:textColor="#000000"
-            android:fontFamily="@font/montserrat_bold"
-            android:text="Categoría:"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:text="@string/categoryTitle"
             android:layout_marginBottom="10dp"/>
 
         <TextView
@@ -32,16 +31,15 @@
             android:layout_height="wrap_content"
             android:textSize="23sp"
             android:textColor="#000000"
-            android:fontFamily="@font/montserrat"
             android:layout_marginBottom="30dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:textColor="#000000"
-            android:fontFamily="@font/montserrat_bold"
-            android:text="Información del producto:"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:text="@string/infoProductTitle"
             android:layout_marginBottom="10dp"/>
 
         <TextView
@@ -50,9 +48,7 @@
             android:layout_height="wrap_content"
             android:textSize="19sp"
             android:textColor="#000000"
-            android:fontFamily="@font/montserrat"
-            android:layout_marginBottom="10dp"
-            android:text="Precio distribuidor:"/>
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:id="@+id/taxDetails"
@@ -60,9 +56,7 @@
             android:layout_height="wrap_content"
             android:textSize="19sp"
             android:textColor="#000000"
-            android:fontFamily="@font/montserrat"
-            android:layout_marginBottom="10dp"
-            android:text="Impuesto:"/>
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:id="@+id/totalDetails"
@@ -70,9 +64,7 @@
             android:layout_height="wrap_content"
             android:textSize="19sp"
             android:textColor="#000000"
-            android:fontFamily="@font/montserrat"
-            android:layout_marginBottom="10dp"
-            android:text="Precio neto:"/>
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:id="@+id/pointsDetails"
@@ -80,49 +72,34 @@
             android:layout_height="wrap_content"
             android:textSize="19sp"
             android:textColor="#000000"
-            android:fontFamily="@font/montserrat"
-            android:layout_marginBottom="30dp"
-            android:text="Puntos:"/>
+            android:layout_marginBottom="30dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:textColor="#000000"
-            android:fontFamily="@font/montserrat_bold"
-            android:layout_marginBottom="30dp"
-            android:text="Cantidad"/>
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp"
+            android:text="@string/quantityTitle"/>
 
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/quantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_marginHorizontal="60dp"
+            android:hint="@string/unidades"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/baseline_remove_circle_outline_black_18dp"
-                android:background="@null"/>
+                android:inputType="numberSigned"
+                />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:textColor="#000000"
-                android:fontFamily="@font/montserrat"
-                android:layout_marginHorizontal="60dp"
-                android:text="1"/>
-
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_add_circle_outline_black_18dp"
-                android:background="@null"/>
-
-        </LinearLayout>
-
-
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
