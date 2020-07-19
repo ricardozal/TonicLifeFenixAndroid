@@ -32,5 +32,6 @@
     <string name="unidades">Unidades</string>
     <string name="checkout">Continuar compra</string>
     <string name="totalTitle">Total</string>
+    <string name="shoppingCartTitle" >Carrito de compras</string>
 
 </resources>

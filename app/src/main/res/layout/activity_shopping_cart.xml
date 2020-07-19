@@ -13,6 +13,8 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarCart"
+            app:title="@string/shoppingCartTitle"
+            app:titleTextColor="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             style="?toolbarStyle">
@@ -28,7 +30,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
