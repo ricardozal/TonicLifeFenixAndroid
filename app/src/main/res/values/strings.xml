@@ -30,5 +30,7 @@
     <string name="infoProductTitle">Información del producto:</string>
     <string name="quantityTitle">Cantidad</string>
     <string name="unidades">Unidades</string>
+    <string name="checkout">Continuar compra</string>
+    <string name="totalTitle">Total</string>
 
 </resources>

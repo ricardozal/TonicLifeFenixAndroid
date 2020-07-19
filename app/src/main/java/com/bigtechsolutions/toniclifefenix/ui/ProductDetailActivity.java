@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -206,6 +207,10 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                 int quantity = Integer.parseInt(quantityStr);
 
                 mViewModel.insert(new ShoppingCart(productName, price,points, imageUrl, quantity,productId));
+
+                Intent i = new Intent(MyFenixApp.getContext(), ShoppingCartActivity.class);
+                startActivity(i);
+                finish();
             }
         }
 

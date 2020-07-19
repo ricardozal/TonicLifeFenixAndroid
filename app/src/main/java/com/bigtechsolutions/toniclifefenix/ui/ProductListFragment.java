@@ -3,6 +3,7 @@ package com.bigtechsolutions.toniclifefenix.ui;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,6 +27,7 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
     MyProductRecyclerViewAdapter adapter;
     List<Product> productList;
     ProductViewModel productViewModel;
+    AppCompatImageButton goShoppingCart;
 
     public ProductListFragment() {
     }
@@ -52,6 +54,7 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
 
 
         recyclerView = view.findViewById(R.id.products_list);
+        goShoppingCart = view.findViewById(R.id.shopping_cart_icon);
 
 
         adapter = new MyProductRecyclerViewAdapter(
@@ -63,6 +66,14 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
         recyclerView.setAdapter(adapter);
 
         loadProductData();
+
+        goShoppingCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MyFenixApp.getContext(), ShoppingCartActivity.class);
+                startActivity(i);
+            }
+        });
 
 
         return view;
