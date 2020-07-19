@@ -13,6 +13,7 @@ import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
 import com.bumptech.glide.Glide;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
@@ -39,12 +40,14 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
         {
             holder.product = mValues.get(position);
 
-            String price = "$" + holder.product.getPrice();
-            String points = "Puntos: " + holder.product.getPoints();
+            String price = "$" + (holder.product.getPrice() * holder.product.getQuantity());
+            String points = "Puntos: " + (holder.product.getPoints() * holder.product.getQuantity());
+            String quantity = holder.product.getQuantity() + "  unidad(es)";
 
             holder.nameProduct.setText(holder.product.getProductName());
             holder.priceProduct.setText(price);
             holder.pointsProduct.setText(points);
+            holder.quantity.setText(quantity);
 
             Glide.with(ctx)
                     .load(holder.product.getImageUrl()).into(holder.imageProduct);
@@ -76,6 +79,7 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
         public final TextView nameProduct;
         public final TextView priceProduct;
         public final TextView pointsProduct;
+        public final MaterialButton quantity;
         public ShoppingCart product;
 
         public ViewHolder(View view) {
@@ -85,6 +89,7 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
             nameProduct = view.findViewById(R.id.product_name_cart);
             priceProduct = view.findViewById(R.id.price_cart);
             pointsProduct = view.findViewById(R.id.points_cart);
+            quantity = view.findViewById(R.id.changeQuantityBtn);
 
         }
 

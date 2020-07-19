@@ -7,8 +7,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
@@ -26,6 +29,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     List<ShoppingCart> productList;
     ShoppingCartViewModel productViewModel;
     Toolbar toolbar;
+    TextView totalCart;
 
 
     @Override
@@ -38,6 +42,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.shopping_card_list);
         toolbar = findViewById(R.id.toolbarCart);
+        totalCart = findViewById(R.id.totalCart);
 
         toolbarConfig();
 
@@ -48,6 +53,12 @@ public class ShoppingCartActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         loadProductData();
+
+        Double totalOrder = productViewModel.getTotalOrder();
+
+        String total = "$" + totalOrder;
+
+        totalCart.setText(total);
 
     }
 

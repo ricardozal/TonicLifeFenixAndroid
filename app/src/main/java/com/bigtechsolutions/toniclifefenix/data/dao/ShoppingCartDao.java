@@ -28,4 +28,7 @@ public interface ShoppingCartDao {
     @Query("SELECT * FROM shopping_cart ORDER BY id ASC")
     LiveData<List<ShoppingCart>> getAll();
 
+    @Query("SELECT SUM(price * quantity) as total FROM shopping_cart")
+    Double getTotalOrder();
+
 }

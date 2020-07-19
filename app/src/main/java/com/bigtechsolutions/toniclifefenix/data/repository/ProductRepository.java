@@ -47,7 +47,7 @@ public class ProductRepository {
                         data.setValue(response.body().getData());
                     }
                 } else {
-                    Toast.makeText(MyFenixApp.getContext(), "Error en el servidor", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyFenixApp.getContext(), response.message(), Toast.LENGTH_SHORT).show();
                 }
 
             }
