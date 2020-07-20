@@ -1,17 +1,27 @@
 package com.bigtechsolutions.toniclifefenix.ui;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
+import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
+import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 
@@ -21,10 +31,12 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
 
     private Context ctx;
     private List<ShoppingCart> mValues;
+    private ShoppingCartViewModel mViewModel;
 
     public ShoppingCartRecyclerViewAdapter(Context context, List<ShoppingCart> items) {
         mValues = items;
         ctx = context;
+        mViewModel = new ViewModelProvider( (AppCompatActivity) context).get(ShoppingCartViewModel.class);
     }
 
     @Override
@@ -51,6 +63,28 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
 
             Glide.with(ctx)
                     .load(holder.product.getImageUrl()).into(holder.imageProduct);
+
+            holder.removeProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    new AlertDialog.Builder(MyFenixApp.getContext())
+//                            .setTitle("Información")
+//                            .setMessage("¿Estás seguro de eliminar este producto del carrito?")
+//                            .setIcon(android.R.drawable.ic_dialog_alert)
+//                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    mViewModel.deleteById(holder.product.productId);
+//                                    Toast.makeText(MyFenixApp.getContext(), "Yaay", Toast.LENGTH_SHORT).show();
+//                                }})
+//                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    dialog.dismiss();
+//                                }
+//                            }).show();
+                }
+            });
+
         }
 
     }
@@ -80,6 +114,7 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
         public final TextView priceProduct;
         public final TextView pointsProduct;
         public final MaterialButton quantity;
+        public final AppCompatImageButton removeProduct;
         public ShoppingCart product;
 
         public ViewHolder(View view) {
@@ -90,6 +125,7 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
             priceProduct = view.findViewById(R.id.price_cart);
             pointsProduct = view.findViewById(R.id.points_cart);
             quantity = view.findViewById(R.id.changeQuantityBtn);
+            removeProduct = view.findViewById(R.id.removeItemCart);
 
         }
 

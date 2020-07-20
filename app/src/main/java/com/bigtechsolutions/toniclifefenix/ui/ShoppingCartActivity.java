@@ -54,7 +54,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         loadProductData();
 
-        Double totalOrder = productViewModel.getTotalOrder();
+        double totalOrder = productViewModel.getTotalOrder() != null ? productViewModel.getTotalOrder() : 0.00;
 
         String total = "$" + totalOrder;
 

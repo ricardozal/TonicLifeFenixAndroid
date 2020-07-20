@@ -29,6 +29,10 @@ public class ShoppingCartViewModel extends AndroidViewModel {
 
     public void insert(ShoppingCart shoppingCart) { shoppingCartRepository.insert(shoppingCart);}
 
+    public void deleteById(int productId) { shoppingCartRepository.deleteById(productId);}
+
+    public void deleteAll() { shoppingCartRepository.deleteAll();}
+
     public Double getTotalOrder() { return totalOrder; }
 
 }

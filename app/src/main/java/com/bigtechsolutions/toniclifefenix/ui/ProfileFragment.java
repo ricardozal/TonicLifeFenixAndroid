@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +27,7 @@ import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.login.MainActivity;
+import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
 
 import java.util.ArrayList;
 
@@ -41,6 +43,8 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
     AuthApiService authApiService;
     RecyclerView recyclerView;
 
+    ShoppingCartViewModel mViewModel;
+
     public ProfileFragment() {
     }
 
@@ -53,6 +57,8 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mViewModel = new ViewModelProvider(getActivity()).get(ShoppingCartViewModel.class);
 
         retrofitInit();
 
@@ -122,6 +128,9 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
                 {
                     if (response.body().isSuccess())
                     {
+
+                        mViewModel.deleteAll();
+
                         SharedPreferencesManager.removeValue(Constants.ACCESS_TOKEN);
 
                         loading.dismiss();
