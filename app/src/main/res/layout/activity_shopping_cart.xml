@@ -33,6 +33,16 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
+            <TextView
+                android:id="@+id/txtEmptyCart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:layout_margin="20dp"
+                android:visibility="gone"
+                android:text="@string/empty_cart"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/shopping_card_list"
                 android:name="com.bigtechsolutions.toniclifefenix.ui.ShoppingCartActivity"

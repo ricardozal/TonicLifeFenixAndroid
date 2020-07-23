@@ -16,8 +16,8 @@ public interface ShoppingCartDao {
     @Insert
     void insert(ShoppingCart product);
 
-    @Update
-    void update(ShoppingCart product);
+    @Query("UPDATE shopping_cart SET quantity = :quantityNum WHERE id = :productId")
+    void updateQuantity(int quantityNum, int productId);
 
     @Query("DELETE FROM shopping_cart")
     void deleteAll();

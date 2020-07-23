@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,19 +32,22 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
 
     private Context ctx;
     private List<ShoppingCart> mValues;
-    private ShoppingCartViewModel mViewModel;
+    private OnRemovelistener onRemovelistener;
+    private OnChangeQuantitylistener onChangeQuantitylistener;
 
-    public ShoppingCartRecyclerViewAdapter(Context context, List<ShoppingCart> items) {
+    public ShoppingCartRecyclerViewAdapter(Context context, List<ShoppingCart> items, OnRemovelistener onRemovelistener, OnChangeQuantitylistener onChangeQuantitylistener) {
         mValues = items;
         ctx = context;
-        mViewModel = new ViewModelProvider( (AppCompatActivity) context).get(ShoppingCartViewModel.class);
+        this.onRemovelistener = onRemovelistener;
+        this.onChangeQuantitylistener = onChangeQuantitylistener;
+
     }
 
     @Override
     public ShoppingCartRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.shpping_cart_item, parent, false);
-        return new ShoppingCartRecyclerViewAdapter.ViewHolder(view);
+        return new ShoppingCartRecyclerViewAdapter.ViewHolder(view, onRemovelistener, onChangeQuantitylistener);
     }
 
     @Override
@@ -63,27 +67,6 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
 
             Glide.with(ctx)
                     .load(holder.product.getImageUrl()).into(holder.imageProduct);
-
-            holder.removeProduct.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    new AlertDialog.Builder(MyFenixApp.getContext())
-//                            .setTitle("Información")
-//                            .setMessage("¿Estás seguro de eliminar este producto del carrito?")
-//                            .setIcon(android.R.drawable.ic_dialog_alert)
-//                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    mViewModel.deleteById(holder.product.productId);
-//                                    Toast.makeText(MyFenixApp.getContext(), "Yaay", Toast.LENGTH_SHORT).show();
-//                                }})
-//                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    dialog.dismiss();
-//                                }
-//                            }).show();
-                }
-            });
 
         }
 
@@ -107,7 +90,7 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
 
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final View mView;
         public final ImageView imageProduct;
         public final TextView nameProduct;
@@ -116,8 +99,10 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
         public final MaterialButton quantity;
         public final AppCompatImageButton removeProduct;
         public ShoppingCart product;
+        OnRemovelistener onRemovelistener;
+        OnChangeQuantitylistener onChangeQuantitylistener;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, OnRemovelistener onRemovelistener, OnChangeQuantitylistener onChangeQuantitylistener) {
             super(view);
             mView = view;
             imageProduct = view.findViewById(R.id.imageProdCart);
@@ -126,6 +111,11 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
             pointsProduct = view.findViewById(R.id.points_cart);
             quantity = view.findViewById(R.id.changeQuantityBtn);
             removeProduct = view.findViewById(R.id.removeItemCart);
+            this.onRemovelistener = onRemovelistener;
+            this.onChangeQuantitylistener = onChangeQuantitylistener;
+
+            removeProduct.setOnClickListener(this);
+            quantity.setOnClickListener(this);
 
         }
 
@@ -134,6 +124,31 @@ public class ShoppingCartRecyclerViewAdapter extends RecyclerView.Adapter<Shoppi
             return super.toString() + " '" + nameProduct.getText() + "'";
         }
 
+        @Override
+        public void onClick(View v) {
+
+            int id = v.getId();
+
+            switch (id){
+
+                case R.id.removeItemCart:
+                    onRemovelistener.onRemoveClick(getAdapterPosition());
+                    break;
+                case R.id.changeQuantityBtn:
+                    onChangeQuantitylistener.onChangeQuantityClick(getAdapterPosition());
+                    break;
+
+            }
+
+        }
+    }
+
+    public interface OnRemovelistener {
+        void onRemoveClick(int position);
+    }
+
+    public interface OnChangeQuantitylistener {
+        void onChangeQuantityClick(int position);
     }
 
 }
