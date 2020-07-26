@@ -1,7 +1,8 @@
-package com.bigtechsolutions.toniclifefenix.ui;
+package com.bigtechsolutions.toniclifefenix.ui.shoppingcart;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -9,22 +10,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.bigtechsolutions.toniclifefenix.R;
-import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
-import com.bigtechsolutions.toniclifefenix.viewmodel.ProductViewModel;
+import com.bigtechsolutions.toniclifefenix.ui.BottomNavigationActivity;
 import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
+import com.google.android.material.button.MaterialButton;
+
 import android.app.AlertDialog;
 import java.util.List;
 
-public class ShoppingCartActivity extends AppCompatActivity implements ShoppingCartRecyclerViewAdapter.OnRemovelistener, ShoppingCartRecyclerViewAdapter.OnChangeQuantitylistener {
+public class ShoppingCartActivity extends AppCompatActivity implements ShoppingCartRecyclerViewAdapter.OnRemovelistener,
+        ShoppingCartRecyclerViewAdapter.OnChangeQuantitylistener, View.OnClickListener {
 
     RecyclerView recyclerView;
     ShoppingCartRecyclerViewAdapter adapter;
@@ -33,6 +35,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
     Toolbar toolbar;
     TextView totalCart, emptyCartTxt;
     AlertDialog.Builder builder;
+    MaterialButton checkoutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,9 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
         toolbar = findViewById(R.id.toolbarCart);
         totalCart = findViewById(R.id.totalCart);
         emptyCartTxt = findViewById(R.id.txtEmptyCart);
+        checkoutBtn = findViewById(R.id.checkoutBtn);
+
+        checkoutBtn.setOnClickListener(this);
 
         toolbarConfig();
 
@@ -144,5 +150,18 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
         FragmentManager fm = getSupportFragmentManager();
         ShoppingCartChangeQuantityFragment dialog = new ShoppingCartChangeQuantityFragment();
         dialog.show(fm, "ShoppingCartChangeQuantityFragment");
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+
+        if(R.id.checkoutBtn == id)
+        {
+            FragmentManager fm = getSupportFragmentManager();
+            ChooseDeliveryFragment dialog = new ChooseDeliveryFragment();
+            dialog.show(fm, "ChooseDeliveryFragment");
+        }
+
     }
 }

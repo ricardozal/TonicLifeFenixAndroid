@@ -4,30 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ChooseCountryFragment"
+    tools:context=".ui.shoppingcart.ChooseDeliveryFragment"
     android:theme="@style/Theme.TonicLife">
 
 
     <RadioGroup
-        android:id="@+id/radioGroupCountry"
+        android:id="@+id/radioGroupDeliveryOptions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
-            android:id="@+id/radioButtonMexico"
+            android:id="@+id/radioButtonAddresses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mexicoName"/>
+            android:text="@string/addressDelivery"/>
 
         <RadioButton
-            android:id="@+id/radioButtonUSA"
+            android:id="@+id/radioButtonBranches"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/usaName"/>
+            android:text="@string/branchDelivery"/>
     </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

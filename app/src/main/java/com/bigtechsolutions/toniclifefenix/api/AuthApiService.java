@@ -1,6 +1,7 @@
 package com.bigtechsolutions.toniclifefenix.api;
 
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
+import com.bigtechsolutions.toniclifefenix.api.responses.models.Address;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
 
 import java.util.List;
@@ -18,6 +19,10 @@ public interface AuthApiService {
 
     @GET("product/{productId}/details")
     Call<GenericResponse<Product>> productDetails(@Path("productId") int productId);
+
+    /* ADDRESS APIs */
+    @GET("distributor/{distributorId}/addresses")
+    Call<GenericResponse<List<Address>>> getAddresses(@Path("distributorId") int distributorId);
 
     @GET("auth/logout")
     Call<GenericResponse<String>> logout();

@@ -1,28 +1,17 @@
-package com.bigtechsolutions.toniclifefenix.ui;
+package com.bigtechsolutions.toniclifefenix.ui.shoppingcart;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bigtechsolutions.toniclifefenix.R;
-import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
-import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
-import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 

@@ -34,5 +34,11 @@
     <string name="totalTitle">Total</string>
     <string name="shoppingCartTitle">Carrito de compras</string>
     <string name="empty_cart">El carrito está vacío</string>
+    <string name="addressesTitle">Mis direcciones</string>
+    <string name="addressDelivery">Entrega a domicilio</string>
+    <string name="branchDelivery">Recoger en sucursal</string>
+    <string name="mexicoName">México</string>
+    <string name="usaName">Estados Unidos</string>
+    <string name="continueLabel">Continuar</string>
 
 </resources>
