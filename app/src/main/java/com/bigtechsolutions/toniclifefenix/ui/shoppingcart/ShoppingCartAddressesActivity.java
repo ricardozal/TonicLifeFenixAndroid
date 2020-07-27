@@ -80,7 +80,6 @@ public class ShoppingCartAddressesActivity extends AppCompatActivity implements 
         addressViewModel.getAddresses().observe(this, new Observer<List<Address>>() {
             @Override
             public void onChanged(List<Address> addresses) {
-                Log.i("Observe", "Cambio addresses");
                 addressesList = addresses;
                 adapter.setDataList(addresses);
             }
@@ -95,7 +94,6 @@ public class ShoppingCartAddressesActivity extends AppCompatActivity implements 
         int distributorId = SharedPreferencesManager.getIntValue(Constants.DISTRIBUTOR_ID);
 
         addressViewModel.setSelectedAddress(addressId,distributorId);
-        loadAddressData();
 
 
     }

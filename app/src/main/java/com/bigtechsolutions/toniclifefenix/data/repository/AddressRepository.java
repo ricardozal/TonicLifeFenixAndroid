@@ -17,6 +17,7 @@ import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,7 +28,7 @@ public class AddressRepository {
 
     AuthApiService authApiService;
     AuthApiClient authApiClient;
-    LiveData<List<Address>> addresses;
+    MutableLiveData<List<Address>> addresses;
 
     public AddressRepository() {
         authApiClient = AuthApiClient.getInstance();
@@ -35,9 +36,12 @@ public class AddressRepository {
         addresses = getAddresses();
     }
 
-    public LiveData<List<Address>> getAddresses()
+    public MutableLiveData<List<Address>> getAddresses()
     {
-        final MutableLiveData<List<Address>> data = new MutableLiveData<>();
+        if(addresses == null)
+        {
+            addresses = new MutableLiveData<>();
+        }
 
         int distributorId = SharedPreferencesManager.getIntValue(Constants.DISTRIBUTOR_ID);
 
@@ -51,7 +55,7 @@ public class AddressRepository {
                 {
                     if (response.body().isSuccess())
                     {
-                        data.setValue(response.body().getData());
+                        addresses.setValue(response.body().getData());
                     }
                 } else {
                     Toast.makeText(MyFenixApp.getContext(), response.message(), Toast.LENGTH_SHORT).show();
@@ -66,23 +70,26 @@ public class AddressRepository {
             }
         });
 
-        return data;
+        return addresses;
     }
 
     public void setSelectedAddress(int addressId, int distributorId)
     {
         SelectAddressRequest selectAddressRequest = new SelectAddressRequest(distributorId, addressId);
 
-        Call<GenericResponse<String>> call = authApiService.setSelectedAddress(selectAddressRequest);
+        Call<GenericResponse<List<Address>>> call = authApiService.setSelectedAddress(selectAddressRequest);
 
-        call.enqueue(new Callback<GenericResponse<String>>() {
+        call.enqueue(new Callback<GenericResponse<List<Address>>>() {
             @Override
-            public void onResponse(Call<GenericResponse<String>> call, Response<GenericResponse<String>> response) {
+            public void onResponse(Call<GenericResponse<List<Address>>> call, Response<GenericResponse<List<Address>>> response) {
 
                 if(response.isSuccessful()){
 
                     if (response.body().isSuccess()){
+
                         Toast.makeText(MyFenixApp.getContext(), "Domicilio seleccionado", Toast.LENGTH_SHORT).show();
+
+                        addresses.setValue(response.body().getData());
 
                     } else {
 
@@ -96,7 +103,7 @@ public class AddressRepository {
             }
 
             @Override
-            public void onFailure(Call<GenericResponse<String>> call, Throwable t) {
+            public void onFailure(Call<GenericResponse<List<Address>>> call, Throwable t) {
                 Toast.makeText(MyFenixApp.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

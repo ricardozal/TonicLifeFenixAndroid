@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,8 @@ public class MyAddressRecyclerViewAdapter extends RecyclerView.Adapter<MyAddress
             if(holder.address.isSelected())
             {
                 holder.card.setBackgroundColor(Color.parseColor("#8DABCA"));
+            } else {
+                holder.card.setBackgroundColor(Color.parseColor("#FFFFFF"));
             }
         }
     }

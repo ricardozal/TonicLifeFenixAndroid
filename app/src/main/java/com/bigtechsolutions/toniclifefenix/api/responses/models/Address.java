@@ -85,6 +85,24 @@ public class Address {
         this.selected = selected;
     }
 
+    public Address(Address address) {
+
+        this.id = address.getId();
+        this.street = address.getStreet();
+        this.extNum = address.getExtNum();
+        this.intNum = address.getIntNum();
+        this.zipCode = address.getZipCode();
+        this.colony = address.getColony();
+        this.city = address.getCity();
+        this.state = address.getState();
+        this.country = address.getCountry();
+        this.references = address.getReferences();
+        this.fullAddress = address.getFullAddress();
+        this.alias = address.getAlias();
+        this.selected = address.isSelected();
+
+    }
+
     public Integer getId() {
         return id;
     }

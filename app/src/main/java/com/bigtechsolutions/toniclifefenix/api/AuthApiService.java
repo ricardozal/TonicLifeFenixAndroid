@@ -30,7 +30,7 @@ public interface AuthApiService {
     Call<GenericResponse<List<Address>>> getAddresses(@Path("distributorId") int distributorId);
 
     @POST("distributor/select-address")
-    Call<GenericResponse<String>> setSelectedAddress(@Body SelectAddressRequest request);
+    Call<GenericResponse<List<Address>>> setSelectedAddress(@Body SelectAddressRequest request);
 
     @GET("auth/logout")
     Call<GenericResponse<String>> logout();
