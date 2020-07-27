@@ -38,6 +38,12 @@ public class Address {
     @SerializedName("full_address")
     @Expose
     private String fullAddress;
+    @SerializedName("alias")
+    @Expose
+    private String alias;
+    @SerializedName("selected")
+    @Expose
+    private boolean selected;
 
     /**
      * No args constructor for use in serialization
@@ -59,8 +65,10 @@ public class Address {
      * @param id
      * @param state
      * @param extNum
+     * @param alias
+     * @param selected
      */
-    public Address(Integer id, String street, String extNum, String intNum, String zipCode, String colony, String city, String state, String country, String references, String fullAddress) {
+    public Address(Integer id, String street, String extNum, String intNum, String zipCode, String colony, String city, String state, String country, String references, String fullAddress, String alias, boolean selected) {
         super();
         this.id = id;
         this.street = street;
@@ -73,6 +81,8 @@ public class Address {
         this.country = country;
         this.references = references;
         this.fullAddress = fullAddress;
+        this.alias = alias;
+        this.selected = selected;
     }
 
     public Integer getId() {
@@ -163,4 +173,19 @@ public class Address {
         this.fullAddress = fullAddress;
     }
 
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 }

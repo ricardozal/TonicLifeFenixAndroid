@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Address;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
@@ -25,5 +26,7 @@ public class AddressViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Address>> getAddresses() { return addresses; }
+
+    public void setSelectedAddress(int addressId, int distributorId) { addressRepository.setSelectedAddress(addressId, distributorId); }
 
 }

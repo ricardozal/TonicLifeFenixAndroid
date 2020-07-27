@@ -3,6 +3,7 @@ package com.bigtechsolutions.toniclifefenix.ui.shoppingcart;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Address;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -39,8 +41,13 @@ public class MyAddressRecyclerViewAdapter extends RecyclerView.Adapter<MyAddress
         {
             holder.address = mValues.get(position);
 
-            holder.alias.setText("Alias");
+            holder.alias.setText(holder.address.getAlias());
             holder.fullAddress.setText(holder.address.getFullAddress());
+
+            if(holder.address.isSelected())
+            {
+                holder.card.setBackgroundColor(Color.parseColor("#8DABCA"));
+            }
         }
     }
 
@@ -68,6 +75,7 @@ public class MyAddressRecyclerViewAdapter extends RecyclerView.Adapter<MyAddress
         public final TextView fullAddress;
         public Address address;
         OnAddressListener onAddressListener;
+        public MaterialCardView card;
 
         public ViewHolder(View view, OnAddressListener onAddressListener) {
             super(view);
@@ -75,6 +83,7 @@ public class MyAddressRecyclerViewAdapter extends RecyclerView.Adapter<MyAddress
             alias = view.findViewById(R.id.alias_address);
             fullAddress = view.findViewById(R.id.full_address);
             this.onAddressListener = onAddressListener;
+            card = view.findViewById(R.id.address_card);
 
             view.setOnClickListener(this);
         }

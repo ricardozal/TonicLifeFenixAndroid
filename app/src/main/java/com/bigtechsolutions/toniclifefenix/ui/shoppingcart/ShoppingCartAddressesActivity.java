@@ -2,6 +2,7 @@ package com.bigtechsolutions.toniclifefenix.ui.shoppingcart;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Address;
+import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
+import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.viewmodel.AddressViewModel;
 import com.google.android.material.button.MaterialButton;
 
@@ -77,6 +80,7 @@ public class ShoppingCartAddressesActivity extends AppCompatActivity implements 
         addressViewModel.getAddresses().observe(this, new Observer<List<Address>>() {
             @Override
             public void onChanged(List<Address> addresses) {
+                Log.i("Observe", "Cambio addresses");
                 addressesList = addresses;
                 adapter.setDataList(addresses);
             }
@@ -86,7 +90,13 @@ public class ShoppingCartAddressesActivity extends AppCompatActivity implements 
 
     @Override
     public void OnAddressClick(int position) {
-        Toast.makeText(this, "Hola", Toast.LENGTH_SHORT).show();
+
+        int addressId = addressesList.get(position).getId();
+        int distributorId = SharedPreferencesManager.getIntValue(Constants.DISTRIBUTOR_ID);
+
+        addressViewModel.setSelectedAddress(addressId,distributorId);
+        loadAddressData();
+
 
     }
 

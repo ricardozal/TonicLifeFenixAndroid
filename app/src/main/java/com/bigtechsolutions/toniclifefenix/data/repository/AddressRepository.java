@@ -1,5 +1,7 @@
 package com.bigtechsolutions.toniclifefenix.data.repository;
 
+import android.app.ProgressDialog;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
@@ -7,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
+import com.bigtechsolutions.toniclifefenix.api.requests.SelectAddressRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Address;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
@@ -58,11 +61,45 @@ public class AddressRepository {
 
             @Override
             public void onFailure(Call<GenericResponse<List<Address>>> call, Throwable t) {
-                Toast.makeText(MyFenixApp.getContext(), "Error de conexión", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyFenixApp.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
 
         return data;
+    }
+
+    public void setSelectedAddress(int addressId, int distributorId)
+    {
+        SelectAddressRequest selectAddressRequest = new SelectAddressRequest(distributorId, addressId);
+
+        Call<GenericResponse<String>> call = authApiService.setSelectedAddress(selectAddressRequest);
+
+        call.enqueue(new Callback<GenericResponse<String>>() {
+            @Override
+            public void onResponse(Call<GenericResponse<String>> call, Response<GenericResponse<String>> response) {
+
+                if(response.isSuccessful()){
+
+                    if (response.body().isSuccess()){
+                        Toast.makeText(MyFenixApp.getContext(), "Domicilio seleccionado", Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        Toast.makeText(MyFenixApp.getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(MyFenixApp.getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GenericResponse<String>> call, Throwable t) {
+                Toast.makeText(MyFenixApp.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }
