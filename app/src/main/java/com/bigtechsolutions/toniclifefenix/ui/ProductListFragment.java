@@ -1,8 +1,10 @@
 package com.bigtechsolutions.toniclifefenix.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -28,6 +30,7 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
     List<Product> productList;
     ProductViewModel productViewModel;
     AppCompatImageButton goShoppingCart;
+    ProgressDialog loading;
 
     public ProductListFragment() {
     }
@@ -44,6 +47,9 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
 
         productViewModel = new ViewModelProvider(getActivity())
                 .get(ProductViewModel.class);
+
+       loading = ProgressDialog.show(getActivity(), "Cargando", "Por favor espere...", false, false);
+
 
     }
 
@@ -86,6 +92,17 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
             public void onChanged(List<Product> products) {
                 productList = products;
                 adapter.setDataList(productList);
+            }
+        });
+
+        productViewModel.getDownloadFinished().observe(getActivity(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean downloadFinished) {
+                if (downloadFinished != null) {
+                    if (downloadFinished) {
+                        loading.dismiss();
+                    }
+                }
             }
         });
 

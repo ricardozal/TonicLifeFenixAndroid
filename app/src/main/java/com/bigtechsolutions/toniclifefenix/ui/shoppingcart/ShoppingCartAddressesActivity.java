@@ -1,11 +1,13 @@
 package com.bigtechsolutions.toniclifefenix.ui.shoppingcart;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -30,11 +32,16 @@ public class ShoppingCartAddressesActivity extends AppCompatActivity implements 
     AddressViewModel addressViewModel;
     Toolbar toolbar;
     MaterialButton continueToPayBtn;
+    ProgressDialog loading;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_addresses_list);
+
+        loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
+
 
         addressViewModel = new ViewModelProvider(this)
                 .get(AddressViewModel.class);
@@ -85,10 +92,23 @@ public class ShoppingCartAddressesActivity extends AppCompatActivity implements 
             }
         });
 
+        addressViewModel.getDownloadFinished().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean downloadFinished) {
+                if (downloadFinished != null) {
+                    if (downloadFinished) {
+                        loading.dismiss();
+                    }
+                }
+            }
+        });
+
     }
 
     @Override
     public void OnAddressClick(int position) {
+
+        loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
 
         int addressId = addressesList.get(position).getId();
         int distributorId = SharedPreferencesManager.getIntValue(Constants.DISTRIBUTOR_ID);

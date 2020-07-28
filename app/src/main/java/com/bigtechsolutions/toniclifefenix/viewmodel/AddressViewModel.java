@@ -34,4 +34,10 @@ public class AddressViewModel extends AndroidViewModel {
 
     public void setSelectedAddress(int addressId, int distributorId) { addressRepository.setSelectedAddress(addressId, distributorId); }
 
+
+    public LiveData<Boolean> getDownloadFinished(){
+        LiveData<Boolean> downloadFinished=addressRepository.getDownloadFinished();
+        return downloadFinished;
+    }
+
 }

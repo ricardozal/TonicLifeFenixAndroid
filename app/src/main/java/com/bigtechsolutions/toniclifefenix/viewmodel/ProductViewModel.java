@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
 import com.bigtechsolutions.toniclifefenix.data.repository.ProductRepository;
@@ -23,4 +24,9 @@ public class ProductViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Product>> getProducts() { return products; }
+
+    public LiveData<Boolean> getDownloadFinished(){
+        LiveData<Boolean> downloadFinished=productRepository.getDownloadFinished();
+        return downloadFinished;
+    }
 }

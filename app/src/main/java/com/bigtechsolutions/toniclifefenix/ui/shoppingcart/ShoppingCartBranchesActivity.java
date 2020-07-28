@@ -1,10 +1,12 @@
 package com.bigtechsolutions.toniclifefenix.ui.shoppingcart;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -27,11 +29,16 @@ public class ShoppingCartBranchesActivity extends AppCompatActivity implements V
     AddressViewModel addressViewModel;
     Toolbar toolbar;
     MaterialButton continueToPayBtn;
+    ProgressDialog loading;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_addresses_branch_list);
+
+        loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
+
 
         addressViewModel = new ViewModelProvider(this)
                 .get(AddressViewModel.class);
@@ -79,6 +86,17 @@ public class ShoppingCartBranchesActivity extends AppCompatActivity implements V
             public void onChanged(List<Branch> branches) {
                 addressesList = branches;
                 adapter.setDataList(branches);
+            }
+        });
+
+        addressViewModel.getDownloadFinished().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean downloadFinished) {
+                if (downloadFinished != null) {
+                    if (downloadFinished) {
+                        loading.dismiss();
+                    }
+                }
             }
         });
 

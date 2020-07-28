@@ -23,6 +23,7 @@ public class ProductRepository {
     AuthApiService authApiService;
     AuthApiClient authApiClient;
     LiveData<List<Product>> products;
+    private final MutableLiveData<Boolean> downloadFinished = new MutableLiveData<>();
 
     public ProductRepository()
     {
@@ -45,6 +46,7 @@ public class ProductRepository {
                     if (response.body().isSuccess())
                     {
                         data.setValue(response.body().getData());
+                        setDownloadFinished();
                     }
                 } else {
                     Toast.makeText(MyFenixApp.getContext(), response.message(), Toast.LENGTH_SHORT).show();
@@ -63,4 +65,11 @@ public class ProductRepository {
         return data;
     }
 
+    public MutableLiveData<Boolean> getDownloadFinished() {
+        return downloadFinished;
+    }
+
+    private void setDownloadFinished() {
+        downloadFinished.setValue(true);
+    }
 }

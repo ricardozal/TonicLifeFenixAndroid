@@ -31,6 +31,7 @@ public class AddressRepository {
     AuthApiClient authApiClient;
     MutableLiveData<List<Address>> addresses;
     MutableLiveData<List<Branch>> branches;
+    private final MutableLiveData<Boolean> downloadFinished = new MutableLiveData<>();
 
     public AddressRepository() {
         authApiClient = AuthApiClient.getInstance();
@@ -56,6 +57,7 @@ public class AddressRepository {
                     if (response.body().isSuccess())
                     {
                         branches.setValue(response.body().getData());
+                        setDownloadFinished();
                     }
                 } else {
                     Toast.makeText(MyFenixApp.getContext(), response.message(), Toast.LENGTH_SHORT).show();
@@ -93,6 +95,7 @@ public class AddressRepository {
                     if (response.body().isSuccess())
                     {
                         addresses.setValue(response.body().getData());
+                        setDownloadFinished();
                     }
                 } else {
                     Toast.makeText(MyFenixApp.getContext(), response.message(), Toast.LENGTH_SHORT).show();
@@ -112,6 +115,8 @@ public class AddressRepository {
 
     public void setSelectedAddress(int addressId, int distributorId)
     {
+        downloadFinished.setValue(false);
+
         SelectAddressRequest selectAddressRequest = new SelectAddressRequest(distributorId, addressId);
 
         Call<GenericResponse<List<Address>>> call = authApiService.setSelectedAddress(selectAddressRequest);
@@ -124,9 +129,8 @@ public class AddressRepository {
 
                     if (response.body().isSuccess()){
 
-                        Toast.makeText(MyFenixApp.getContext(), "Domicilio seleccionado", Toast.LENGTH_SHORT).show();
-
                         addresses.setValue(response.body().getData());
+                        setDownloadFinished();
 
                     } else {
 
@@ -145,5 +149,13 @@ public class AddressRepository {
             }
         });
 
+    }
+
+    public MutableLiveData<Boolean> getDownloadFinished() {
+        return downloadFinished;
+    }
+
+    private void setDownloadFinished() {
+        downloadFinished.setValue(true);
     }
 }
