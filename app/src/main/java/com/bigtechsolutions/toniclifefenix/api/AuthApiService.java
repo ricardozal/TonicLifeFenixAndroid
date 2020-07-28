@@ -5,6 +5,7 @@ import com.bigtechsolutions.toniclifefenix.api.requests.SelectAddressRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.Token;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Address;
+import com.bigtechsolutions.toniclifefenix.api.responses.models.Branch;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
 
 import java.util.List;
@@ -31,6 +32,10 @@ public interface AuthApiService {
 
     @POST("distributor/select-address")
     Call<GenericResponse<List<Address>>> setSelectedAddress(@Body SelectAddressRequest request);
+
+    /* BRANCHES APIs */
+    @GET("all-branches")
+    Call<GenericResponse<List<Branch>>> getBranches();
 
     @GET("auth/logout")
     Call<GenericResponse<String>> logout();

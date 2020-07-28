@@ -12,6 +12,7 @@ import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
 import com.bigtechsolutions.toniclifefenix.api.requests.SelectAddressRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Address;
+import com.bigtechsolutions.toniclifefenix.api.responses.models.Branch;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
 import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
@@ -29,11 +30,47 @@ public class AddressRepository {
     AuthApiService authApiService;
     AuthApiClient authApiClient;
     MutableLiveData<List<Address>> addresses;
+    MutableLiveData<List<Branch>> branches;
 
     public AddressRepository() {
         authApiClient = AuthApiClient.getInstance();
         authApiService = authApiClient.getAuthApiService();
         addresses = getAddresses();
+        branches = getBranches();
+    }
+
+    public MutableLiveData<List<Branch>> getBranches() {
+
+        if(branches == null)
+        {
+            branches = new MutableLiveData<>();
+        }
+
+        Call<GenericResponse<List<Branch>>> call = authApiService.getBranches();
+
+        call.enqueue(new Callback<GenericResponse<List<Branch>>>() {
+            @Override
+            public void onResponse(Call<GenericResponse<List<Branch>>> call, Response<GenericResponse<List<Branch>>> response) {
+                if (response.isSuccessful())
+                {
+                    if (response.body().isSuccess())
+                    {
+                        branches.setValue(response.body().getData());
+                    }
+                } else {
+                    Toast.makeText(MyFenixApp.getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GenericResponse<List<Branch>>> call, Throwable t) {
+                Toast.makeText(MyFenixApp.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        return branches;
+
     }
 
     public MutableLiveData<List<Address>> getAddresses()

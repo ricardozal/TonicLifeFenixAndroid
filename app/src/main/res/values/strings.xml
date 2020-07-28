@@ -40,5 +40,6 @@
     <string name="mexicoName">México</string>
     <string name="usaName">Estados Unidos</string>
     <string name="continueLabel">Continuar</string>
+    <string name="branchesTitle">Sucursales</string>
 
 </resources>

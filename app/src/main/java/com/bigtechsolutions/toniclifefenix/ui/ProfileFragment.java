@@ -132,6 +132,7 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
                         mViewModel.deleteAll();
 
                         SharedPreferencesManager.removeValue(Constants.ACCESS_TOKEN);
+                        SharedPreferencesManager.removeValue(Constants.BRANCH_ID);
 
                         loading.dismiss();
 

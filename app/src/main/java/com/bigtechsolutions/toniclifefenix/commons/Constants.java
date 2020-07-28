@@ -12,4 +12,5 @@ public class Constants {
     public static final String DISTRIBUTOR_TONIC_LIFE_ID = "DISTRIBUTOR_TONIC_LIFE_ID";
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
 
+    public static final String BRANCH_ID = "BRANCH_ID";
 }

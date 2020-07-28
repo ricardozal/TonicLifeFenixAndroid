@@ -54,9 +54,9 @@ public class ChooseDeliveryFragment extends DialogFragment{
                                 getActivity().finish();
                                 break;
                             case R.id.radioButtonBranches:
-//                                i = new Intent(getContext(), ShoppingCartBranchesActivity.class);
-//                                startActivity(i);
-//                                getActivity().finish();
+                                i = new Intent(getContext(), ShoppingCartBranchesActivity.class);
+                                startActivity(i);
+                                getActivity().finish();
                                 break;
                         }
 
