@@ -3,6 +3,7 @@ package com.bigtechsolutions.toniclifefenix.ui.shoppingcart;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -251,6 +252,13 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
+        int id = v.getId();
 
+        if(R.id.payBtn == id)
+        {
+//            FragmentManager fm = getSupportFragmentManager();
+//            ChoosePaymentMethod dialog = new ChoosePaymentMethod();
+//            dialog.show(fm, "ChoosePaymentMethod");
+        }
     }
 }
