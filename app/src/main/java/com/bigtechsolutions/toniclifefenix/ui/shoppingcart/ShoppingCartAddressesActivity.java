@@ -124,7 +124,12 @@ public class ShoppingCartAddressesActivity extends AppCompatActivity implements 
 
         if(R.id.continueToPayBtn == id)
         {
-            Toast.makeText(this, "Resumen", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(MyFenixApp.getContext(), CheckOutActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("branchSelected", false);
+            i.putExtras(bundle);
+            startActivity(i);
+            finish();
         }
     }
 }

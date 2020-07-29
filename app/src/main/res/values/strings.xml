@@ -41,5 +41,8 @@
     <string name="usaName">Estados Unidos</string>
     <string name="continueLabel">Continuar</string>
     <string name="branchesTitle">Sucursales</string>
+    <string name="payStr">Pagar</string>
+    <string name="checkoutTitle">Confirma tu compra</string>
+    <string name="totalToPay">Total a pagar</string>
 
 </resources>

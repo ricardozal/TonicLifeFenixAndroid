@@ -12,9 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ui.shoppingcart.ShoppingCartActivity"></activity>
-        <activity android:name=".ui.shoppingcart.ShoppingCartAddressesActivity"></activity>
-        <activity android:name=".ui.shoppingcart.ShoppingCartBranchesActivity"></activity>
+        <activity android:name=".ui.shoppingcart.CheckOutActivity"></activity>
+        <activity android:name=".ui.shoppingcart.ShoppingCartActivity" />
+        <activity android:name=".ui.shoppingcart.ShoppingCartAddressesActivity" />
+        <activity android:name=".ui.shoppingcart.ShoppingCartBranchesActivity" />
         <activity android:name=".ui.ProductDetailActivity" />
         <activity android:name=".ui.BottomNavigationActivity" />
         <activity android:name=".login.MainActivity">

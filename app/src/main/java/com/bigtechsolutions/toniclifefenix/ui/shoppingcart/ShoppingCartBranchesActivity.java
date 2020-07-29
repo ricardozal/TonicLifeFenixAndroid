@@ -108,7 +108,12 @@ public class ShoppingCartBranchesActivity extends AppCompatActivity implements V
 
         if(R.id.continueToPayBranchBtn == id)
         {
-            Toast.makeText(this, "Resumen", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(MyFenixApp.getContext(), CheckOutActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("branchSelected", true);
+            i.putExtras(bundle);
+            startActivity(i);
+            finish();
         }
     }
 }

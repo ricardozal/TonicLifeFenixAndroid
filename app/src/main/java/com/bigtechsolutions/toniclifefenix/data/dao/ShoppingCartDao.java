@@ -31,4 +31,7 @@ public interface ShoppingCartDao {
     @Query("SELECT SUM(price * quantity) as total FROM shopping_cart")
     Double getTotalOrder();
 
+    @Query("SELECT COUNT(*) as count FROM shopping_cart")
+    Integer getCountProducts();
+
 }

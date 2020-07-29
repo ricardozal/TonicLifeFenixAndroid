@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.shoppingcart.CheckOutActivity"
+    android:theme="@style/Theme.TonicLife">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/product_checkout_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/toolbar_checkout_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:toolbarId="@id/toolbar"
+            app:expandedTitleTextAppearance="@style/TextAppearance.Design.CollapsingToolbar.Expanded">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingVertical="5dp"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:id="@+id/checkoutTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="25sp"
+                        android:text="@string/checkoutTitle"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:id="@+id/countProductsCheckout"
+                            android:layout_width="0dp"
+                            android:layout_weight=".50"
+                            android:layout_height="wrap_content"
+                            android:textSize="19sp"
+                            android:text="Productos (5)"
+                            android:textColor="#FFFFFF"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/totalPayCheckout"
+                            android:layout_width="0dp"
+                            android:layout_weight=".50"
+                            android:layout_height="wrap_content"
+                            android:textSize="19sp"
+                            android:text="$376.00"
+                            android:textColor="#FFFFFF"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/shipping_price_row_checkout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight=".50"
+                            android:layout_height="wrap_content"
+                            android:textSize="19sp"
+                            android:text="Envío"
+                            android:textColor="#FFFFFF"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/shipping_price_checkout"
+                            android:layout_width="0dp"
+                            android:layout_weight=".50"
+                            android:layout_height="wrap_content"
+                            android:textSize="19sp"
+                            android:text="$90.00"
+                            android:textColor="#FFFFFF"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_height="1dp"
+                        android:background="#FFFFFF"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight=".50"
+                            android:layout_height="wrap_content"
+                            android:textSize="19sp"
+                            android:text="@string/totalToPay"
+                            android:textColor="#FFFFFF"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/total_to_pay_checkout"
+                            android:layout_width="0dp"
+                            android:layout_weight=".50"
+                            android:layout_height="wrap_content"
+                            android:textSize="19sp"
+                            android:text="$1376.00"
+                            android:textColor="#FFFFFF"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_product_checkout"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                android:background="@android:color/transparent"
+                style="?toolbarStyle"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_checkout" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
