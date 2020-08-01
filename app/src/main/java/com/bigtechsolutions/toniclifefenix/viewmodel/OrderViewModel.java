@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.bigtechsolutions.toniclifefenix.api.requests.GenerateIntentRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Address;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.PaymentMethod;
@@ -27,6 +28,8 @@ public class OrderViewModel extends AndroidViewModel {
     public LiveData<List<PaymentMethod>> getPaymentMethods() { return paymentMethods; }
 
     public void validateInventory(ValidateInvRequest validateInvRequest, OnSuccess onSuccess){ orderRepository.validateInventory(validateInvRequest, onSuccess ); }
+
+    public void generateIntent(GenerateIntentRequest generateIntentRequest, OnSuccess onSuccess){orderRepository.generateIntent(generateIntentRequest, onSuccess);}
 
     public LiveData<Boolean> getDownloadFinished(){
         LiveData<Boolean> downloadFinished=orderRepository.getDownloadFinished();

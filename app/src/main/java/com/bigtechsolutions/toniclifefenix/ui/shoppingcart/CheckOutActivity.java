@@ -305,6 +305,11 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                     startActivity(i);
                     finish();
                 }
+
+                @Override
+                public void OnRequestStripeSuccess(String key) {
+
+                }
             });
 
         }

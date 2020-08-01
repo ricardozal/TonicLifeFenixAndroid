@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ui.shoppingcart.PaymentMethodActivity"></activity>
+        <activity android:name=".ui.shoppingcart.StripePayActivity"></activity>
+        <activity android:name=".ui.shoppingcart.PaymentMethodActivity" />
         <activity android:name=".ui.shoppingcart.CheckOutActivity" />
         <activity android:name=".ui.shoppingcart.ShoppingCartActivity" />
         <activity android:name=".ui.shoppingcart.ShoppingCartAddressesActivity" />

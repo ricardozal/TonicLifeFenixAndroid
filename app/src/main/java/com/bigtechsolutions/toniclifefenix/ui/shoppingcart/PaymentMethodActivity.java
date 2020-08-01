@@ -107,7 +107,9 @@ public class PaymentMethodActivity extends AppCompatActivity implements PaymentM
 
         } else if(paymentMethodList.get(position).getId() == 2){ //Stripe
 
-            Toast.makeText(MyFenixApp.getContext(), "Stripe", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(MyFenixApp.getContext(), StripePayActivity.class);
+            startActivity(i);
+            finish();
 
         }
 

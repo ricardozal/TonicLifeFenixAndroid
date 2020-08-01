@@ -1,6 +1,7 @@
 package com.bigtechsolutions.toniclifefenix.api;
 
 import com.bigtechsolutions.toniclifefenix.api.requests.AuthRequest;
+import com.bigtechsolutions.toniclifefenix.api.requests.GenerateIntentRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.SelectAddressRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
@@ -46,6 +47,10 @@ public interface AuthApiService {
 
     @POST("validate-branch-inventory")
     Call<GenericResponse<Branch>> validateInventory(@Body ValidateInvRequest request);
+
+    @POST("generate-intent")
+    Call<GenericResponse<String>> generateIntent(@Body GenerateIntentRequest request);
+
 
     @GET("auth/logout")
     Call<GenericResponse<String>> logout();

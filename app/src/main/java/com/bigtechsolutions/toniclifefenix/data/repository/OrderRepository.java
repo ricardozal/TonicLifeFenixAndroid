@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
+import com.bigtechsolutions.toniclifefenix.api.requests.GenerateIntentRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Branch;
@@ -107,6 +108,46 @@ public class OrderRepository {
             public void onFailure(Call<GenericResponse<Branch>> call, Throwable t) {
                 Toast.makeText(MyFenixApp.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 setDownloadFinished();
+            }
+        });
+
+    }
+
+    public void generateIntent(GenerateIntentRequest generateIntentRequest, OnSuccess onSuccess){
+
+        Call<GenericResponse<String>> call = authApiService.generateIntent(generateIntentRequest);
+
+        call.enqueue(new Callback<GenericResponse<String>>() {
+            @Override
+            public void onResponse(Call<GenericResponse<String>> call, Response<GenericResponse<String>> response) {
+
+                if (response.isSuccessful())
+                {
+                    if (response.body().isSuccess())
+                    {
+
+                        setDownloadFinished();
+                        onSuccess.OnRequestStripeSuccess(response.body().getData());
+
+                    }else {
+
+                        Toast.makeText(MyFenixApp.getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        setDownloadFinished();
+
+                    }
+                } else {
+                    Toast.makeText(MyFenixApp.getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                    setDownloadFinished();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GenericResponse<String>> call, Throwable t) {
+
+                Toast.makeText(MyFenixApp.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                setDownloadFinished();
+
             }
         });
 
