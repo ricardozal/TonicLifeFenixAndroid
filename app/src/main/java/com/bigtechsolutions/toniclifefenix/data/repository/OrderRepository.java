@@ -1,5 +1,7 @@
 package com.bigtechsolutions.toniclifefenix.data.repository;
 
+import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -13,6 +15,8 @@ import com.bigtechsolutions.toniclifefenix.api.responses.models.PaymentMethod;
 import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
+import com.bigtechsolutions.toniclifefenix.ui.shoppingcart.PaymentMethodActivity;
+import com.bigtechsolutions.toniclifefenix.viewmodel.OnSuccess;
 
 import java.util.List;
 
@@ -26,7 +30,7 @@ public class OrderRepository {
     AuthApiClient authApiClient;
     MutableLiveData<List<PaymentMethod>> paymentMethods;
     private final MutableLiveData<Boolean> downloadFinished = new MutableLiveData<>();
-    boolean success;
+
 
     public OrderRepository() {
         authApiClient = AuthApiClient.getInstance();
@@ -69,7 +73,7 @@ public class OrderRepository {
 
     }
 
-    public boolean validateInventory(ValidateInvRequest validateInvRequest){
+    public void validateInventory(ValidateInvRequest validateInvRequest, OnSuccess onSuccess){
 
         Call<GenericResponse<Branch>> call = authApiService.validateInventory(validateInvRequest);
 
@@ -80,16 +84,19 @@ public class OrderRepository {
                 {
                     if (response.body().isSuccess())
                     {
-                        success = response.body().isSuccess();
+
                         SharedPreferencesManager.setIntegerValue(Constants.BRANCH_ID, response.body().getData().getId());
                         setDownloadFinished();
+                        onSuccess.OnRequestSuccess();
+
                     }else {
-                        success = response.body().isSuccess();
+
+
                         Toast.makeText(MyFenixApp.getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         setDownloadFinished();
+
                     }
                 } else {
-                    success = false;
                     Toast.makeText(MyFenixApp.getContext(), response.message(), Toast.LENGTH_SHORT).show();
                     setDownloadFinished();
                 }
@@ -98,13 +105,10 @@ public class OrderRepository {
 
             @Override
             public void onFailure(Call<GenericResponse<Branch>> call, Throwable t) {
-                success = false;
                 Toast.makeText(MyFenixApp.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 setDownloadFinished();
             }
         });
-
-        return success;
 
     }
 

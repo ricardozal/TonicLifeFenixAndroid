@@ -28,6 +28,7 @@ import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
 import com.bigtechsolutions.toniclifefenix.viewmodel.AddressViewModel;
+import com.bigtechsolutions.toniclifefenix.viewmodel.OnSuccess;
 import com.bigtechsolutions.toniclifefenix.viewmodel.OrderViewModel;
 import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
 import com.google.android.material.appbar.AppBarLayout;
@@ -297,15 +298,14 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
             ValidateInvRequest validateInvRequest = new ValidateInvRequest(addressId,branchId, productsRequest);
 
-            boolean success = orderViewModel.validateInventory(validateInvRequest);
-
-            if(success){
-
-                Intent i = new Intent(MyFenixApp.getContext(), PaymentMethodActivity.class);
-                startActivity(i);
-                finish();
-
-            }
+            orderViewModel.validateInventory(validateInvRequest, new OnSuccess() {
+                @Override
+                public void OnRequestSuccess() {
+                    Intent i = new Intent(MyFenixApp.getContext(), PaymentMethodActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            });
 
         }
     }

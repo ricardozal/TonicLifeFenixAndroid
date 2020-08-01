@@ -26,7 +26,7 @@ public class OrderViewModel extends AndroidViewModel {
 
     public LiveData<List<PaymentMethod>> getPaymentMethods() { return paymentMethods; }
 
-    public boolean validateInventory(ValidateInvRequest validateInvRequest){ return orderRepository.validateInventory(validateInvRequest); }
+    public void validateInventory(ValidateInvRequest validateInvRequest, OnSuccess onSuccess){ orderRepository.validateInventory(validateInvRequest, onSuccess ); }
 
     public LiveData<Boolean> getDownloadFinished(){
         LiveData<Boolean> downloadFinished=orderRepository.getDownloadFinished();
