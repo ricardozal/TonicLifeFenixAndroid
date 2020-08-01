@@ -13,10 +13,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
+import com.bigtechsolutions.toniclifefenix.api.requests.ProductRequest;
+import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Address;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Branch;
 import com.bigtechsolutions.toniclifefenix.commons.Constants;
@@ -24,6 +27,7 @@ import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
 import com.bigtechsolutions.toniclifefenix.viewmodel.AddressViewModel;
+import com.bigtechsolutions.toniclifefenix.viewmodel.OrderViewModel;
 import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -50,10 +54,15 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
     ShoppingCartViewModel productViewModel;
     AddressViewModel addressViewModel;
+    OrderViewModel orderViewModel;
 
     boolean branchSelected;
 
     ProgressDialog loading;
+
+    int deliveryAddressId;
+
+    List<ProductRequest> productsRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +76,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
         addressViewModel = new ViewModelProvider(this)
                 .get(AddressViewModel.class);
+
+        orderViewModel = new ViewModelProvider(this)
+                .get(OrderViewModel.class);
 
         Bundle bundle = getIntent().getExtras();
         branchSelected = bundle.getBoolean("branchSelected");
@@ -93,6 +105,13 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onChanged(List<ShoppingCart> shoppingCarts) {
                 productList = shoppingCarts;
+
+                for ( ShoppingCart product : shoppingCarts ) {
+
+                    productsRequest.add(new ProductRequest(product.getProductId(),product.getQuantity()));
+
+                }
+
                 adapter.setDataList(shoppingCarts);
             }
         });
@@ -155,6 +174,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                         if(address.isSelected()){
                             aliasAddress.setText(address.getAlias());
                             fullAddress.setText(address.getFullAddress());
+                            deliveryAddressId = address.getId();
                         }
 
                     }
@@ -256,9 +276,35 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
         if(R.id.payBtn == id)
         {
-//            FragmentManager fm = getSupportFragmentManager();
-//            ChoosePaymentMethod dialog = new ChoosePaymentMethod();
-//            dialog.show(fm, "ChoosePaymentMethod");
+
+            loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
+
+            int addressId = branchSelected ? 0 : deliveryAddressId;
+            int branchId = branchSelected ? SharedPreferencesManager.getIntValue(Constants.BRANCH_ID) : 0;
+
+            ValidateInvRequest validateInvRequest = new ValidateInvRequest(addressId,branchId, productsRequest);
+
+            boolean success = orderViewModel.validateInventory(validateInvRequest);
+
+            if(success){
+
+                Intent i = new Intent(MyFenixApp.getContext(), PaymentMethodActivity.class);
+                startActivity(i);
+                finish();
+
+            }
+
+            orderViewModel.getDownloadFinished().observe(this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean downloadFinished) {
+                    if (downloadFinished != null) {
+                        if (downloadFinished) {
+                            loading.dismiss();
+                        }
+                    }
+                }
+            });
+
         }
     }
 }
