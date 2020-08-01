@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CheckOutActivity extends AppCompatActivity implements View.OnClickListener {
@@ -62,7 +64,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
     int deliveryAddressId;
 
-    List<ProductRequest> productsRequest;
+    List<ProductRequest> productsRequest = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,6 +197,17 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
+        orderViewModel.getDownloadFinished().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean downloadFinished) {
+                if (downloadFinished != null) {
+                    if (downloadFinished) {
+                        loading.dismiss();
+                    }
+                }
+            }
+        });
+
 
 
     }
@@ -293,17 +306,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 finish();
 
             }
-
-            orderViewModel.getDownloadFinished().observe(this, new Observer<Boolean>() {
-                @Override
-                public void onChanged(Boolean downloadFinished) {
-                    if (downloadFinished != null) {
-                        if (downloadFinished) {
-                            loading.dismiss();
-                        }
-                    }
-                }
-            });
 
         }
     }
