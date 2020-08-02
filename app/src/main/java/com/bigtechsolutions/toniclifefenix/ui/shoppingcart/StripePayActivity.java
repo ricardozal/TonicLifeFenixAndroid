@@ -88,9 +88,25 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
         events();
         toolbarConfig();
         retrofitInit();
+        getShoppingCart();
         setStripe();
 
 
+
+    }
+
+    private void getShoppingCart() {
+
+        productViewModel.getAll().observe(this, new Observer<List<ShoppingCart>>() {
+            @Override
+            public void onChanged(List<ShoppingCart> shoppingCarts) {
+                for ( ShoppingCart product : shoppingCarts ) {
+
+                    productsRequest.add(new ProductRequest(product.getProductId(),product.getQuantity()));
+
+                }
+            }
+        });
 
     }
 
@@ -235,7 +251,7 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
 
                         activity.displayAlert(
                                 title,
-                                message
+                                "El pago se procesó, pero algo salió mal al guardar tu orden de compra, ponte en contacto de inmediato con el administrador."
                         );
 
                     }
@@ -269,7 +285,7 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent i = new Intent(MyFenixApp.getContext(), ShoppingCart.class);
+                Intent i = new Intent(MyFenixApp.getContext(), ShoppingCartActivity.class);
                 startActivity(i);
                 finish();
             }
