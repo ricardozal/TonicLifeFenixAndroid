@@ -2,6 +2,7 @@ package com.bigtechsolutions.toniclifefenix.api;
 
 import com.bigtechsolutions.toniclifefenix.api.requests.AuthRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.GenerateIntentRequest;
+import com.bigtechsolutions.toniclifefenix.api.requests.OrderRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.SelectAddressRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
@@ -50,6 +51,9 @@ public interface AuthApiService {
 
     @POST("generate-intent")
     Call<GenericResponse<String>> generateIntent(@Body GenerateIntentRequest request);
+
+    @POST("save-order")
+    Call<GenericResponse<String>> saveOrder(@Body OrderRequest request);
 
 
     @GET("auth/logout")

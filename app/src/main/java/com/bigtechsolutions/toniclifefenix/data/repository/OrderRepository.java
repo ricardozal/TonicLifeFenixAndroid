@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
 import com.bigtechsolutions.toniclifefenix.api.requests.GenerateIntentRequest;
+import com.bigtechsolutions.toniclifefenix.api.requests.OrderRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Branch;
@@ -17,6 +18,7 @@ import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.ui.shoppingcart.PaymentMethodActivity;
+import com.bigtechsolutions.toniclifefenix.viewmodel.OnOrderResponse;
 import com.bigtechsolutions.toniclifefenix.viewmodel.OnSuccess;
 
 import java.util.List;
@@ -151,6 +153,39 @@ public class OrderRepository {
             }
         });
 
+    }
+
+    public void saveOrder(OrderRequest orderRequest, OnOrderResponse onOrderResponse){
+
+        Call<GenericResponse<String>> call = authApiService.saveOrder(orderRequest);
+
+        call.enqueue(new Callback<GenericResponse<String>>() {
+            @Override
+            public void onResponse(Call<GenericResponse<String>> call, Response<GenericResponse<String>> response) {
+
+                if (response.isSuccessful())
+                {
+                    if (response.body().isSuccess())
+                    {
+                        setDownloadFinished();
+                        onOrderResponse.OnSuccess(response.body().getMessage(),response.body().getData());
+
+                    }else {
+                        onOrderResponse.OnError(response.body().getMessage(),response.body().getData());
+                        setDownloadFinished();
+                    }
+                } else {
+                    onOrderResponse.OnError("Error en el servidor",response.message());
+                    setDownloadFinished();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GenericResponse<String>> call, Throwable t) {
+                onOrderResponse.OnError("Error de conexión", "Algo salió mal, comprueba tu conexión a internet");
+            }
+        });
     }
 
     public MutableLiveData<Boolean> getDownloadFinished() {

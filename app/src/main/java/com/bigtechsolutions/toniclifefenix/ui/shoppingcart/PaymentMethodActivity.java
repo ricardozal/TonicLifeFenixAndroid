@@ -30,10 +30,15 @@ public class PaymentMethodActivity extends AppCompatActivity implements PaymentM
     PaymentMethodsRecyclerViewAdapter adapter;
     List<PaymentMethod> paymentMethodList;
 
+    int deliveryAddressId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_method);
+
+        Bundle bundle = getIntent().getExtras();
+        deliveryAddressId = bundle.getInt("addressId");
 
         loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
 
@@ -108,6 +113,10 @@ public class PaymentMethodActivity extends AppCompatActivity implements PaymentM
         } else if(paymentMethodList.get(position).getId() == 2){ //Stripe
 
             Intent i = new Intent(MyFenixApp.getContext(), StripePayActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("addressId", deliveryAddressId);
+            bundle.putInt("paymentMethodId", paymentMethodList.get(position).getId());
+            i.putExtras(bundle);
             startActivity(i);
             finish();
 

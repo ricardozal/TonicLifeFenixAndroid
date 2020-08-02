@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +18,13 @@ import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
 import com.bigtechsolutions.toniclifefenix.api.requests.GenerateIntentRequest;
+import com.bigtechsolutions.toniclifefenix.api.requests.OrderRequest;
+import com.bigtechsolutions.toniclifefenix.api.requests.ProductRequest;
+import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
+import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
+import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
+import com.bigtechsolutions.toniclifefenix.viewmodel.OnOrderResponse;
 import com.bigtechsolutions.toniclifefenix.viewmodel.OnSuccess;
 import com.bigtechsolutions.toniclifefenix.viewmodel.OrderViewModel;
 import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
@@ -33,6 +40,8 @@ import com.stripe.android.model.PaymentMethodCreateParams;
 import com.stripe.android.view.CardInputWidget;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class StripePayActivity extends AppCompatActivity implements View.OnClickListener {
@@ -48,6 +57,12 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
     ShoppingCartViewModel productViewModel;
     ProgressDialog loading;
 
+    int deliveryAddressId;
+    int paymentMethodId;
+    ShoppingCartViewModel mViewModel;
+
+    List<ProductRequest> productsRequest = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +76,13 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
 
         productViewModel = new ViewModelProvider(this)
                 .get(ShoppingCartViewModel.class);
+
+        mViewModel = new ViewModelProvider(this).get(ShoppingCartViewModel.class);
+
+        Bundle bundle = getIntent().getExtras();
+        deliveryAddressId = bundle.getInt("addressId");
+        paymentMethodId = bundle.getInt("paymentMethodId");
+
 
         findViews();
         events();
@@ -182,18 +204,47 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
             }
             PaymentIntent paymentIntent = result.getIntent();
             PaymentIntent.Status status = paymentIntent.getStatus();
-            activity.loading.dismiss();
             if (status == PaymentIntent.Status.Succeeded) {
                 // Payment completed successfully
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                activity.displayAlert(
-                        "Payment completed",
-                        gson.toJson(paymentIntent)
-                );
+
+                int distributorId = SharedPreferencesManager.getIntValue(Constants.DISTRIBUTOR_ID);
+                int branchId = SharedPreferencesManager.getIntValue(Constants.BRANCH_ID);
+
+                OrderRequest orderRequest = new OrderRequest(activity.deliveryAddressId, distributorId, branchId, activity.paymentMethodId, activity.productsRequest);
+
+                activity.orderViewModel.saveOrder(orderRequest, new OnOrderResponse() {
+                    @Override
+                    public void OnSuccess(String title, String message) {
+
+                        activity.mViewModel.deleteAll();
+                        SharedPreferencesManager.removeValue(Constants.BRANCH_ID);
+
+                        activity.loading.dismiss();
+
+                        activity.displayAlert(
+                                title,
+                                message
+                        );
+
+                    }
+
+                    @Override
+                    public void OnError(String title, String message) {
+
+                        activity.loading.dismiss();
+
+                        activity.displayAlert(
+                                title,
+                                message
+                        );
+
+                    }
+                });
+
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method
                 activity.displayAlert(
-                        "Payment failed",
+                        "El pago no se pudo realizar",
                         Objects.requireNonNull(paymentIntent.getLastPaymentError()).getMessage()
                 );
             }
@@ -215,7 +266,15 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(message);
-        builder.setPositiveButton("Ok", null);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(MyFenixApp.getContext(), ShoppingCart.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        builder.setCancelable(false);
         builder.create().show();
     }
 }

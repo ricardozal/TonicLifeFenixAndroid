@@ -302,6 +302,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 @Override
                 public void OnRequestSuccess() {
                     Intent i = new Intent(MyFenixApp.getContext(), PaymentMethodActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("addressId", addressId);
+                    i.putExtras(bundle);
                     startActivity(i);
                     finish();
                 }
