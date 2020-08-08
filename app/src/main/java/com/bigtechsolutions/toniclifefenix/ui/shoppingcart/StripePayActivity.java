@@ -125,7 +125,20 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
 
         double amount = productViewModel.getTotalOrder();
 
-        GenerateIntentRequest generateIntentRequest = new GenerateIntentRequest(amount,"mxn");
+        String selected = SharedPreferencesManager.getStringValue(Constants.COUNTRY);
+        String currency = "";
+
+        if(selected != null){
+
+            if(selected.equals("1")){
+                currency = "mxn";
+            } else if(selected.equals("2")){
+                currency = "usd";
+            }
+
+        }
+
+        GenerateIntentRequest generateIntentRequest = new GenerateIntentRequest(amount,currency);
 
         orderViewModel.generateIntent(generateIntentRequest, new OnSuccess() {
             @Override

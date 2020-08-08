@@ -10,7 +10,9 @@ import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
+import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
+import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.ui.MyProductRecyclerViewAdapter;
 
 import java.util.List;
@@ -36,7 +38,9 @@ public class ProductRepository {
     {
         final MutableLiveData<List<Product>> data = new MutableLiveData<>();
 
-        Call<GenericResponse<List<Product>>> call = authApiService.getProducts();
+        int countryId = Integer.parseInt(SharedPreferencesManager.getStringValue(Constants.COUNTRY));
+
+        Call<GenericResponse<List<Product>>> call = authApiService.getProducts(countryId);
         call.enqueue(new Callback<GenericResponse<List<Product>>>() {
             @Override
             public void onResponse(Call<GenericResponse<List<Product>>> call, Response<GenericResponse<List<Product>>> response) {

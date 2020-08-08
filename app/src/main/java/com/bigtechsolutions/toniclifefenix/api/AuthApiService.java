@@ -24,8 +24,8 @@ public interface AuthApiService {
 
 
     /* PRODUCT APIs */
-    @GET("products")
-    Call<GenericResponse<List<Product>>> getProducts();
+    @GET("products/{countryId}")
+    Call<GenericResponse<List<Product>>> getProducts(@Path("countryId") int countryId);
 
     @GET("product/{productId}/details")
     Call<GenericResponse<Product>> productDetails(@Path("productId") int productId);

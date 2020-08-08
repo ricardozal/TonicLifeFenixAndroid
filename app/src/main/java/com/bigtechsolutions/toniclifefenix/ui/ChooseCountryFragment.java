@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.login.MainActivity;
+import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
 
 public class ChooseCountryFragment extends DialogFragment {
 
@@ -29,11 +31,13 @@ public class ChooseCountryFragment extends DialogFragment {
     private View view;
     private RadioGroup countriesRBtn;
     private RadioButton radioMex, radioUsa;
+    ShoppingCartViewModel mViewModel;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mViewModel = new ViewModelProvider(getActivity()).get(ShoppingCartViewModel.class);
     }
 
     @Override
@@ -57,6 +61,9 @@ public class ChooseCountryFragment extends DialogFragment {
                                 break;
                         }
 
+                        mViewModel.deleteAll();
+
+                        SharedPreferencesManager.removeValue(Constants.BRANCH_ID);
                         SharedPreferencesManager.setStringValue(Constants.COUNTRY, String.valueOf(countryNumber));
 
                         Intent i = new Intent(MyFenixApp.getContext(), BottomNavigationActivity.class);
