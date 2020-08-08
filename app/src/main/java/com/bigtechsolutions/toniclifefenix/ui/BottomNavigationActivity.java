@@ -34,16 +34,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
                 .add(R.id.fragment_container, new ProductListFragment())
                 .commit();
 
-        String country = SharedPreferencesManager.getStringValue(Constants.COUNTRY);
-
-        if(country == null)
-        {
-            FragmentManager fm = getSupportFragmentManager();
-            ChooseCountryFragment dialog = new ChooseCountryFragment();
-            dialog.setCancelable(false);
-            dialog.show(fm, "ChooseCountryFragment");
-        }
-
     }
 
     private void findViews() {

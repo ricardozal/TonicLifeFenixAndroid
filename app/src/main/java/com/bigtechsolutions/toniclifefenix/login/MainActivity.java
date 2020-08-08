@@ -1,6 +1,7 @@
 package com.bigtechsolutions.toniclifefenix.login;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,6 +20,8 @@ import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.ui.BottomNavigationActivity;
+import com.bigtechsolutions.toniclifefenix.ui.ChooseCountryFragment;
+import com.bigtechsolutions.toniclifefenix.ui.WaitingActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -131,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             loading.dismiss();
 
-                            Intent i = new Intent(MainActivity.this, BottomNavigationActivity.class);
+                            Intent i = new Intent(MainActivity.this, WaitingActivity.class);
                             startActivity(i);
                             finish();
 

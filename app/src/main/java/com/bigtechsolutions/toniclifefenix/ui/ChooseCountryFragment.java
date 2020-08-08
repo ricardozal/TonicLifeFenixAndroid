@@ -5,6 +5,7 @@ import androidx.fragment.app.DialogFragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -16,7 +17,9 @@ import android.widget.RadioGroup;
 
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.commons.Constants;
+import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
+import com.bigtechsolutions.toniclifefenix.login.MainActivity;
 
 public class ChooseCountryFragment extends DialogFragment {
 
@@ -55,6 +58,10 @@ public class ChooseCountryFragment extends DialogFragment {
                         }
 
                         SharedPreferencesManager.setStringValue(Constants.COUNTRY, String.valueOf(countryNumber));
+
+                        Intent i = new Intent(MyFenixApp.getContext(), BottomNavigationActivity.class);
+                        startActivity(i);
+                        getActivity().finish();
 
                     }
                 });
