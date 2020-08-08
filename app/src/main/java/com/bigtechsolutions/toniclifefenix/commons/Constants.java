@@ -13,4 +13,5 @@ public class Constants {
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
 
     public static final String BRANCH_ID = "BRANCH_ID";
+    public static final String COUNTRY = "COUNTRY";
 }

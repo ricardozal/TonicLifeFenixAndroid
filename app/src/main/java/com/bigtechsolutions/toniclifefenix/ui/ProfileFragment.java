@@ -133,6 +133,7 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
 
                         SharedPreferencesManager.removeValue(Constants.ACCESS_TOKEN);
                         SharedPreferencesManager.removeValue(Constants.BRANCH_ID);
+                        SharedPreferencesManager.removeValue(Constants.COUNTRY);
 
                         loading.dismiss();
 

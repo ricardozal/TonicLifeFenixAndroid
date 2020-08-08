@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +30,7 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
     MyProductRecyclerViewAdapter adapter;
     List<Product> productList;
     ProductViewModel productViewModel;
-    AppCompatImageButton goShoppingCart;
+    AppCompatImageButton goShoppingCart, selectCountry;
     ProgressDialog loading;
 
     public ProductListFragment() {
@@ -61,6 +62,7 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
 
         recyclerView = view.findViewById(R.id.products_list);
         goShoppingCart = view.findViewById(R.id.shopping_cart_icon);
+        selectCountry = view.findViewById(R.id.country_ico);
 
 
         adapter = new MyProductRecyclerViewAdapter(
@@ -78,6 +80,16 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
             public void onClick(View v) {
                 Intent i = new Intent(MyFenixApp.getContext(), ShoppingCartActivity.class);
                 startActivity(i);
+            }
+        });
+
+        selectCountry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                ChooseCountryFragment dialog = new ChooseCountryFragment();
+                dialog.setCancelable(false);
+                dialog.show(fm, "ChooseCountryFragment");
             }
         });
 

@@ -11,9 +11,12 @@ import androidx.annotation.Nullable;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.bigtechsolutions.toniclifefenix.R;
+import com.bigtechsolutions.toniclifefenix.commons.Constants;
+import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 
 public class ChooseCountryFragment extends DialogFragment {
 
@@ -22,6 +25,7 @@ public class ChooseCountryFragment extends DialogFragment {
     }
     private View view;
     private RadioGroup countriesRBtn;
+    private RadioButton radioMex, radioUsa;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -50,6 +54,8 @@ public class ChooseCountryFragment extends DialogFragment {
                                 break;
                         }
 
+                        SharedPreferencesManager.setStringValue(Constants.COUNTRY, String.valueOf(countryNumber));
+
                     }
                 });
 
@@ -57,6 +63,20 @@ public class ChooseCountryFragment extends DialogFragment {
         view = inflater.inflate(R.layout.choose_country_fragment, null);
 
         countriesRBtn = view.findViewById(R.id.radioGroupCountry);
+        radioMex = view.findViewById(R.id.radioButtonMexico);
+        radioUsa = view.findViewById(R.id.radioButtonUSA);
+
+        String selected = SharedPreferencesManager.getStringValue(Constants.COUNTRY);
+
+        if(selected != null){
+
+            if(selected.equals("1")){
+                radioMex.setChecked(true);
+            } else if(selected.equals("2")){
+                radioUsa.setChecked(true);
+            }
+
+        }
 
         builder.setView(view);
 
