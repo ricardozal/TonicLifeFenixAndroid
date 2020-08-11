@@ -77,5 +77,7 @@
     <string name="accountNameStr">Nombre de propietario</string>
     <string name="numAccountStr">Número de cuenta</string>
     <string name="clabeStr">CLABE</string>
+    <string name="saveStr">Guardar</string>
+    <string name="sendStr">Registrar</string>
 
 </resources>
