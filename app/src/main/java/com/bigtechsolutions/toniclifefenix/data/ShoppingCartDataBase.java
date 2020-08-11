@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase;
 import com.bigtechsolutions.toniclifefenix.data.dao.ShoppingCartDao;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
 
-@Database(entities = {ShoppingCart.class}, version = 1)
+@Database(entities = {ShoppingCart.class}, version = 2)
 public abstract class ShoppingCartDataBase extends RoomDatabase {
     public abstract ShoppingCartDao shoppingCartDao();
     private static volatile ShoppingCartDataBase INSTANCE;

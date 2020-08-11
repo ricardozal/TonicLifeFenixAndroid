@@ -34,4 +34,7 @@ public interface ShoppingCartDao {
     @Query("SELECT COUNT(*) as count FROM shopping_cart")
     Integer getCountProducts();
 
+    @Query("SELECT COUNT(*) as count FROM shopping_cart WHERE is_kit = 1")
+    Integer getNumberKits();
+
 }

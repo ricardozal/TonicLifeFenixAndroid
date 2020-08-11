@@ -24,6 +24,7 @@ import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
+import com.bigtechsolutions.toniclifefenix.ui.NewDistributorActivity;
 import com.bigtechsolutions.toniclifefenix.viewmodel.OnOrderResponse;
 import com.bigtechsolutions.toniclifefenix.viewmodel.OnSuccess;
 import com.bigtechsolutions.toniclifefenix.viewmodel.OrderViewModel;
@@ -245,6 +246,8 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
                     @Override
                     public void OnSuccess(String title, String message) {
 
+                        int kitsNumber = activity.mViewModel.getNumberKits();
+
                         activity.mViewModel.deleteAll();
                         SharedPreferencesManager.removeValue(Constants.BRANCH_ID);
 
@@ -252,7 +255,8 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
 
                         activity.displayAlert(
                                 title,
-                                message
+                                message,
+                                kitsNumber > 0
                         );
 
                     }
@@ -264,7 +268,8 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
 
                         activity.displayAlert(
                                 title,
-                                "El pago se procesó, pero algo salió mal al guardar tu orden de compra, ponte en contacto de inmediato con el administrador."
+                                "El pago se procesó, pero algo salió mal al guardar tu orden de compra, ponte en contacto de inmediato con el administrador.",
+                                false
                         );
 
                     }
@@ -274,7 +279,8 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
                 // Payment failed – allow retrying using a different payment method
                 activity.displayAlert(
                         "El pago no se pudo realizar",
-                        Objects.requireNonNull(paymentIntent.getLastPaymentError()).getMessage()
+                        Objects.requireNonNull(paymentIntent.getLastPaymentError()).getMessage(),
+                        false
                 );
             }
         }
@@ -286,21 +292,34 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
             }
             // Payment request failed – allow retrying using the same payment method
             activity.loading.dismiss();
-            activity.displayAlert("Error", e.toString());
+            activity.displayAlert("Error", e.toString(),false);
         }
     }
 
     private void displayAlert(@NonNull String title,
-                              @Nullable String message) {
+                              @Nullable String message,
+                              boolean isKit) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(message);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent i = new Intent(MyFenixApp.getContext(), ShoppingCartActivity.class);
-                startActivity(i);
-                finish();
+
+                if(isKit){
+
+                    Intent i = new Intent(MyFenixApp.getContext(), NewDistributorActivity.class);
+                    startActivity(i);
+                    finish();
+
+                } else {
+
+                    Intent i = new Intent(MyFenixApp.getContext(), ShoppingCartActivity.class);
+                    startActivity(i);
+                    finish();
+
+                }
+
             }
         });
         builder.setCancelable(false);

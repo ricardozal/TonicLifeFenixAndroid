@@ -29,6 +29,9 @@ public class Product {
     @SerializedName("points")
     @Expose
     private Integer points;
+    @SerializedName("is_kit")
+    @Expose
+    private boolean isKit;
 
     /**
      * No args constructor for use in serialization
@@ -49,7 +52,7 @@ public class Product {
      * @param tax
      * @param points
      */
-    public Product(int id, String name, String category, String imageUrl, Double distributorPrice, Double tax, Double total, Integer points) {
+    public Product(int id, String name, String category, String imageUrl, Double distributorPrice, Double tax, Double total, Integer points, boolean isKit) {
         super();
         this.id = id;
         this.name = name;
@@ -59,6 +62,7 @@ public class Product {
         this.tax = tax;
         this.total = total;
         this.points = points;
+        this.isKit = isKit;
     }
 
     public int getId() {
@@ -125,4 +129,11 @@ public class Product {
         this.points = points;
     }
 
+    public boolean isKit() {
+        return isKit;
+    }
+
+    public void setKit(boolean kit) {
+        isKit = kit;
+    }
 }

@@ -46,5 +46,36 @@
     <string name="totalToPay">Total a pagar</string>
     <string name="paymentMethodsTitle">Métodos de pago</string>
     <string name="toPay">Pagar</string>
+    <string name="streetStr">Calle</string>
+    <string name="addressesStr">Dirección</string>
+    <string name="newDistLabel">Datos del nuevo distribuidor</string>
+    <string name="zipCodeStr">Código postal</string>
+    <string name="extNumStr">Número exterior</string>
+    <string name="intNumStr">Número interior</string>
+    <string name="colonyStr">Colonia</string>
+    <string name="cityStr">Ciudad</string>
+    <string name="stateStr">Estado</string>
+    <string name="countryStr">País</string>
+    <string name="personalDataStr">Datos personales</string>
+    <string name="emailStr">Correo electrónico</string>
+    <string name="nameStr">Nombre completo</string>
+    <string name="maritalStatusStr">Estado civil</string>
+    <string name="singleStr">Soltero</string>
+    <string name="divorsedStr">Divorciado</string>
+    <string name="marriedStr">Casado</string>
+    <string name="windowerStr">Viudo</string>
+    <string name="birthdayStr">Fecha de nacimiento</string>
+    <string name="birthPlaceStr">Lugar de nacimiento</string>
+    <string name="nacionalityStr">Nacionalidad</string>
+    <string name="rfcStr">RFC</string>
+    <string name="curpStr">CURP</string>
+    <string name="phone1Str">Teléfono 1</string>
+    <string name="phoneStr">Teléfono 2</string>
+    <string name="identStr">Número de identificación</string>
+    <string name="bankStr">Datos bancarios</string>
+    <string name="bankNameStr">Nombre del banco</string>
+    <string name="accountNameStr">Nombre de propietario</string>
+    <string name="numAccountStr">Número de cuenta</string>
+    <string name="clabeStr">CLABE</string>
 
 </resources>

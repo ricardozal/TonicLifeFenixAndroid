@@ -15,7 +15,7 @@ public class ShoppingCartViewModel extends AndroidViewModel {
 
     private LiveData<List<ShoppingCart>> all;
     private Double totalOrder;
-    private Integer countProducts;
+    private Integer countProducts, numberKits;
     private ShoppingCartRepository shoppingCartRepository;
 
     public ShoppingCartViewModel(Application application) throws ExecutionException, InterruptedException {
@@ -25,6 +25,7 @@ public class ShoppingCartViewModel extends AndroidViewModel {
         all = shoppingCartRepository.getAll();
         totalOrder = shoppingCartRepository.getTotalOrder();
         countProducts = shoppingCartRepository.getCountProducts();
+        numberKits = shoppingCartRepository.getNumberKits();
     }
 
     public LiveData<List<ShoppingCart>> getAll() { return all;}
@@ -38,5 +39,7 @@ public class ShoppingCartViewModel extends AndroidViewModel {
     public Double getTotalOrder() { return totalOrder; }
 
     public Integer getCountProducts() { return countProducts; }
+
+    public Integer getNumberKits() { return numberKits; }
 
 }

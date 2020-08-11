@@ -28,13 +28,17 @@ public class ShoppingCart {
     @ColumnInfo(name = "product_id")
     public int productId;
 
-    public ShoppingCart(String productName, double price, double points, String imageUrl, int quantity, int productId) {
+    @ColumnInfo(name = "is_kit")
+    private boolean isKit;
+
+    public ShoppingCart(String productName, double price, double points, String imageUrl, int quantity, int productId, boolean isKit) {
         this.productName = productName;
         this.price = price;
         this.points = points;
         this.imageUrl = imageUrl;
         this.quantity = quantity;
         this.productId = productId;
+        this.isKit = isKit;
     }
 
     public int getId() {
@@ -91,5 +95,13 @@ public class ShoppingCart {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public boolean isKit() {
+        return isKit;
+    }
+
+    public void setKit(boolean kit) {
+        isKit = kit;
     }
 }

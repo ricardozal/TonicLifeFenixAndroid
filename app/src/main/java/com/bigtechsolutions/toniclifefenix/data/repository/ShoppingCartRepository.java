@@ -34,6 +34,10 @@ public class ShoppingCartRepository {
        return new getCountProductsAsyncTask(shoppingCartDao).execute().get();
     }
 
+    public Integer getNumberKits() throws ExecutionException, InterruptedException {
+        return new getNumberKitsAsyncTask(shoppingCartDao).execute().get();
+    }
+
     public void insert(ShoppingCart product)
     {
         new insertAsyncTask(shoppingCartDao).execute(product);
@@ -88,6 +92,19 @@ public class ShoppingCartRepository {
         @Override
         protected Integer doInBackground(Void... params) {
             return shoppingCartDaoAsyncTask.getCountProducts();
+        }
+    }
+
+    private static class getNumberKitsAsyncTask extends AsyncTask<Void, Void, Integer> {
+        private ShoppingCartDao shoppingCartDaoAsyncTask;
+
+        getNumberKitsAsyncTask(ShoppingCartDao dao){
+            shoppingCartDaoAsyncTask = dao;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+            return shoppingCartDaoAsyncTask.getNumberKits();
         }
     }
 

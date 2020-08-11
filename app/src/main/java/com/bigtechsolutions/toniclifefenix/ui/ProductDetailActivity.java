@@ -47,6 +47,8 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     AuthApiClient authApiClient;
     AuthApiService authApiService;
 
+    boolean isKit = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,6 +155,8 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
 
                         toolbarLayout.setTitle(product.getName());
 
+                        isKit = product.isKit();
+
                         loading.dismiss();
 
                     } else{
@@ -203,7 +207,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                 int productId = Integer.parseInt(productIdHidden.getText().toString());
                 int quantity = Integer.parseInt(quantityStr);
 
-                mViewModel.insert(new ShoppingCart(productName, price,points, imageUrl, quantity,productId));
+                mViewModel.insert(new ShoppingCart(productName, price,points, imageUrl, quantity,productId, isKit));
 
                 Intent i = new Intent(MyFenixApp.getContext(), ShoppingCartActivity.class);
                 startActivity(i);
