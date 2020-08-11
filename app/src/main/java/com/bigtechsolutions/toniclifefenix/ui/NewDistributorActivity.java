@@ -95,11 +95,32 @@ public class NewDistributorActivity extends AppCompatActivity implements View.On
 
         String name = newDistName.getEditText().getText().toString();
         String email = newDistEmail.getEditText().getText().toString();
+        String birthday = newDistBirthday.getEditText().getText().toString();
+        String birthPlace = newDistBirthPlace.getEditText().getText().toString();
+        String nacionality = newDistNacionality.getEditText().getText().toString();
+        String rfc = newDistRfc.getEditText().getText().toString();
+        String curp = newDistCurp.getEditText().getText().toString();
+        String phone1 = newDistPhone1.getEditText().getText().toString();
+        String phone2 = newDistPhone2.getEditText().getText().toString();
+        String identification = newDistIdentification.getEditText().getText().toString();
+        String street = newDistStreet.getEditText().getText().toString();
+        String zipCode = newDistZipCode.getEditText().getText().toString();
+        String extNum = newDistExtNum.getEditText().getText().toString();
+        String intNum = newDistIntNum.getEditText().getText().toString();
+        String colony = newDistColony.getEditText().getText().toString();
+        String city = newDistCity.getEditText().getText().toString();
+        String state = newDistState.getEditText().getText().toString();
+        String bankData = newDistBankData.getEditText().getText().toString();
+        String accountName = newDistAccountName.getEditText().getText().toString();
+        String accountNumber = newDistNumAccount.getEditText().getText().toString();
+        String clabe = newDistClabe.getEditText().getText().toString();
 
         if (name.isEmpty()){
-            newDistName.setError("El ID Tonic Life es requerido");
+            newDistName.setError("El nombre completo es requerido");
         } else if(email.isEmpty()){
-            newDistEmail.setError("La contraseña es requerida");
+            newDistEmail.setError("La correo electrónico es requerido");
+        } else if(birthday.isEmpty()){
+            newDistBirthday.setError("");
         }
 
     }
