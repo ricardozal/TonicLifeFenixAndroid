@@ -82,7 +82,6 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
         options.add("Promociones");
         options.add("Mis compras");
         options.add("Direcciones");
-        options.add("Métodos de pago");
         options.add("Cerrar sesión");
 
         recyclerView.setAdapter(new MyOptionRecyclerViewAdapter(options, this));
@@ -105,9 +104,6 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
                 Toast.makeText(MyFenixApp.getContext(), "Direcciones", Toast.LENGTH_LONG).show();
                 break;
             case 3:
-                Toast.makeText(MyFenixApp.getContext(), "Metodos de pago", Toast.LENGTH_LONG).show();
-                break;
-            case 4:
                 logout();
                 break;
         }

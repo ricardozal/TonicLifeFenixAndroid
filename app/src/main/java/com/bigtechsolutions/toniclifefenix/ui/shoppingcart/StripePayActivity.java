@@ -30,8 +30,6 @@ import com.bigtechsolutions.toniclifefenix.viewmodel.OnSuccess;
 import com.bigtechsolutions.toniclifefenix.viewmodel.OrderViewModel;
 import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
 import com.google.android.material.button.MaterialButton;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.stripe.android.ApiResultCallback;
 import com.stripe.android.PaymentIntentResult;
 import com.stripe.android.Stripe;
