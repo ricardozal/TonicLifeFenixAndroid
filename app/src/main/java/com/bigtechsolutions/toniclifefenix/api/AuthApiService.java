@@ -2,6 +2,7 @@ package com.bigtechsolutions.toniclifefenix.api;
 
 import com.bigtechsolutions.toniclifefenix.api.requests.AuthRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.GenerateIntentRequest;
+import com.bigtechsolutions.toniclifefenix.api.requests.NewDistributorRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.OrderRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.SelectAddressRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
@@ -9,6 +10,7 @@ import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.Token;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Address;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Branch;
+import com.bigtechsolutions.toniclifefenix.api.responses.models.OrderResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.PaymentMethod;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
 
@@ -53,8 +55,11 @@ public interface AuthApiService {
     Call<GenericResponse<String>> generateIntent(@Body GenerateIntentRequest request);
 
     @POST("save-order")
-    Call<GenericResponse<String>> saveOrder(@Body OrderRequest request);
+    Call<GenericResponse<OrderResponse>> saveOrder(@Body OrderRequest request);
 
+    /* New Distributor */
+    @POST("save-new-distributor")
+    Call<GenericResponse<String>> saveNewDistributor(@Body NewDistributorRequest request);
 
     @GET("auth/logout")
     Call<GenericResponse<String>> logout();

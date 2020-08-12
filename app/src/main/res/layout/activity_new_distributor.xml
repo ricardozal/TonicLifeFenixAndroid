@@ -75,7 +75,6 @@
 
         <RadioGroup
             android:id="@+id/newDistMaritalStatus"
-            android:checkedButton="@+id/maritalStatusChecked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RadioButton
@@ -377,7 +376,6 @@
 
         <RadioGroup
             android:id="@+id/newDistCountries"
-            android:checkedButton="@+id/countryChecked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RadioButton

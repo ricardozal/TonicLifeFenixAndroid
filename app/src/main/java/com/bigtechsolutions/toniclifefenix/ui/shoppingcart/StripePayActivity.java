@@ -244,7 +244,7 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
 
                 activity.orderViewModel.saveOrder(orderRequest, new OnOrderResponse() {
                     @Override
-                    public void OnSuccess(String title, String message) {
+                    public void OnSuccess(String title, String message, Integer orderId) {
 
                         int kitsNumber = activity.mViewModel.getNumberKits();
 
@@ -256,7 +256,8 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
                         activity.displayAlert(
                                 title,
                                 message,
-                                kitsNumber > 0
+                                kitsNumber > 0,
+                                orderId
                         );
 
                     }
@@ -269,7 +270,8 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
                         activity.displayAlert(
                                 title,
                                 "El pago se procesó, pero algo salió mal al guardar tu orden de compra, ponte en contacto de inmediato con el administrador.",
-                                false
+                                false,
+                                0
                         );
 
                     }
@@ -280,7 +282,8 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
                 activity.displayAlert(
                         "El pago no se pudo realizar",
                         Objects.requireNonNull(paymentIntent.getLastPaymentError()).getMessage(),
-                        false
+                        false,
+                        0
                 );
             }
         }
@@ -292,13 +295,14 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
             }
             // Payment request failed – allow retrying using the same payment method
             activity.loading.dismiss();
-            activity.displayAlert("Error", e.toString(),false);
+            activity.displayAlert("Error", e.toString(),false, 0);
         }
     }
 
     private void displayAlert(@NonNull String title,
                               @Nullable String message,
-                              boolean isKit) {
+                              boolean isKit,
+                              int orderId) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(message);
@@ -309,6 +313,8 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
                 if(isKit){
 
                     Intent i = new Intent(MyFenixApp.getContext(), NewDistributorActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("orderId", orderId);
                     startActivity(i);
                     finish();
 

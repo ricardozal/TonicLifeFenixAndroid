@@ -1,14 +1,26 @@
 package com.bigtechsolutions.toniclifefenix.ui;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.bigtechsolutions.toniclifefenix.R;
-import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
-import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
+import com.bigtechsolutions.toniclifefenix.api.requests.NewDistributorRequest;
+import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
+import com.bigtechsolutions.toniclifefenix.ui.shoppingcart.ShoppingCartActivity;
+import com.bigtechsolutions.toniclifefenix.viewmodel.NewDistributorViewModel;
+import com.bigtechsolutions.toniclifefenix.viewmodel.OnOrderResponse;
+import com.bigtechsolutions.toniclifefenix.viewmodel.OnResponse;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -38,9 +50,9 @@ public class NewDistributorActivity extends AppCompatActivity implements View.On
     TextInputLayout newDistNumAccount;
     TextInputLayout newDistClabe;
     MaterialButton saveNewDistBtn;
-
-    AuthApiClient authApiClient;
-    AuthApiService authApiService;
+    NewDistributorViewModel newDistributorViewModel;
+    int orderId;
+    ProgressDialog loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +61,13 @@ public class NewDistributorActivity extends AppCompatActivity implements View.On
 
         findViews();
         events();
-        retrofitInit();
 
-    }
+        newDistributorViewModel = new ViewModelProvider(this)
+                .get(NewDistributorViewModel.class);
 
-    private void retrofitInit() {
-        authApiClient = AuthApiClient.getInstance();
-        authApiService = authApiClient.getAuthApiService();
+        Bundle bundle = getIntent().getExtras();
+        orderId = bundle.getInt("orderId");
+
     }
 
     private void events() {
@@ -93,11 +105,13 @@ public class NewDistributorActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
 
+        loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
+
         String name = newDistName.getEditText().getText().toString();
         String email = newDistEmail.getEditText().getText().toString();
         String birthday = newDistBirthday.getEditText().getText().toString();
         String birthPlace = newDistBirthPlace.getEditText().getText().toString();
-        String nacionality = newDistNacionality.getEditText().getText().toString();
+        String nationality = newDistNacionality.getEditText().getText().toString();
         String rfc = newDistRfc.getEditText().getText().toString();
         String curp = newDistCurp.getEditText().getText().toString();
         String phone1 = newDistPhone1.getEditText().getText().toString();
@@ -110,18 +124,133 @@ public class NewDistributorActivity extends AppCompatActivity implements View.On
         String colony = newDistColony.getEditText().getText().toString();
         String city = newDistCity.getEditText().getText().toString();
         String state = newDistState.getEditText().getText().toString();
-        String bankData = newDistBankData.getEditText().getText().toString();
+        String bankName = newDistBankData.getEditText().getText().toString();
         String accountName = newDistAccountName.getEditText().getText().toString();
-        String accountNumber = newDistNumAccount.getEditText().getText().toString();
-        String clabe = newDistClabe.getEditText().getText().toString();
+        String bankAccountNumber = newDistNumAccount.getEditText().getText().toString();
+        String clabeRoutingBank = newDistClabe.getEditText().getText().toString();
+        String maritalStatus = "";
+        int countryId = 0;
+
+        switch (newDistMaritalStatus.getCheckedRadioButtonId()){
+            case R.id.singleRadioBtn:
+                maritalStatus = "Soltero";
+                break;
+            case R.id.marriedRadioBtn:
+                maritalStatus = "Casado";
+                break;
+            case R.id.divorcedRadioBtn:
+                maritalStatus = "Divorciado";
+                break;
+            case R.id.windowerRadioBtn:
+                maritalStatus = "Viudo";
+                break;
+        }
+
+        switch (newDistCountries.getCheckedRadioButtonId()){
+            case R.id.mexButtonCountry:
+                countryId = 1;
+                break;
+            case R.id.usaButtonCountry:
+                countryId = 2;
+                break;
+        }
 
         if (name.isEmpty()){
             newDistName.setError("El nombre completo es requerido");
         } else if(email.isEmpty()){
             newDistEmail.setError("La correo electrónico es requerido");
         } else if(birthday.isEmpty()){
-            newDistBirthday.setError("");
+            newDistBirthday.setError("La fecha de nacimiento es requerida");
+        } else if(birthPlace.isEmpty()){
+            newDistBirthPlace.setError("El lugar de nacimiento es requerido");
+        } else if(nationality.isEmpty()){
+            newDistNacionality.setError("La nacionalidad es requerida");
+        } else if(rfc.isEmpty()){
+            newDistRfc.setError("El RFC es requeridp");
+        } else if(curp.isEmpty()){
+            newDistCurp.setError("La CURP es requerida");
+        } else if(phone1.isEmpty()){
+            newDistPhone1.setError("El teléfono es requerido");
+        } else if(phone2.isEmpty()){
+            newDistPhone2.setError("El teléfono es requerido");
+        } else if(identification.isEmpty()){
+            newDistIdentification.setError("El número de identificación e requerido");
+        } else if(street.isEmpty()){
+            newDistStreet.setError("El nombre de la calle es requerida");
+        } else if(zipCode.isEmpty()){
+            newDistZipCode.setError("El código postal es requerido");
+        } else if(extNum.isEmpty()){
+            newDistExtNum.setError("El número exterior es requerido");
+        } else if(colony.isEmpty()){
+            newDistColony.setError("El nombre de la colonia es requerido");
+        } else if(city.isEmpty()){
+            newDistCity.setError("El nombre de la ciudad es requerida");
+        } else if(state.isEmpty()){
+            newDistState.setError("El nombre del estado es requerido");
+        } else if(bankName.isEmpty()){
+            newDistBankData.setError("El nombre del banco es requerido");
+        } else if(accountName.isEmpty()){
+            newDistAccountName.setError("El nombre del propietario es requerido");
+        } else if(bankAccountNumber.isEmpty()){
+            newDistNumAccount.setError("El número de cuenta es requerido");
+        } else if(clabeRoutingBank.isEmpty()){
+            newDistClabe.setError("La CLABE es requerida");
+        } else if(maritalStatus.isEmpty()){
+            Toast.makeText(this, "Debes elegir un estado civil", Toast.LENGTH_LONG).show();
+        } else if(countryId == 0){
+            Toast.makeText(this, "Debes elegir un país", Toast.LENGTH_LONG).show();
+        } else {
+
+            NewDistributorRequest request = new NewDistributorRequest(street, zipCode, extNum, intNum, colony, city, state, countryId, name, email, maritalStatus, birthday, birthPlace, nationality, rfc, curp, phone1, phone2, identification, orderId, bankName, accountName, bankAccountNumber, clabeRoutingBank);
+
+            newDistributorViewModel.saveNewDistributor(request, new OnResponse() {
+                @Override
+                public void OnSuccess(String title, String message) {
+                    loading.dismiss();
+                    displayAlert(
+                            title,
+                            message,
+                            true
+                    );
+                }
+
+                @Override
+                public void OnError(String title, String message) {
+                    loading.dismiss();
+                    displayAlert(
+                            title,
+                            message,
+                            false
+                    );
+                }
+            });
+
         }
 
     }
+
+    private void displayAlert(@NonNull String title,
+                              @Nullable String message,
+                              boolean correct) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if(correct){
+                    Intent i = new Intent(MyFenixApp.getContext(), BottomNavigationActivity.class);
+                    startActivity(i);
+                    finish();
+                } else {
+                    dialog.dismiss();
+                }
+
+            }
+        });
+        builder.setCancelable(false);
+        builder.create().show();
+    }
+
 }

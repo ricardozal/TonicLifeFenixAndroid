@@ -13,6 +13,7 @@ import com.bigtechsolutions.toniclifefenix.api.requests.OrderRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Branch;
+import com.bigtechsolutions.toniclifefenix.api.responses.models.OrderResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.PaymentMethod;
 import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
@@ -157,21 +158,21 @@ public class OrderRepository {
 
     public void saveOrder(OrderRequest orderRequest, OnOrderResponse onOrderResponse){
 
-        Call<GenericResponse<String>> call = authApiService.saveOrder(orderRequest);
+        Call<GenericResponse<OrderResponse>> call = authApiService.saveOrder(orderRequest);
 
-        call.enqueue(new Callback<GenericResponse<String>>() {
+        call.enqueue(new Callback<GenericResponse<OrderResponse>>() {
             @Override
-            public void onResponse(Call<GenericResponse<String>> call, Response<GenericResponse<String>> response) {
+            public void onResponse(Call<GenericResponse<OrderResponse>> call, Response<GenericResponse<OrderResponse>> response) {
 
                 if (response.isSuccessful())
                 {
                     if (response.body().isSuccess())
                     {
                         setDownloadFinished();
-                        onOrderResponse.OnSuccess(response.body().getMessage(),response.body().getData());
+                        onOrderResponse.OnSuccess(response.body().getMessage(),response.body().getData().getMessage(), response.body().getData().getOrderId());
 
                     }else {
-                        onOrderResponse.OnError(response.body().getMessage(),response.body().getData());
+                        onOrderResponse.OnError(response.body().getMessage(),response.body().getData().getMessage());
                         setDownloadFinished();
                     }
                 } else {
@@ -182,7 +183,7 @@ public class OrderRepository {
             }
 
             @Override
-            public void onFailure(Call<GenericResponse<String>> call, Throwable t) {
+            public void onFailure(Call<GenericResponse<OrderResponse>> call, Throwable t) {
                 onOrderResponse.OnError("Error de conexión", "Algo salió mal, comprueba tu conexión a internet");
             }
         });
