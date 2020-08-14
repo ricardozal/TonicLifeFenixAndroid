@@ -70,6 +70,11 @@ public class NewDistributorActivity extends AppCompatActivity implements View.On
 
     }
 
+    @Override
+    public void onBackPressed() {
+        // Do Here what ever you want do on back press;
+    }
+
     private void events() {
 
         saveNewDistBtn.setOnClickListener(this);
@@ -104,8 +109,6 @@ public class NewDistributorActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onClick(View v) {
-
-        loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
 
         String name = newDistName.getEditText().getText().toString();
         String email = newDistEmail.getEditText().getText().toString();
@@ -200,7 +203,7 @@ public class NewDistributorActivity extends AppCompatActivity implements View.On
         } else if(countryId == 0){
             Toast.makeText(this, "Debes elegir un país", Toast.LENGTH_LONG).show();
         } else {
-
+            loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
             NewDistributorRequest request = new NewDistributorRequest(street, zipCode, extNum, intNum, colony, city, state, countryId, name, email, maritalStatus, birthday, birthPlace, nationality, rfc, curp, phone1, phone2, identification, orderId, bankName, accountName, bankAccountNumber, clabeRoutingBank);
 
             newDistributorViewModel.saveNewDistributor(request, new OnResponse() {

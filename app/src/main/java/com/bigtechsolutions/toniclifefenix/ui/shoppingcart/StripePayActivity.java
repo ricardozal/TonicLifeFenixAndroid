@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.bigtechsolutions.toniclifefenix.R;
@@ -255,7 +256,8 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
                                 title,
                                 message,
                                 kitsNumber > 0,
-                                orderId
+                                orderId,
+                                true
                         );
 
                     }
@@ -269,7 +271,8 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
                                 title,
                                 "El pago se procesó, pero algo salió mal al guardar tu orden de compra, ponte en contacto de inmediato con el administrador.",
                                 false,
-                                0
+                                0,
+                                true
                         );
 
                     }
@@ -281,7 +284,8 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
                         "El pago no se pudo realizar",
                         Objects.requireNonNull(paymentIntent.getLastPaymentError()).getMessage(),
                         false,
-                        0
+                        0,
+                        false
                 );
             }
         }
@@ -293,14 +297,15 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
             }
             // Payment request failed – allow retrying using the same payment method
             activity.loading.dismiss();
-            activity.displayAlert("Error", e.toString(),false, 0);
+            activity.displayAlert("Error", e.toString(),false, 0, false);
         }
     }
 
     private void displayAlert(@NonNull String title,
                               @Nullable String message,
                               boolean isKit,
-                              int orderId) {
+                              int orderId,
+                              boolean correctPayment) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(message);
@@ -308,20 +313,24 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                if(isKit){
+                if(correctPayment){
+                    if(isKit){
+                        Intent i = new Intent(MyFenixApp.getContext(), NewDistributorActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("orderId", orderId);
+                        i.putExtras(bundle);
+                        startActivity(i);
+                        finish();
 
-                    Intent i = new Intent(MyFenixApp.getContext(), NewDistributorActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("orderId", orderId);
-                    startActivity(i);
-                    finish();
+                    } else {
 
+                        Intent i = new Intent(MyFenixApp.getContext(), ShoppingCartActivity.class);
+                        startActivity(i);
+                        finish();
+
+                    }
                 } else {
-
-                    Intent i = new Intent(MyFenixApp.getContext(), ShoppingCartActivity.class);
-                    startActivity(i);
-                    finish();
-
+                    dialog.dismiss();
                 }
 
             }
