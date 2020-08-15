@@ -45,4 +45,6 @@ public class ShoppingCartViewModel extends AndroidViewModel {
 
     public Integer getNumberKits() { return numberKits; }
 
+    public Integer productExist(int productId) throws ExecutionException, InterruptedException { return shoppingCartRepository.productExit(productId); }
+
 }

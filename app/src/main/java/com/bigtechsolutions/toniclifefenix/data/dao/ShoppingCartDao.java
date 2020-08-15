@@ -37,4 +37,7 @@ public interface ShoppingCartDao {
     @Query("SELECT COUNT(*) as count FROM shopping_cart WHERE is_kit = 1")
     Integer getNumberKits();
 
+    @Query("SELECT COUNT(*) as count FROM shopping_cart WHERE product_id = :productId")
+    Integer productExist(int productId);
+
 }

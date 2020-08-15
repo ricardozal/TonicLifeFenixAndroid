@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
+import com.bigtechsolutions.toniclifefenix.api.requests.ChangeQuantityRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
@@ -27,6 +28,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -206,8 +209,22 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                 String imageUrl = productImageUrlHidden.getText().toString();
                 int productId = Integer.parseInt(productIdHidden.getText().toString());
                 int quantity = Integer.parseInt(quantityStr);
+                int exist = 0;
 
-                mViewModel.insert(new ShoppingCart(productName, price,points, imageUrl, quantity,productId, isKit));
+                try {
+                    exist = mViewModel.productExist(productId);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if(exist > 0){
+                    mViewModel.updateQuantity(new ChangeQuantityRequest(quantity, productId));
+                } else {
+                    mViewModel.insert(new ShoppingCart(productName, price,points, imageUrl, quantity,productId, isKit));
+                }
+
 
                 Intent i = new Intent(MyFenixApp.getContext(), ShoppingCartActivity.class);
                 startActivity(i);
