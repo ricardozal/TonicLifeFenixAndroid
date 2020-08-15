@@ -1,4 +1,4 @@
-package com.bigtechsolutions.toniclifefenix.viewmodel;
+package com.bigtechsolutions.toniclifefenix.viewmodel.interfaces;
 
 public interface OnSuccess {
 

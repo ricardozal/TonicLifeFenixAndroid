@@ -131,6 +131,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     .setStringValue(Constants.DISTRIBUTOR_TONIC_LIFE_ID, response.body().getData().getTonicLifeId());
                             SharedPreferencesManager
                                     .setStringValue(Constants.ACCESS_TOKEN, token);
+                            SharedPreferencesManager
+                                    .setIntegerValue(Constants.DIST_COUNTRY, response.body().getData().getDistributorCountry());
+                            SharedPreferencesManager
+                                    .setStringValue(Constants.CURRENT_POINTS, String.valueOf(response.body().getData().getCurrentPoints()));
 
                             loading.dismiss();
 

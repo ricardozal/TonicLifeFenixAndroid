@@ -12,7 +12,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.bigtechsolutions.toniclifefenix.R;
@@ -26,8 +25,8 @@ import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
 import com.bigtechsolutions.toniclifefenix.ui.NewDistributorActivity;
-import com.bigtechsolutions.toniclifefenix.viewmodel.OnOrderResponse;
-import com.bigtechsolutions.toniclifefenix.viewmodel.OnSuccess;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnOrderResponse;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnSuccess;
 import com.bigtechsolutions.toniclifefenix.viewmodel.OrderViewModel;
 import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
 import com.google.android.material.button.MaterialButton;
@@ -243,12 +242,14 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
 
                 activity.orderViewModel.saveOrder(orderRequest, new OnOrderResponse() {
                     @Override
-                    public void OnSuccess(String title, String message, Integer orderId) {
+                    public void OnSuccess(String title, String message, Integer orderId, Double currentPoints) {
 
                         int kitsNumber = activity.mViewModel.getNumberKits();
 
                         activity.mViewModel.deleteAll();
                         SharedPreferencesManager.removeValue(Constants.BRANCH_ID);
+                        SharedPreferencesManager.removeValue(Constants.CURRENT_POINTS);
+                        SharedPreferencesManager.setStringValue(Constants.CURRENT_POINTS, String.valueOf(currentPoints));
 
                         activity.loading.dismiss();
 

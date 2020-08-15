@@ -27,6 +27,8 @@ import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.login.MainActivity;
+import com.bigtechsolutions.toniclifefenix.ui.profile.MyOrdersActivity;
+import com.bigtechsolutions.toniclifefenix.ui.shoppingcart.StripePayActivity;
 import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
 
 import java.util.ArrayList;
@@ -75,9 +77,10 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
         TextView distributorPoints = view.findViewById(R.id.accumulated_points_profile);
 
         String greetings = "Hola, " + SharedPreferencesManager.getStringValue(Constants.DISTRIBUTOR_NAME);
+        String currentPoints = "Puntos acumulados en este mes: "+SharedPreferencesManager.getStringValue(Constants.CURRENT_POINTS);
 
         distributorName.setText(greetings);
-        distributorPoints.setText("Puntos acumulados en este mes: 1524");
+        distributorPoints.setText(currentPoints);
 
         options.add("Promociones");
         options.add("Mis compras");
@@ -98,7 +101,9 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
                 Toast.makeText(MyFenixApp.getContext(), "Promos", Toast.LENGTH_LONG).show();
                 break;
             case 1:
-                Toast.makeText(MyFenixApp.getContext(), "Mis compras", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(MyFenixApp.getContext(), MyOrdersActivity.class);
+                startActivity(i);
+                getActivity().finish();
                 break;
             case 2:
                 Toast.makeText(MyFenixApp.getContext(), "Direcciones", Toast.LENGTH_LONG).show();
@@ -130,6 +135,8 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
                         SharedPreferencesManager.removeValue(Constants.ACCESS_TOKEN);
                         SharedPreferencesManager.removeValue(Constants.BRANCH_ID);
                         SharedPreferencesManager.removeValue(Constants.COUNTRY);
+                        SharedPreferencesManager.removeValue(Constants.DIST_COUNTRY);
+                        SharedPreferencesManager.removeValue(Constants.CURRENT_POINTS);
 
                         loading.dismiss();
 

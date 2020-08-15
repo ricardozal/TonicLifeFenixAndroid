@@ -17,6 +17,12 @@ public class Token {
     @SerializedName("tonic_life_id")
     @Expose
     private String tonicLifeId;
+    @SerializedName("current_points")
+    @Expose
+    private Double currentPoints;
+    @SerializedName("distributor_country")
+    @Expose
+    private Integer distributorCountry;
     @SerializedName("access_token")
     @Expose
     private String accessToken;
@@ -44,11 +50,13 @@ public class Token {
      * @param tokenType
      * @param expiresAt
      */
-    public Token(int id, String name, String email, String tonicLifeId, String accessToken, String tokenType, String expiresAt) {
+    public Token(int id, String name, String email, String tonicLifeId, Double currentPoints, Integer distributorCountry, String accessToken, String tokenType, String expiresAt) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.tonicLifeId = tonicLifeId;
+        this.currentPoints = currentPoints;
+        this.distributorCountry = distributorCountry;
         this.accessToken = accessToken;
         this.tokenType = tokenType;
         this.expiresAt = expiresAt;
@@ -110,4 +118,19 @@ public class Token {
         this.expiresAt = expiresAt;
     }
 
+    public Double getCurrentPoints() {
+        return currentPoints;
+    }
+
+    public void setCurrentPoints(Double currentPoints) {
+        this.currentPoints = currentPoints;
+    }
+
+    public Integer getDistributorCountry() {
+        return distributorCountry;
+    }
+
+    public void setDistributorCountry(Integer distributorCountry) {
+        this.distributorCountry = distributorCountry;
+    }
 }

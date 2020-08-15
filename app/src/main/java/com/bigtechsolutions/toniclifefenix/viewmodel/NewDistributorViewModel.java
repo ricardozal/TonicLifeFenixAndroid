@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.bigtechsolutions.toniclifefenix.api.requests.NewDistributorRequest;
 import com.bigtechsolutions.toniclifefenix.data.repository.NewDistributorRepository;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnResponse;
 
 public class NewDistributorViewModel extends AndroidViewModel {
 

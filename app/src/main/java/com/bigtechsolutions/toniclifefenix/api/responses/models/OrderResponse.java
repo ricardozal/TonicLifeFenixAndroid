@@ -11,6 +11,9 @@ public class OrderResponse {
     @SerializedName("order_id")
     @Expose
     private Integer orderId;
+    @SerializedName("current_points")
+    @Expose
+    private Double currentPoints;
 
     /**
      * No args constructor for use in serialization
@@ -24,10 +27,11 @@ public class OrderResponse {
      * @param orderId
      * @param message
      */
-    public OrderResponse(String message, Integer orderId) {
+    public OrderResponse(String message, Integer orderId, Double currentPoints) {
         super();
         this.message = message;
         this.orderId = orderId;
+        this.currentPoints = currentPoints;
     }
 
     public String getMessage() {
@@ -46,4 +50,11 @@ public class OrderResponse {
         this.orderId = orderId;
     }
 
+    public Double getCurrentPoints() {
+        return currentPoints;
+    }
+
+    public void setCurrentPoints(Double currentPoints) {
+        this.currentPoints = currentPoints;
+    }
 }

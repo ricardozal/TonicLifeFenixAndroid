@@ -79,5 +79,6 @@
     <string name="clabeStr">CLABE</string>
     <string name="saveStr">Guardar</string>
     <string name="sendStr">Registrar</string>
+    <string name="ordersTitle">Mis compras</string>
 
 </resources>

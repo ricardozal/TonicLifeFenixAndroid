@@ -4,8 +4,7 @@ import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
 import com.bigtechsolutions.toniclifefenix.api.requests.NewDistributorRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
-import com.bigtechsolutions.toniclifefenix.viewmodel.OnOrderResponse;
-import com.bigtechsolutions.toniclifefenix.viewmodel.OnResponse;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

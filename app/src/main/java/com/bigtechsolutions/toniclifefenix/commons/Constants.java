@@ -11,6 +11,8 @@ public class Constants {
     public static final String DISTRIBUTOR_EMAIL = "DISTRIBUTOR_EMAIL";
     public static final String DISTRIBUTOR_TONIC_LIFE_ID = "DISTRIBUTOR_TONIC_LIFE_ID";
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
+    public static final String CURRENT_POINTS = "CURRENT_POINTS";
+    public static final String DIST_COUNTRY = "DIST_COUNTRY";
 
     public static final String BRANCH_ID = "BRANCH_ID";
     public static final String COUNTRY = "COUNTRY";

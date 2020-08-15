@@ -10,6 +10,8 @@ import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.Token;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Address;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Branch;
+import com.bigtechsolutions.toniclifefenix.api.responses.models.Order;
+import com.bigtechsolutions.toniclifefenix.api.responses.models.OrderItem;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.OrderResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.PaymentMethod;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
@@ -63,5 +65,13 @@ public interface AuthApiService {
 
     @GET("auth/logout")
     Call<GenericResponse<String>> logout();
+
+    /* Orders */
+
+    @GET("distributor/{distributorId}/orders")
+    Call<GenericResponse<List<OrderItem>>> getOrders(@Path("distributorId") int distributorId);
+
+    @GET("order/{orderId}/show")
+    Call<GenericResponse<Order>> getOrder(@Path("orderId") int orderId);
 
 }

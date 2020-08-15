@@ -17,10 +17,8 @@ import android.widget.Toast;
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.requests.NewDistributorRequest;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
-import com.bigtechsolutions.toniclifefenix.ui.shoppingcart.ShoppingCartActivity;
 import com.bigtechsolutions.toniclifefenix.viewmodel.NewDistributorViewModel;
-import com.bigtechsolutions.toniclifefenix.viewmodel.OnOrderResponse;
-import com.bigtechsolutions.toniclifefenix.viewmodel.OnResponse;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnResponse;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 

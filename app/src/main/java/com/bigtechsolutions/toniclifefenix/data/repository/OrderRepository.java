@@ -1,7 +1,5 @@
 package com.bigtechsolutions.toniclifefenix.data.repository;
 
-import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -13,14 +11,16 @@ import com.bigtechsolutions.toniclifefenix.api.requests.OrderRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Branch;
+import com.bigtechsolutions.toniclifefenix.api.responses.models.Order;
+import com.bigtechsolutions.toniclifefenix.api.responses.models.OrderItem;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.OrderResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.PaymentMethod;
 import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
-import com.bigtechsolutions.toniclifefenix.ui.shoppingcart.PaymentMethodActivity;
-import com.bigtechsolutions.toniclifefenix.viewmodel.OnOrderResponse;
-import com.bigtechsolutions.toniclifefenix.viewmodel.OnSuccess;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnOrderItemResponse;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnOrderResponse;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnSuccess;
 
 import java.util.List;
 
@@ -33,6 +33,7 @@ public class OrderRepository {
     AuthApiService authApiService;
     AuthApiClient authApiClient;
     MutableLiveData<List<PaymentMethod>> paymentMethods;
+    MutableLiveData<List<OrderItem>> orderItems;
     private final MutableLiveData<Boolean> downloadFinished = new MutableLiveData<>();
 
 
@@ -40,6 +41,69 @@ public class OrderRepository {
         authApiClient = AuthApiClient.getInstance();
         authApiService = authApiClient.getAuthApiService();
         paymentMethods = getPaymentMethods();
+    }
+
+    public MutableLiveData<List<OrderItem>> getOrders(){
+
+        if(orderItems == null){
+
+            orderItems = new MutableLiveData<>();
+
+        }
+
+        int distributorId = SharedPreferencesManager.getIntValue(Constants.DISTRIBUTOR_ID);
+
+        Call<GenericResponse<List<OrderItem>>> call = authApiService.getOrders(distributorId);
+
+        call.enqueue(new Callback<GenericResponse<List<OrderItem>>>() {
+            @Override
+            public void onResponse(Call<GenericResponse<List<OrderItem>>> call, Response<GenericResponse<List<OrderItem>>> response) {
+                if (response.isSuccessful())
+                {
+                    if (response.body().isSuccess())
+                    {
+                        orderItems.setValue(response.body().getData());
+                        setDownloadFinished();
+                    }
+                } else {
+                    Toast.makeText(MyFenixApp.getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GenericResponse<List<OrderItem>>> call, Throwable t) {
+                Toast.makeText(MyFenixApp.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return orderItems;
+
+    }
+
+    public void getOrder(int orderId, OnOrderItemResponse onOrderItemResponse){
+
+        Call<GenericResponse<Order>> call = authApiService.getOrder(orderId);
+
+        call.enqueue(new Callback<GenericResponse<Order>>() {
+            @Override
+            public void onResponse(Call<GenericResponse<Order>> call, Response<GenericResponse<Order>> response) {
+                if (response.isSuccessful())
+                {
+                    if (response.body().isSuccess())
+                    {
+                        onOrderItemResponse.OnSuccess("Bien", response.body().getMessage(), response.body().getData());
+                    }
+                } else {
+                    onOrderItemResponse.OnError("Algo salió mal", "Error en el servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GenericResponse<Order>> call, Throwable t) {
+                onOrderItemResponse.OnError("Algo salió mal", "Error de conexión");
+            }
+        });
+
     }
 
     public MutableLiveData<List<PaymentMethod>> getPaymentMethods(){
@@ -169,7 +233,7 @@ public class OrderRepository {
                     if (response.body().isSuccess())
                     {
                         setDownloadFinished();
-                        onOrderResponse.OnSuccess(response.body().getMessage(),response.body().getData().getMessage(), response.body().getData().getOrderId());
+                        onOrderResponse.OnSuccess(response.body().getMessage(),response.body().getData().getMessage(), response.body().getData().getOrderId(), response.body().getData().getCurrentPoints());
 
                     }else {
                         onOrderResponse.OnError(response.body().getMessage(),response.body().getData().getMessage());
