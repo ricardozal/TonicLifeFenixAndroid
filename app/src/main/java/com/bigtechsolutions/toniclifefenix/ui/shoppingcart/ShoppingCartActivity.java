@@ -147,8 +147,13 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
 
     @Override
     public void onChangeQuantityClick(int position) {
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("productId", productList.get(position).getProductId());
+
         FragmentManager fm = getSupportFragmentManager();
         ShoppingCartChangeQuantityFragment dialog = new ShoppingCartChangeQuantityFragment();
+        dialog.setArguments(bundle);
         dialog.show(fm, "ShoppingCartChangeQuantityFragment");
     }
 

@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.bigtechsolutions.toniclifefenix.api.requests.ChangeQuantityRequest;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
 import com.bigtechsolutions.toniclifefenix.data.repository.ShoppingCartRepository;
 
@@ -31,6 +32,8 @@ public class ShoppingCartViewModel extends AndroidViewModel {
     public LiveData<List<ShoppingCart>> getAll() { return all;}
 
     public void insert(ShoppingCart shoppingCart) { shoppingCartRepository.insert(shoppingCart);}
+
+    public void updateQuantity(ChangeQuantityRequest changeQuantityRequest) { shoppingCartRepository.updateQuantity(changeQuantityRequest); }
 
     public void deleteById(int productId) { shoppingCartRepository.deleteById(productId);}
 

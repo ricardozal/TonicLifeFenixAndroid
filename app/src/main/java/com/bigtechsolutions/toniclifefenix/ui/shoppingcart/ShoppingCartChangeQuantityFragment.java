@@ -3,15 +3,23 @@ package com.bigtechsolutions.toniclifefenix.ui.shoppingcart;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigtechsolutions.toniclifefenix.R;
+import com.bigtechsolutions.toniclifefenix.api.requests.ChangeQuantityRequest;
+import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
+import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
 
@@ -23,10 +31,18 @@ public class ShoppingCartChangeQuantityFragment extends DialogFragment {
 
     private View view;
     TextInputLayout quantity;
+    int productId;
+    ShoppingCartViewModel productViewModel;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        Bundle mArgs = getArguments();
+        productId = mArgs.getInt("productId");
+
+        productViewModel = new ViewModelProvider(this)
+                .get(ShoppingCartViewModel.class);
 
     }
 
@@ -44,9 +60,14 @@ public class ShoppingCartChangeQuantityFragment extends DialogFragment {
                         String quantityStr = quantity.getEditText().getText().toString();
 
                         if (quantityStr.isEmpty() || Integer.parseInt(quantityStr) < 1){
-                            quantity.setError("Debes elegir la cantidad de producto válida");
+                            Toast.makeText(MyFenixApp.getContext(), "Debes elegir la cantidad de producto válida", Toast.LENGTH_SHORT).show();
                         } else {
+                            ChangeQuantityRequest changeQuantityRequest = new ChangeQuantityRequest(Integer.parseInt(quantityStr), productId);
+                            productViewModel.updateQuantity(changeQuantityRequest);
 
+                            Intent i = new Intent(MyFenixApp.getContext(), ShoppingCartActivity.class);
+                            startActivity(i);
+                            getActivity().finish();
                         }
 
                     }

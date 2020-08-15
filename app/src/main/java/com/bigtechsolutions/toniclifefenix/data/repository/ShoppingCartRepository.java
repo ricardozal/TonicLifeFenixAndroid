@@ -2,9 +2,11 @@ package com.bigtechsolutions.toniclifefenix.data.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.bigtechsolutions.toniclifefenix.api.requests.ChangeQuantityRequest;
 import com.bigtechsolutions.toniclifefenix.data.ShoppingCartDataBase;
 import com.bigtechsolutions.toniclifefenix.data.dao.ShoppingCartDao;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
@@ -43,6 +45,12 @@ public class ShoppingCartRepository {
         new insertAsyncTask(shoppingCartDao).execute(product);
     }
 
+    public void updateQuantity(ChangeQuantityRequest changeQuantityRequest){
+
+        new updateAsyncTask(shoppingCartDao).execute(changeQuantityRequest);
+
+    }
+
     public void deleteById(int productId)
     {
         new deleteByIdAsyncTask(shoppingCartDao).execute(productId);
@@ -65,6 +73,20 @@ public class ShoppingCartRepository {
         @Override
         protected Void doInBackground(ShoppingCart... shoppingCarts) {
             shoppingCartDaoAsyncTask.insert(shoppingCarts[0]);
+            return null;
+        }
+    }
+
+    private static class updateAsyncTask extends AsyncTask<ChangeQuantityRequest, Void, Void> {
+        private ShoppingCartDao shoppingCartDaoAsyncTask;
+
+        updateAsyncTask(ShoppingCartDao dao){
+            shoppingCartDaoAsyncTask = dao;
+        }
+
+        @Override
+        protected Void doInBackground(ChangeQuantityRequest... changeQuantityRequests) {
+            shoppingCartDaoAsyncTask.updateQuantity(changeQuantityRequests[0].getQuantity(), changeQuantityRequests[0].getProductId());
             return null;
         }
     }
