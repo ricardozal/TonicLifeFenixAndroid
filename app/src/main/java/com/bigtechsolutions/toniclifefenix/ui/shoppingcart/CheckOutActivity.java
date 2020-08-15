@@ -1,5 +1,6 @@
 package com.bigtechsolutions.toniclifefenix.ui.shoppingcart;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -7,7 +8,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,7 +27,9 @@ import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
+import com.bigtechsolutions.toniclifefenix.ui.BottomNavigationActivity;
 import com.bigtechsolutions.toniclifefenix.viewmodel.AddressViewModel;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnResponse;
 import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnSuccess;
 import com.bigtechsolutions.toniclifefenix.viewmodel.OrderViewModel;
 import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
@@ -295,9 +300,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
             ValidateInvRequest validateInvRequest = new ValidateInvRequest(addressId,branchId, productsRequest);
 
-            orderViewModel.validateInventory(validateInvRequest, new OnSuccess() {
+            orderViewModel.validateInventory(validateInvRequest, new OnResponse() {
                 @Override
-                public void OnRequestSuccess() {
+                public void OnSuccess(String title, String message) {
                     Intent i = new Intent(MyFenixApp.getContext(), PaymentMethodActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("addressId", addressId);
@@ -307,11 +312,26 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 }
 
                 @Override
-                public void OnRequestStripeSuccess(String key) {
-
+                public void OnError(String title, String message) {
+                    displayAlert(title, message);
                 }
             });
 
         }
+    }
+
+    private void displayAlert(@NonNull String title,
+                              @Nullable String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setCancelable(false);
+        builder.create().show();
     }
 }

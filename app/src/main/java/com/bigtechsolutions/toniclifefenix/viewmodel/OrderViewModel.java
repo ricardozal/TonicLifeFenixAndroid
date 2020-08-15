@@ -14,6 +14,7 @@ import com.bigtechsolutions.toniclifefenix.api.responses.models.PaymentMethod;
 import com.bigtechsolutions.toniclifefenix.data.repository.OrderRepository;
 import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnOrderItemResponse;
 import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnOrderResponse;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnResponse;
 import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnSuccess;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class OrderViewModel extends AndroidViewModel {
 
     public void getOrder(int orderId, OnOrderItemResponse onOrderItemResponse) { orderRepository.getOrder(orderId, onOrderItemResponse); }
 
-    public void validateInventory(ValidateInvRequest validateInvRequest, OnSuccess onSuccess){ orderRepository.validateInventory(validateInvRequest, onSuccess ); }
+    public void validateInventory(ValidateInvRequest validateInvRequest, OnResponse onResponse){ orderRepository.validateInventory(validateInvRequest, onResponse ); }
 
     public void generateIntent(GenerateIntentRequest generateIntentRequest, OnSuccess onSuccess){orderRepository.generateIntent(generateIntentRequest, onSuccess);}
     

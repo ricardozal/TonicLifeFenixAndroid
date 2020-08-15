@@ -20,6 +20,7 @@ import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnOrderItemResponse;
 import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnOrderResponse;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnResponse;
 import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnSuccess;
 
 import java.util.List;
@@ -141,7 +142,7 @@ public class OrderRepository {
 
     }
 
-    public void validateInventory(ValidateInvRequest validateInvRequest, OnSuccess onSuccess){
+    public void validateInventory(ValidateInvRequest validateInvRequest, OnResponse onResponse){
 
         Call<GenericResponse<Branch>> call = authApiService.validateInventory(validateInvRequest);
 
@@ -152,20 +153,16 @@ public class OrderRepository {
                 {
                     if (response.body().isSuccess())
                     {
-
                         SharedPreferencesManager.setIntegerValue(Constants.BRANCH_ID, response.body().getData().getId());
                         setDownloadFinished();
-                        onSuccess.OnRequestSuccess();
+                        onResponse.OnSuccess("Todo bien", "Continuar");
 
                     }else {
-
-
-                        Toast.makeText(MyFenixApp.getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         setDownloadFinished();
-
+                        onResponse.OnError("Atención", response.body().getMessage());
                     }
                 } else {
-                    Toast.makeText(MyFenixApp.getContext(), response.message(), Toast.LENGTH_SHORT).show();
+                    onResponse.OnError("Atención", response.message());
                     setDownloadFinished();
                 }
 
@@ -173,7 +170,7 @@ public class OrderRepository {
 
             @Override
             public void onFailure(Call<GenericResponse<Branch>> call, Throwable t) {
-                Toast.makeText(MyFenixApp.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                onResponse.OnError("Atención", t.getMessage());
                 setDownloadFinished();
             }
         });
