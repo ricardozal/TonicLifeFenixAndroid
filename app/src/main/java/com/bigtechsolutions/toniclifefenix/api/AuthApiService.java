@@ -43,11 +43,11 @@ public interface AuthApiService {
     @POST("distributor/select-address")
     Call<GenericResponse<List<Address>>> setSelectedAddress(@Body SelectAddressRequest request);
 
-    @GET("distributor/{addressId}/address")
-    Call<GenericResponse<Address>> getAddress(@Path("addressId") int addressId);
+    @GET("distributor/{distributorId}/address/{addressId}/show")
+    Call<GenericResponse<Address>> getAddress(@Path("addressId") int addressId, @Path("distributorId") int distributorId);
 
-    @POST("distributor/save-address")
-    Call<GenericResponse<String>> saveAddress(@Body UpsertAddressRequest request);
+    @POST("distributor/{distributorId}/save-address")
+    Call<GenericResponse<String>> saveAddress(@Path("distributorId") int distributorId, @Body UpsertAddressRequest request);
 
     /* BRANCHES APIs */
     @GET("all-branches")

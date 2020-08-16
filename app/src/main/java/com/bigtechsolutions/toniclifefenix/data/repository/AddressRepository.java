@@ -45,7 +45,9 @@ public class AddressRepository {
 
     public void saveAddress(UpsertAddressRequest upsertAddressRequest, OnResponse onResponse){
 
-        Call<GenericResponse<String>> call = authApiService.saveAddress(upsertAddressRequest);
+        int distributorId = SharedPreferencesManager.getIntValue(Constants.DISTRIBUTOR_ID);
+
+        Call<GenericResponse<String>> call = authApiService.saveAddress(distributorId, upsertAddressRequest);
 
         call.enqueue(new Callback<GenericResponse<String>>() {
             @Override
@@ -74,7 +76,9 @@ public class AddressRepository {
 
     public void getAddress(int addressId, OnAddressResponse onResponse){
 
-        Call<GenericResponse<Address>> call = authApiService.getAddress(addressId);
+        int distributorId = SharedPreferencesManager.getIntValue(Constants.DISTRIBUTOR_ID);
+
+        Call<GenericResponse<Address>> call = authApiService.getAddress(addressId, distributorId);
 
         call.enqueue(new Callback<GenericResponse<Address>>() {
             @Override
