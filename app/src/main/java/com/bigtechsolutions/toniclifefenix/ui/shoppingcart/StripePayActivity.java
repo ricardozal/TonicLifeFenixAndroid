@@ -119,7 +119,7 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
     private void setStripe() {
         stripe = new Stripe(
                 getApplicationContext(),
-                Objects.requireNonNull("pk_test_51HB9ItGBCPqeJ6dQ6S1Z1s2vcPg7S75x0Zp9iEyIwcN1QZkQ55cDwMLNzIYDisU7rrOcT4uWzVAEoYgDzIOVtjhg00cnRpwmVZ")
+                Objects.requireNonNull(Constants.STRIPE_PUBLIC_KEY)
         );
 
         double amount = productViewModel.getTotalOrder();
