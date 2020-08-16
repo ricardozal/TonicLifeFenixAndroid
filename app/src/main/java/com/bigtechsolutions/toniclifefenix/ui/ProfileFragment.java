@@ -27,6 +27,7 @@ import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.login.MainActivity;
+import com.bigtechsolutions.toniclifefenix.ui.profile.MyAddressesActivity;
 import com.bigtechsolutions.toniclifefenix.ui.profile.MyOrdersActivity;
 import com.bigtechsolutions.toniclifefenix.ui.profile.MyPromosActivity;
 import com.bigtechsolutions.toniclifefenix.ui.shoppingcart.StripePayActivity;
@@ -109,7 +110,9 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
                 getActivity().finish();
                 break;
             case 2:
-                Toast.makeText(MyFenixApp.getContext(), "Direcciones", Toast.LENGTH_LONG).show();
+                Intent intentAddress = new Intent(MyFenixApp.getContext(), MyAddressesActivity.class);
+                startActivity(intentAddress);
+                getActivity().finish();
                 break;
             case 3:
                 logout();

@@ -19,26 +19,6 @@
             android:layout_height="?attr/actionBarSize"
             style="?toolbarStyle">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/addAddressCart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:src="@drawable/ic_shopping_cart"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginRight="16dp"
-                    tools:ignore="MissingConstraints"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>

@@ -49,6 +49,8 @@ public class MyAddressesActivity extends AppCompatActivity implements MyAddresse
         toolbar = findViewById(R.id.toolbarAddressProfile);
         addAddress = findViewById(R.id.addAddressBtn);
 
+        addAddress.setOnClickListener(this);
+
         toolbarConfig();
 
         adapter = new MyAddressesAdapter(

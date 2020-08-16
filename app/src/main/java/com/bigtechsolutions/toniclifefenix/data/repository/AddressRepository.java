@@ -61,7 +61,7 @@ public class AddressRepository {
                         onResponse.OnError(response.body().getMessage(), response.body().getData());
                     }
                 } else {
-                    onResponse.OnError("Algo salió mal", "Error en el servidor");
+                    onResponse.OnError("Algo salió mal", response.message());
                 }
             }
 

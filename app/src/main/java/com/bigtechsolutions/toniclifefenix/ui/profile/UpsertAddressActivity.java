@@ -55,9 +55,6 @@ public class UpsertAddressActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upsert_address);
 
-        loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
-
-
         addressViewModel = new ViewModelProvider(this)
                 .get(AddressViewModel.class);
 
@@ -74,6 +71,8 @@ public class UpsertAddressActivity extends AppCompatActivity implements View.OnC
         Countries = findViewById(R.id.addressProfCountries);
         radioMex = findViewById(R.id.mexButtonCountryAddressProf);
         radioUsa = findViewById(R.id.usaButtonCountryAddressProf);
+
+        addAddress.setOnClickListener(this);
 
         toolbarConfig();
 
@@ -96,7 +95,8 @@ public class UpsertAddressActivity extends AppCompatActivity implements View.OnC
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setTitle(addressId != 0 ? "Editar dirección" : "Nueva dirección");
+        String title = addressId != 0 ? "Editar dirección" : "Nueva dirección";
+        toolbar.setTitle(title);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +109,8 @@ public class UpsertAddressActivity extends AppCompatActivity implements View.OnC
     }
 
     private void loadData() {
+
+        loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
 
         addressViewModel.getAddress(addressId, new OnAddressResponse() {
             @Override
