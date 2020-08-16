@@ -28,6 +28,7 @@ import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.login.MainActivity;
 import com.bigtechsolutions.toniclifefenix.ui.profile.MyOrdersActivity;
+import com.bigtechsolutions.toniclifefenix.ui.profile.MyPromosActivity;
 import com.bigtechsolutions.toniclifefenix.ui.shoppingcart.StripePayActivity;
 import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
 
@@ -98,7 +99,9 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
         switch (position)
         {
             case 0:
-                Toast.makeText(MyFenixApp.getContext(), "Promos", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MyFenixApp.getContext(), MyPromosActivity.class);
+                startActivity(intent);
+                getActivity().finish();
                 break;
             case 1:
                 Intent i = new Intent(MyFenixApp.getContext(), MyOrdersActivity.class);
