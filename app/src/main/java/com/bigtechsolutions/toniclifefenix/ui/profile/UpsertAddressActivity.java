@@ -135,10 +135,13 @@ public class UpsertAddressActivity extends AppCompatActivity implements View.OnC
 
                 }
 
+                loading.dismiss();
+
             }
 
             @Override
             public void OnError(String title, String message) {
+                loading.dismiss();
                 displayAlert(title, message);
             }
         });
@@ -215,11 +218,13 @@ public class UpsertAddressActivity extends AppCompatActivity implements View.OnC
                 addressViewModel.saveAddress(upsertAddressRequest, new OnResponse() {
                     @Override
                     public void OnSuccess(String title, String message) {
+                        loading.dismiss();
                         displayAlert(title, message);
                     }
 
                     @Override
                     public void OnError(String title, String message) {
+                        loading.dismiss();
                         displayAlert(title, message);
                     }
                 });
