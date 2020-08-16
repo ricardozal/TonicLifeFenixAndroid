@@ -82,5 +82,8 @@
     <string name="ordersTitle">Mis compras</string>
     <string name="promosTitle">Mis promociones</string>
     <string name="promosMessage">Aquí se muestran las promociones que has obtenido, consulta a tu administrador para hacer válida alguna de ellas.</string>
+    <string name="edit">Editar</string>
+    <string name="addAddressStr">Agregar dirección</string>
+    <string name="aliasStr">Alias</string>
 
 </resources>

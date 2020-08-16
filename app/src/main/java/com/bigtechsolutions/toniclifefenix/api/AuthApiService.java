@@ -5,6 +5,7 @@ import com.bigtechsolutions.toniclifefenix.api.requests.GenerateIntentRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.NewDistributorRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.OrderRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.SelectAddressRequest;
+import com.bigtechsolutions.toniclifefenix.api.requests.UpsertAddressRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.Token;
@@ -41,6 +42,12 @@ public interface AuthApiService {
 
     @POST("distributor/select-address")
     Call<GenericResponse<List<Address>>> setSelectedAddress(@Body SelectAddressRequest request);
+
+    @GET("distributor/{addressId}/address")
+    Call<GenericResponse<Address>> getAddress(@Path("addressId") int addressId);
+
+    @POST("distributor/save-address")
+    Call<GenericResponse<String>> saveAddress(@Body UpsertAddressRequest request);
 
     /* BRANCHES APIs */
     @GET("all-branches")
