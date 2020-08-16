@@ -50,16 +50,16 @@ public interface AuthApiService {
     Call<GenericResponse<String>> saveAddress(@Path("distributorId") int distributorId, @Body UpsertAddressRequest request);
 
     /* BRANCHES APIs */
-    @GET("all-branches")
-    Call<GenericResponse<List<Branch>>> getBranches();
+    @GET("distributor/{distributorId}/all-branches")
+    Call<GenericResponse<List<Branch>>> getBranches(@Path("distributorId") int distributorId);
 
     /* ORDER SHOPPING CART */
 
     @GET("get-payment-methods")
     Call<GenericResponse<List<PaymentMethod>>> getPaymentMethods();
 
-    @POST("validate-branch-inventory")
-    Call<GenericResponse<Branch>> validateInventory(@Body ValidateInvRequest request);
+    @POST("distributor/{distributorId}/validate-branch-inventory")
+    Call<GenericResponse<Branch>> validateInventory(@Body ValidateInvRequest request, @Path("distributorId") int distributorId);
 
     @POST("generate-intent")
     Call<GenericResponse<String>> generateIntent(@Body GenerateIntentRequest request);

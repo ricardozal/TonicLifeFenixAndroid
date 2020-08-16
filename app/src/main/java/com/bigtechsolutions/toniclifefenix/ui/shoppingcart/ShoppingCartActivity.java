@@ -90,6 +90,11 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
 
     }
 
+    @Override
+    public void onBackPressed() {
+        // Do Here what ever you want do on back press;
+    }
+
     private void loadProductData() {
 
         productViewModel.getAll().observe(this, new Observer<List<ShoppingCart>>() {

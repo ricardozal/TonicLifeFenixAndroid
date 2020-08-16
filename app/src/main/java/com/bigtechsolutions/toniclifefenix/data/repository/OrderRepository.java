@@ -144,7 +144,9 @@ public class OrderRepository {
 
     public void validateInventory(ValidateInvRequest validateInvRequest, OnResponse onResponse){
 
-        Call<GenericResponse<Branch>> call = authApiService.validateInventory(validateInvRequest);
+        int distributorId = SharedPreferencesManager.getIntValue(Constants.DISTRIBUTOR_ID);
+
+        Call<GenericResponse<Branch>> call = authApiService.validateInventory(validateInvRequest, distributorId);
 
         call.enqueue(new Callback<GenericResponse<Branch>>() {
             @Override

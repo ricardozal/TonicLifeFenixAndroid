@@ -111,7 +111,9 @@ public class AddressRepository {
             branches = new MutableLiveData<>();
         }
 
-        Call<GenericResponse<List<Branch>>> call = authApiService.getBranches();
+        int distributorId = SharedPreferencesManager.getIntValue(Constants.DISTRIBUTOR_ID);
+
+        Call<GenericResponse<List<Branch>>> call = authApiService.getBranches(distributorId);
 
         call.enqueue(new Callback<GenericResponse<List<Branch>>>() {
             @Override
