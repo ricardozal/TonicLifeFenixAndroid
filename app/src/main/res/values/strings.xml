@@ -80,5 +80,7 @@
     <string name="saveStr">Guardar</string>
     <string name="sendStr">Registrar</string>
     <string name="ordersTitle">Mis compras</string>
+    <string name="promosTitle">Mis promociones</string>
+    <string name="promosMessage">Aquí se muestran las promociones que has obtenido, consulta a tu administrador para hacer válida alguna de ellas.</string>
 
 </resources>

@@ -1,0 +1,101 @@
+package com.bigtechsolutions.toniclifefenix.ui.profile;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
+import com.bigtechsolutions.toniclifefenix.R;
+import com.bigtechsolutions.toniclifefenix.api.responses.models.OrderItem;
+import com.bigtechsolutions.toniclifefenix.api.responses.models.Promotion;
+import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
+import com.bigtechsolutions.toniclifefenix.ui.BottomNavigationActivity;
+import com.bigtechsolutions.toniclifefenix.viewmodel.DistributorViewModel;
+import com.bigtechsolutions.toniclifefenix.viewmodel.OrderViewModel;
+
+import java.util.List;
+
+public class MyPromosActivity extends AppCompatActivity {
+
+    DistributorViewModel distributorViewModel;
+    ProgressDialog loading;
+    RecyclerView recyclerView;
+    Toolbar toolbar;
+    MyPromosAdapter adapter;
+    List<Promotion> promotionList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_promos);
+
+        loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
+
+        distributorViewModel = new ViewModelProvider(this)
+                .get(DistributorViewModel.class);
+
+        recyclerView = findViewById(R.id.promos_list);
+        toolbar = findViewById(R.id.toolbarPromos);
+
+        toolbarConfig();
+
+        adapter = new MyPromosAdapter(
+                this,
+                promotionList
+        );
+
+        recyclerView.setAdapter(adapter);
+
+        loadPromosData();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Do Here what ever you want do on back press;
+    }
+
+    private void loadPromosData() {
+        distributorViewModel.getPromotions().observe(this, new Observer<List<Promotion>>() {
+            @Override
+            public void onChanged(List<Promotion> promotions) {
+                promotionList = promotions;
+                adapter.setDataList(promotions);
+            }
+        });
+
+        distributorViewModel.getDownloadFinished().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean downloadFinished) {
+                if (downloadFinished != null) {
+                    if (downloadFinished) {
+                        loading.dismiss();
+                    }
+                }
+            }
+        });
+    }
+
+    private void toolbarConfig() {
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MyFenixApp.getContext(), BottomNavigationActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+    }
+}

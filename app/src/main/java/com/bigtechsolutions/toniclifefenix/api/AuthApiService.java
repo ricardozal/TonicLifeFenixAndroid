@@ -15,6 +15,7 @@ import com.bigtechsolutions.toniclifefenix.api.responses.models.OrderItem;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.OrderResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.PaymentMethod;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
+import com.bigtechsolutions.toniclifefenix.api.responses.models.Promotion;
 
 import java.util.List;
 
@@ -73,5 +74,9 @@ public interface AuthApiService {
 
     @GET("order/{orderId}/show")
     Call<GenericResponse<Order>> getOrder(@Path("orderId") int orderId);
+
+    /* Promotions */
+    @GET("distributor/{distributorId}/promotions")
+    Call<GenericResponse<List<Promotion>>> getPromotions(@Path("distributorId") int distributorId);
 
 }

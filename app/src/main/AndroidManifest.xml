@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ui.profile.OrderShowActivity"></activity>
+        <activity android:name=".ui.profile.MyPromosActivity"></activity>
+        <activity android:name=".ui.profile.OrderShowActivity" />
         <activity android:name=".ui.profile.MyOrdersActivity" />
         <activity android:name=".ui.NewDistributorActivity" />
         <activity android:name=".ui.WaitingActivity" />
