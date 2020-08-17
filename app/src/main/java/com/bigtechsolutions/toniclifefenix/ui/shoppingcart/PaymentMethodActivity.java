@@ -108,7 +108,13 @@ public class PaymentMethodActivity extends AppCompatActivity implements PaymentM
 
         if(paymentMethodList.get(position).getId() == 1){ //PayPal
 
-            Toast.makeText(MyFenixApp.getContext(), "PayPal", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(MyFenixApp.getContext(), PayPalPaymentActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("addressId", deliveryAddressId);
+            bundle.putInt("paymentMethodId", paymentMethodList.get(position).getId());
+            i.putExtras(bundle);
+            startActivity(i);
+            finish();
 
         } else if(paymentMethodList.get(position).getId() == 2){ //Stripe
 

@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
@@ -55,6 +56,7 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
     OrderViewModel orderViewModel;
     ShoppingCartViewModel productViewModel;
     ProgressDialog loading;
+    private TextView toPayTxt;
 
     int deliveryAddressId;
     int paymentMethodId;
@@ -137,6 +139,9 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
 
         }
 
+        String totalStr = "Total a pagar: " + "$"+amount+currency;
+        toPayTxt.setText(totalStr);
+
         GenerateIntentRequest generateIntentRequest = new GenerateIntentRequest(amount,currency);
 
         orderViewModel.generateIntent(generateIntentRequest, new OnSuccess() {
@@ -184,6 +189,8 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MyFenixApp.getContext(), PaymentMethodActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("addressId", deliveryAddressId);
                 startActivity(i);
                 finish();
             }
@@ -195,6 +202,7 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
         pay = findViewById(R.id.stripePayBtn);
         cardInputWidget = findViewById(R.id.cardInputStripe);
         toolbar = findViewById(R.id.toolbarStripe);
+        toPayTxt = findViewById(R.id.total_to_pay_stripe);
 
     }
 
@@ -281,6 +289,7 @@ public class StripePayActivity extends AppCompatActivity implements View.OnClick
 
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method
+                activity.loading.dismiss();
                 activity.displayAlert(
                         "El pago no se pudo realizar",
                         Objects.requireNonNull(paymentIntent.getLastPaymentError()).getMessage(),

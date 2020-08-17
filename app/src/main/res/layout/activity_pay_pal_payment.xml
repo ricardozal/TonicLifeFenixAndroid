@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.TonicLife"
-    tools:context=".ui.shoppingcart.StripePayActivity">
+    tools:context=".ui.shoppingcart.PayPalPaymentActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarStripe"
+            android:id="@+id/toolbarPaypal"
             app:title="@string/toPay"
             app:titleTextColor="@color/colorWhite"
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/total_to_pay_stripe"
+                android:id="@+id/total_to_pay_paypal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
@@ -45,15 +45,8 @@
                 android:textAppearance="?attr/textAppearanceHeadline5"
                 />
 
-            <com.stripe.android.view.CardInputWidget
-                android:id="@+id/cardInputStripe"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"/>
-
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/stripePayBtn"
+                android:id="@+id/PayPalBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -68,4 +61,3 @@
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-

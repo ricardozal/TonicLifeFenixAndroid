@@ -20,6 +20,6 @@ public class Constants {
     // APIs
 
     public static final String STRIPE_PUBLIC_KEY = "pk_test_51HB9ItGBCPqeJ6dQ6S1Z1s2vcPg7S75x0Zp9iEyIwcN1QZkQ55cDwMLNzIYDisU7rrOcT4uWzVAEoYgDzIOVtjhg00cnRpwmVZ";
-    public static final String PAYPAL_CLIENT_ID = "";
+    public static final String PAYPAL_CLIENT_ID = "AW2vGNO15ZK8tNZWIlpY4Hj5jmqzYQZsdnm54rvF_WNLSj4oiJTHBfDfGgmLIlERh3YZbjWTVXvxJoD-";
 
 }

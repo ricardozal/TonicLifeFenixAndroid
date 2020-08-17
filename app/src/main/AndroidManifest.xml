@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ui.profile.UpsertAddressActivity"></activity>
+        <activity android:name=".ui.shoppingcart.PayPalPaymentActivity"></activity>
+        <activity android:name=".ui.profile.UpsertAddressActivity" />
         <activity android:name=".ui.profile.MyAddressesActivity" />
         <activity android:name=".ui.profile.MyPromosActivity" />
         <activity android:name=".ui.profile.OrderShowActivity" />
