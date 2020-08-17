@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "699398933787",
+    "firebase_url": "https://tonic-life-fenix.firebaseio.com",
+    "project_id": "tonic-life-fenix",
+    "storage_bucket": "tonic-life-fenix.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699398933787:android:dff5a1d22161e1da9d97be",
+        "android_client_info": {
+          "package_name": "com.bigtechsolutions.toniclifefenix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699398933787-0ve3ainfilsuljnke9bghdkv5f0rf4c1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrfYLwnAzoxCJPfx4117mAm-CLFZMA_CU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699398933787-0ve3ainfilsuljnke9bghdkv5f0rf4c1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
