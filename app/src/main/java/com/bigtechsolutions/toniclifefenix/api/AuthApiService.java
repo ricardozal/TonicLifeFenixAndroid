@@ -1,6 +1,7 @@
 package com.bigtechsolutions.toniclifefenix.api;
 
 import com.bigtechsolutions.toniclifefenix.api.requests.AuthRequest;
+import com.bigtechsolutions.toniclifefenix.api.requests.FirebaseTokenRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.GenerateIntentRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.NewDistributorRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.OrderRequest;
@@ -85,5 +86,10 @@ public interface AuthApiService {
     /* Promotions */
     @GET("distributor/{distributorId}/promotions")
     Call<GenericResponse<List<Promotion>>> getPromotions(@Path("distributorId") int distributorId);
+
+    /* Save Token Firebase */
+
+    @POST("distributor/{distributorId}/save-firebase-token")
+    Call<GenericResponse<String>> saveFirebaseToken(@Path("distributorId") int distributorId, @Body FirebaseTokenRequest request);
 
 }

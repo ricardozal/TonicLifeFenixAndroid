@@ -12,9 +12,19 @@ import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
 import com.bigtechsolutions.toniclifefenix.R;
+import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
+import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
+import com.bigtechsolutions.toniclifefenix.api.requests.FirebaseTokenRequest;
+import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
+import com.bigtechsolutions.toniclifefenix.commons.Constants;
+import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.ui.BottomNavigationActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -52,23 +62,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
-            if (/* Check if data needs to be processed by long running job */ true) {
-                // For long-running tasks (10 seconds or more) use WorkManager.
-                //scheduleJob();
-            } else {
-                // Handle message within 10 seconds
-                handleNow();
-            }
+            handleNow();
 
         }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
+
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+
+            String title = remoteMessage.getNotification().getTitle() != null ? remoteMessage.getNotification().getTitle() : "";
+            String body = remoteMessage.getNotification().getBody();
+
+            if(body != null)
+                sendNotification(title, body);
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
+
     }
     // [END receive_message]
 
@@ -107,7 +119,34 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-        // TODO: Implement this method to send token to your app server.
+
+        String tokenAuth = SharedPreferencesManager.getStringValue(Constants.ACCESS_TOKEN);
+
+        if(tokenAuth != null && token != null)
+        {
+            AuthApiClient authApiClient;
+            AuthApiService authApiService;
+
+            authApiClient = AuthApiClient.getInstance();
+            authApiService = authApiClient.getAuthApiService();
+
+            int distributorId = SharedPreferencesManager.getIntValue(Constants.DISTRIBUTOR_ID);
+
+            FirebaseTokenRequest firebaseTokenRequest = new FirebaseTokenRequest(token);
+
+            Call<GenericResponse<String>> call = authApiService.saveFirebaseToken(distributorId, firebaseTokenRequest);
+
+            call.enqueue(new Callback<GenericResponse<String>>() {
+                @Override
+                public void onResponse(Call<GenericResponse<String>> call, Response<GenericResponse<String>> response) {
+                }
+
+                @Override
+                public void onFailure(Call<GenericResponse<String>> call, Throwable t) {
+                }
+            });
+        }
+
     }
 
     /**
@@ -115,7 +154,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String messageBody) {
+    private void sendNotification(String title, String messageBody) {
         Intent intent = new Intent(this, BottomNavigationActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -126,7 +165,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.logo_tonic_life)
-                        .setContentTitle(getString(R.string.fcm_message))
+                        .setContentTitle(title)
                         .setContentText(messageBody)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)

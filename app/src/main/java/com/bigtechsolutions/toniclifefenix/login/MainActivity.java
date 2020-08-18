@@ -3,6 +3,7 @@ package com.bigtechsolutions.toniclifefenix.login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -24,6 +25,8 @@ import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.ui.BottomNavigationActivity;
 import com.bigtechsolutions.toniclifefenix.ui.ChooseCountryFragment;
 import com.bigtechsolutions.toniclifefenix.ui.WaitingActivity;
+import com.bigtechsolutions.toniclifefenix.viewmodel.DistributorViewModel;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -98,30 +101,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void setupFirebase()
-    {
-
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w("INFO", "getInstanceId failed", task.getException());
-                            return;
-                        }
-
-                        // Get new Instance ID token
-                        String token = task.getResult().getToken();
-
-                        // Log and toast
-                        String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d("INFO", msg);
-                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-    }
     private void login() {
 
         String tonicLifeId = etTonicLifeId.getEditText().getText().toString();
@@ -166,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             SharedPreferencesManager
                                     .setStringValue(Constants.CURRENT_POINTS, String.valueOf(response.body().getData().getCurrentPoints()));
 
-                            setupFirebase();
 
                             loading.dismiss();
 
