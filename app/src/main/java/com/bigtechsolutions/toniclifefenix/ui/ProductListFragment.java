@@ -20,12 +20,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
+import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
+import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.ui.shoppingcart.ShoppingCartActivity;
 import com.bigtechsolutions.toniclifefenix.viewmodel.ProductViewModel;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
@@ -35,8 +39,10 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
     MyProductRecyclerViewAdapter adapter;
     List<Product> productList;
     ProductViewModel productViewModel;
-    AppCompatImageButton goShoppingCart, selectCountry;
+    AppCompatImageButton goShoppingCart, selectCountry, search;
     ProgressDialog loading;
+    TextView resultSearch, withoutResults;
+    MaterialButton clearSearchBtn;
 
     public ProductListFragment() {
     }
@@ -68,7 +74,9 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
         recyclerView = view.findViewById(R.id.products_list);
         goShoppingCart = view.findViewById(R.id.shopping_cart_icon);
         selectCountry = view.findViewById(R.id.country_ico);
-
+        clearSearchBtn = view.findViewById(R.id.clearSearchBtn);
+        resultSearch = view.findViewById(R.id.result_search);
+        search = view.findViewById(R.id.search_product);
 
         adapter = new MyProductRecyclerViewAdapter(
                 getActivity(),
@@ -79,6 +87,16 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
         recyclerView.setAdapter(adapter);
 
         loadProductData();
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                SearchProductsFragment dialog = new SearchProductsFragment();
+                dialog.setCancelable(false);
+                dialog.show(fm, "SearchProductsFragment");
+            }
+        });
 
         goShoppingCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +130,27 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
             }
         });
 
+        if(SharedPreferencesManager.getStringValue(Constants.NAME_PRODUCT_SEARCH) != null){
+
+            clearSearchBtn.setVisibility(View.VISIBLE);
+            resultSearch.setVisibility(View.VISIBLE);
+
+            String result = "Resultados de la búsqueda: "+SharedPreferencesManager.getStringValue(Constants.NAME_PRODUCT_SEARCH);
+
+            resultSearch.setText(result);
+
+        }
+
+        clearSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferencesManager.removeValue(Constants.NAME_PRODUCT_SEARCH);
+                Intent i = new Intent(MyFenixApp.getContext(), BottomNavigationActivity.class);
+                startActivity(i);
+                getActivity().finish();
+            }
+        });
+
 
         return view;
     }
@@ -123,6 +162,8 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
             public void onChanged(List<Product> products) {
                 productList = products;
                 adapter.setDataList(productList);
+                if(productList.size() < 1)
+                    withoutResults.setVisibility(View.VISIBLE);
             }
         });
 

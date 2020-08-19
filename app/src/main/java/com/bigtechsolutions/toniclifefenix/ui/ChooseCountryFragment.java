@@ -65,7 +65,7 @@ public class ChooseCountryFragment extends DialogFragment {
 
                         SharedPreferencesManager.removeValue(Constants.BRANCH_ID);
                         SharedPreferencesManager.setStringValue(Constants.COUNTRY, String.valueOf(countryNumber));
-
+                        SharedPreferencesManager.removeValue(Constants.NAME_PRODUCT_SEARCH);
                         Intent i = new Intent(MyFenixApp.getContext(), BottomNavigationActivity.class);
                         startActivity(i);
                         getActivity().finish();

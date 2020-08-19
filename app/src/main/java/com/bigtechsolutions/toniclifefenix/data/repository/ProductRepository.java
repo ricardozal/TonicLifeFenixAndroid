@@ -39,8 +39,9 @@ public class ProductRepository {
         final MutableLiveData<List<Product>> data = new MutableLiveData<>();
 
         int countryId = SharedPreferencesManager.getStringValue(Constants.COUNTRY) != null ? Integer.parseInt(SharedPreferencesManager.getStringValue(Constants.COUNTRY)) : SharedPreferencesManager.getIntValue(Constants.DIST_COUNTRY);
+        String productName = SharedPreferencesManager.getStringValue(Constants.NAME_PRODUCT_SEARCH) != null ? SharedPreferencesManager.getStringValue(Constants.NAME_PRODUCT_SEARCH) : "0";
 
-        Call<GenericResponse<List<Product>>> call = authApiService.getProducts(countryId);
+        Call<GenericResponse<List<Product>>> call = authApiService.getProducts(countryId, productName);
         call.enqueue(new Callback<GenericResponse<List<Product>>>() {
             @Override
             public void onResponse(Call<GenericResponse<List<Product>>> call, Response<GenericResponse<List<Product>>> response) {

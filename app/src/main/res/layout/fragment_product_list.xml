@@ -23,6 +23,7 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/search_product"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -70,16 +71,51 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/products_list"
-            android:name="com.bigtechsolutions.toniclifefenix.ui.ProductListFragment"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/fragment_product"
-            tools:context=".ui.ProductListFragment"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/result_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="10dp"
+                android:visibility="gone"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/clearSearchBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="10dp"
+                android:visibility="gone"
+                android:text="@string/clear" />
+
+            <TextView
+                android:id="@+id/txtEmptyCart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:layout_margin="20dp"
+                android:visibility="gone"
+                android:text="@string/nothing"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/products_list"
+                android:name="com.bigtechsolutions.toniclifefenix.ui.ProductListFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/fragment_product"
+                tools:context=".ui.ProductListFragment"/>
+
+        </LinearLayout>
 
 
     </RelativeLayout>

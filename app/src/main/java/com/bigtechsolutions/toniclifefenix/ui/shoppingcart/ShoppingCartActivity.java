@@ -16,7 +16,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bigtechsolutions.toniclifefenix.R;
+import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
+import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
 import com.bigtechsolutions.toniclifefenix.ui.BottomNavigationActivity;
 import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
@@ -52,6 +54,8 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
         checkoutBtn = findViewById(R.id.checkoutBtn);
 
         checkoutBtn.setOnClickListener(this);
+
+        SharedPreferencesManager.removeValue(Constants.NAME_PRODUCT_SEARCH);
 
         toolbarConfig();
 
