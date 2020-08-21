@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onFailure(Call<GenericResponse<Token>> call, Throwable t) {
                     loading.dismiss();
-                    Toast.makeText(MainActivity.this, "Error en la conexión", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, t.getMessage() , Toast.LENGTH_SHORT).show();
                 }
             });
 
