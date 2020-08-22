@@ -44,6 +44,8 @@ public class OrderViewModel extends AndroidViewModel {
     
     public void saveOrder(OrderRequest orderRequest, OnOrderResponse onOrderResponse){ orderRepository.saveOrder(orderRequest, onOrderResponse); }
 
+    public void validateRegisterPoints(Integer orderId, OnResponse onResponse) { orderRepository.validateRegisterPoints(orderId, onResponse); }
+
     public LiveData<Boolean> getDownloadFinished(){
         LiveData<Boolean> downloadFinished=orderRepository.getDownloadFinished();
         return downloadFinished;

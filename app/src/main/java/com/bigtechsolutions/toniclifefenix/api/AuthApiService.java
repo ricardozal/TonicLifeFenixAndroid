@@ -92,4 +92,7 @@ public interface AuthApiService {
     @POST("distributor/{distributorId}/save-firebase-token")
     Call<GenericResponse<String>> saveFirebaseToken(@Path("distributorId") int distributorId, @Body FirebaseTokenRequest request);
 
+    @GET("order/{orderId}/validate-register-points")
+    Call<GenericResponse<String>> validateRegisterPoints(@Path("orderId") int orderId);
+
 }

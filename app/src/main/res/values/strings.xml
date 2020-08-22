@@ -92,5 +92,8 @@
     <string name="product_name">Nombre del producto</string>
     <string name="clear">Limpiar búsqueda</string>
     <string name="nothing">Sin resultados</string>
+    <string name="points_register">Repartir puntos</string>
+    <string name="instru">Coloque los puntos correspondientes a los distribuidores que desea dividir los puntos, los demás dejelos en blanco</string>
+    <string name="distri_ppoins">Registrar puntos</string>
 
 </resources>
