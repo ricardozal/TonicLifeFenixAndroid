@@ -28,7 +28,7 @@ public class OrderShowActivity extends AppCompatActivity implements View.OnClick
 
     OrderViewModel orderViewModel;
     ProgressDialog loading;
-    int orderId;
+    int orderId, price, points;
     TextView id, date, totalPrice, totalPoints, totalTaxes, shippingPrice, products, status, paymentMethod, delivery;
     Toolbar toolbar;
     MaterialButton pointsBtn;
@@ -68,10 +68,13 @@ public class OrderShowActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void OnSuccess(String title, String message, Order order) {
 
+                price = Integer.parseInt(order.getTotalPrice());
+                points = Integer.parseInt(order.getTotalPoints());
+
 
                 String folio = "Folio: "+order.getId();
                 String dateStr = "Fecha de compra: "+order.getDate();
-                String priceStr = "Total: "+order.getTotalPrice();
+                String priceStr = "Total: $"+order.getTotalPrice();
                 String taxStr = "Impuestos: "+order.getTotalTaxes();
                 String pointsStr = "Puntos totales: "+order.getTotalPoints();
                 String shippingStr = "Envío: "+order.getShippingPrice();
@@ -179,6 +182,8 @@ public class OrderShowActivity extends AppCompatActivity implements View.OnClick
                     Intent i = new Intent(MyFenixApp.getContext(), RegisterPointsActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("orderId", orderId);
+                    bundle.putInt("price", price);
+                    bundle.putInt("points", points);
                     i.putExtras(bundle);
                     startActivity(i);
 
