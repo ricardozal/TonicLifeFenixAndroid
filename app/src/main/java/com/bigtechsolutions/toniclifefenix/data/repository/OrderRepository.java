@@ -252,6 +252,35 @@ public class OrderRepository {
         });
     }
 
+    public void validateRegisterPoints(Integer orderId, OnResponse onResponse) {
+
+        Call<GenericResponse<String>> call = authApiService.validateRegisterPoints(orderId);
+
+        call.enqueue(new Callback<GenericResponse<String>>() {
+            @Override
+            public void onResponse(Call<GenericResponse<String>> call, Response<GenericResponse<String>> response) {
+                if (response.isSuccessful())
+                {
+                    if (response.body().isSuccess())
+                    {
+                        onResponse.OnSuccess("Atención",response.body().getMessage());
+
+                    }else {
+                        onResponse.OnError("Atención",response.body().getMessage());
+                    }
+                } else {
+                    onResponse.OnError("Error en el servidor",response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GenericResponse<String>> call, Throwable t) {
+                onResponse.OnError("Algo salió mal","Error de conexión");
+            }
+        });
+
+    }
+
     public MutableLiveData<Boolean> getDownloadFinished() {
         return downloadFinished;
     }

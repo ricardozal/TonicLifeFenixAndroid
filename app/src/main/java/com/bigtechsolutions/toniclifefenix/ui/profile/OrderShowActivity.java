@@ -18,17 +18,20 @@ import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Order;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.ProductOrder;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
-import com.bigtechsolutions.toniclifefenix.ui.BottomNavigationActivity;
+import com.bigtechsolutions.toniclifefenix.ui.profile.register_points.RegisterPointsActivity;
 import com.bigtechsolutions.toniclifefenix.viewmodel.OrderViewModel;
 import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnOrderItemResponse;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnResponse;
+import com.google.android.material.button.MaterialButton;
 
-public class OrderShowActivity extends AppCompatActivity {
+public class OrderShowActivity extends AppCompatActivity implements View.OnClickListener {
 
     OrderViewModel orderViewModel;
     ProgressDialog loading;
-    int orderId;
+    int orderId, price, points;
     TextView id, date, totalPrice, totalPoints, totalTaxes, shippingPrice, products, status, paymentMethod, delivery;
     Toolbar toolbar;
+    MaterialButton pointsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public class OrderShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_show);
 
         findViews();
+
+        pointsBtn.setOnClickListener(this);
 
         loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
 
@@ -63,10 +68,13 @@ public class OrderShowActivity extends AppCompatActivity {
             @Override
             public void OnSuccess(String title, String message, Order order) {
 
+                price = Integer.parseInt(order.getTotalPrice());
+                points = Integer.parseInt(order.getTotalPoints());
+
 
                 String folio = "Folio: "+order.getId();
                 String dateStr = "Fecha de compra: "+order.getDate();
-                String priceStr = "Total: "+order.getTotalPrice();
+                String priceStr = "Total: $"+order.getTotalPrice();
                 String taxStr = "Impuestos: "+order.getTotalTaxes();
                 String pointsStr = "Puntos totales: "+order.getTotalPoints();
                 String shippingStr = "Envío: "+order.getShippingPrice();
@@ -121,6 +129,7 @@ public class OrderShowActivity extends AppCompatActivity {
         status = findViewById(R.id.order_status);
         paymentMethod = findViewById(R.id.order_payment_method);
         delivery = findViewById(R.id.order_delivery);
+        pointsBtn = findViewById(R.id.pointsBtn);
     }
 
     private void toolbarConfig() {
@@ -153,5 +162,41 @@ public class OrderShowActivity extends AppCompatActivity {
         });
         builder.setCancelable(false);
         builder.create().show();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        int id = v.getId();
+
+        if(id == R.id.pointsBtn){
+
+            loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
+
+
+            orderViewModel.validateRegisterPoints(orderId, new OnResponse() {
+                @Override
+                public void OnSuccess(String title, String message) {
+                    loading.dismiss();
+
+                    Intent i = new Intent(MyFenixApp.getContext(), RegisterPointsActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("orderId", orderId);
+                    bundle.putInt("price", price);
+                    bundle.putInt("points", points);
+                    i.putExtras(bundle);
+                    startActivity(i);
+
+                }
+
+                @Override
+                public void OnError(String title, String message) {
+                    loading.dismiss();
+                    displayAlert(title,message);
+                }
+            });
+
+        }
+
     }
 }
