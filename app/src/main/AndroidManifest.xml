@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.profile.register_points.RegisterPointsActivity"></activity>
+        <activity android:name=".ui.DocumentsViewActivity"></activity>
+        <activity android:name=".ui.profile.register_points.RegisterPointsActivity" />
         <activity android:name=".ui.shoppingcart.PayPalPaymentActivity" />
         <activity android:name=".ui.profile.UpsertAddressActivity" />
         <activity android:name=".ui.profile.MyAddressesActivity" />

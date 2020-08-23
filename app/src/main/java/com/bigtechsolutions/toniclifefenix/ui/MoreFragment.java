@@ -78,6 +78,28 @@ public class MoreFragment extends Fragment {
             }
         });
 
+        ImageView plan = (ImageView)rootView.findViewById(R.id.ivPlan);
+        plan.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Bundle pdf = new Bundle();
+                pdf.putString("pdf","http://192.168.0.4:8000/business_plan");
+                Intent intent = new Intent(getActivity(), DocumentsViewActivity.class);
+                intent.putExtras(pdf);
+                startActivity(intent);
+            }
+        });
+
+        ImageView catalog = (ImageView)rootView.findViewById(R.id.ivCatalog);
+        catalog.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Bundle pdf = new Bundle();
+                pdf.putString("pdf","http://192.168.0.4:8000/business_plan");
+                Intent intent = new Intent(getActivity(), DocumentsViewActivity.class);
+                intent.putExtras(pdf);
+                startActivity(intent);
+            }
+        });
+
         return rootView;
     }
 }
