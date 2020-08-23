@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bigtechsolutions.toniclifefenix.R;
+import com.bigtechsolutions.toniclifefenix.commons.Constants;
 
 
 public class MoreFragment extends Fragment {
@@ -81,10 +82,11 @@ public class MoreFragment extends Fragment {
         ImageView plan = (ImageView)rootView.findViewById(R.id.ivPlan);
         plan.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Bundle pdf = new Bundle();
-                pdf.putString("pdf","http://192.168.0.4:8000/business_plan");
+                Bundle bundle = new Bundle();
+                bundle.putString("pdf", Constants.API_TONIC_LIFE_FENIX_URL+"/files/plan.pdf");
+                bundle.putString("name", "Plan de Negocio");
                 Intent intent = new Intent(getActivity(), DocumentsViewActivity.class);
-                intent.putExtras(pdf);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -92,10 +94,35 @@ public class MoreFragment extends Fragment {
         ImageView catalog = (ImageView)rootView.findViewById(R.id.ivCatalog);
         catalog.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Bundle pdf = new Bundle();
-                pdf.putString("pdf","http://192.168.0.4:8000/business_plan");
+                Bundle bundle = new Bundle();
+                bundle.putString("pdf", Constants.API_TONIC_LIFE_FENIX_URL+"/files/catalog.pdf");
+                bundle.putString("name", "Catálogo");
                 Intent intent = new Intent(getActivity(), DocumentsViewActivity.class);
-                intent.putExtras(pdf);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        ImageView kits = (ImageView)rootView.findViewById(R.id.ivKits);
+        kits.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Bundle bundle = new Bundle();
+                bundle.putString("pdf", Constants.API_TONIC_LIFE_FENIX_URL+"/files/kits.pdf");
+                bundle.putString("name", "Kits");
+                Intent intent = new Intent(getActivity(), DocumentsViewActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        ImageView tutorial = (ImageView)rootView.findViewById(R.id.ivTuto);
+        tutorial.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Bundle bundle = new Bundle();
+                bundle.putString("pdf", Constants.API_TONIC_LIFE_FENIX_URL+"/files/tutorial.pdf");
+                bundle.putString("name", "Tutorial");
+                Intent intent = new Intent(getActivity(), DocumentsViewActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

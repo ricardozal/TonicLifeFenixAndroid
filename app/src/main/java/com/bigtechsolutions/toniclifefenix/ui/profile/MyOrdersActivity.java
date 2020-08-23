@@ -102,8 +102,6 @@ public class MyOrdersActivity extends AppCompatActivity implements MyOrdersAdapt
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MyFenixApp.getContext(), BottomNavigationActivity.class);
-                startActivity(i);
                 finish();
             }
         });

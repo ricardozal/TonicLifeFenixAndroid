@@ -102,17 +102,14 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
             case 0:
                 Intent intent = new Intent(MyFenixApp.getContext(), MyPromosActivity.class);
                 startActivity(intent);
-                getActivity().finish();
                 break;
             case 1:
                 Intent i = new Intent(MyFenixApp.getContext(), MyOrdersActivity.class);
                 startActivity(i);
-                getActivity().finish();
                 break;
             case 2:
                 Intent intentAddress = new Intent(MyFenixApp.getContext(), MyAddressesActivity.class);
                 startActivity(intentAddress);
-                getActivity().finish();
                 break;
             case 3:
                 logout();
