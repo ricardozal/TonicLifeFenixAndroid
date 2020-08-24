@@ -93,11 +93,12 @@
     <string name="clear">Limpiar búsqueda</string>
     <string name="nothing">Sin resultados</string>
     <string name="points_register">Repartir puntos</string>
-    <string name="instru">Coloque los puntos correspondientes a los distribuidores que desea dividir los puntos, los demás dejelos en blanco</string>
+    <string name="instru">Ingrese el ID Tonic Life y los puntos correspondientes y púlse en elegir. Cuando haya elegido a los distribuidores púlse en ek botón de asignar.</string>
     <string name="distri_ppoins">Registrar puntos</string>
     <string name="pickup">Elegir</string>
     <string name="error_tonic_life_id">Debe ingresar un ID Tonic Life</string>
     <string name="points_str">Puntos</string>
     <string name="error_points">Debe ingresar la cantidad de puntos</string>
+    <string name="assign">Asignar</string>
 
 </resources>

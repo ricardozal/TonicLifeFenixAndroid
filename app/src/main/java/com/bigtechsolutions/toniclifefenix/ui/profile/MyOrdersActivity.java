@@ -118,7 +118,6 @@ public class MyOrdersActivity extends AppCompatActivity implements MyOrdersAdapt
         bundle.putInt("orderId", orderId);
         i.putExtras(bundle);
         startActivity(i);
-        finish();
 
     }
 

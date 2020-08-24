@@ -40,6 +40,9 @@ public class Order {
     @SerializedName("delivery")
     @Expose
     private String delivery;
+    @SerializedName("country_id")
+    @Expose
+    private Integer countryId;
 
     /**
      * No args constructor for use in serialization
@@ -62,7 +65,7 @@ public class Order {
      * @param products
      * @param status
      */
-    public Order(Integer id, String date, String totalPrice, String totalPoints, String totalTaxes, String shippingPrice, Integer totalProducts, List<ProductOrder> products, String status, String paymentMethod, String delivery) {
+    public Order(Integer id, String date, String totalPrice, String totalPoints, String totalTaxes, String shippingPrice, Integer totalProducts, List<ProductOrder> products, String status, String paymentMethod, String delivery, Integer countryId) {
         super();
         this.id = id;
         this.date = date;
@@ -75,6 +78,7 @@ public class Order {
         this.status = status;
         this.paymentMethod = paymentMethod;
         this.delivery = delivery;
+        this.countryId = countryId;
     }
 
     public Integer getId() {
@@ -165,4 +169,11 @@ public class Order {
         this.delivery = delivery;
     }
 
+    public Integer getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(Integer countryId) {
+        this.countryId = countryId;
+    }
 }

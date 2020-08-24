@@ -1,7 +1,9 @@
 package com.bigtechsolutions.toniclifefenix.ui.profile.register_points
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -18,20 +20,29 @@ class RegisterPointsActivity : AppCompatActivity() {
 
     lateinit var vBind: ActivityRegisterPointsBinding
 
+    var modiPoints : Double = 0.0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         vBind = DataBindingUtil.setContentView(this, R.layout.activity_register_points)
 
         val bundle :Bundle ?=intent.extras
         val orderId = bundle!!.getInt("orderId")
-        val price = bundle!!.getInt("price")
-        val points = bundle!!.getInt("points")
+        val price = bundle!!.getDouble("price")
+        val points = bundle!!.getDouble("points")
+        val countryId = bundle!!.getInt("countryId")
 
         toolbarConfig(vBind.toolbar, orderId)
 
-//        var modiPoints : Int = SharedPreferencesManager.getIntValue(Constants.C)
-//
-//        vBind.txCurrentPoints.text = "Puntos: " +
+        /**
+         * countryId = 1 : Mexico
+         * countryId = 2 : USA
+         */
+        modiPoints = if (countryId == 1) points else price;
+
+        val list: MutableList<asignedPoints> = ArrayList()
+
+        vBind.txCurrentPoints.text = "Puntos: $modiPoints"
 
         vBind.btnSelect.setOnClickListener {
 
@@ -39,23 +50,78 @@ class RegisterPointsActivity : AppCompatActivity() {
 
                 val v = layoutInflater.inflate(R.layout.item_distributor_points, vBind.llDistributors, false)
                 val externalBinding = ItemDistributorPointsBinding.bind(v)
+                var exist : Boolean = false
 
-                val pointsStr: String = vBind.etPoints.text.toString() + " puntos"
-
-                externalBinding.tonicId.text = vBind.etTonicLifeFenix.text.toString()
-                externalBinding.pointsTonic.text = pointsStr
-
-                externalBinding.btnDelete.setOnClickListener {
-
-                    externalBinding.itemRoot.removeViewAt(0)
-
+                for (item in list){
+                    exist = item.tonicLifeId == vBind.etTonicLifeFenix.text.toString()
                 }
 
-                vBind.llDistributors.addView(v)
+                val pattern = Regex("^[0-9]{1,4}$")
 
-                vBind.etTonicLifeFenix.text?.clear()
-                vBind.etPoints.text?.clear()
+                if(pattern.containsMatchIn(vBind.etPoints.text.toString())){
+                    Log.i("DESPUES DE REG", "SI")
+                    if(((modiPoints - vBind.etPoints.text.toString().toInt()) >= 0) && !exist){
 
+                        val pointsStr: String = vBind.etPoints.text.toString() + " puntos"
+
+                        externalBinding.tonicId.text = vBind.etTonicLifeFenix.text.toString()
+                        externalBinding.pointsTonic.text = pointsStr
+
+                        externalBinding.btnDelete.setOnClickListener {
+
+                            val tag : String = externalBinding.itemRoot.tag as String
+
+                            if(list.isNotEmpty()) {
+                                val current = list.filter { it.tonicLifeId == tag }
+
+                                modiPoints += current.first().points
+
+                                val listTem = list.filter { it.tonicLifeId != tag }
+
+                                list.clear()
+
+                                for (item in listTem){
+                                    list.add(item)
+                                }
+                            }
+
+                            externalBinding.itemRoot.removeViewAt(0)
+                            Log.i("Points", modiPoints.toString())
+                            vBind.txCurrentPoints.text = "Puntos: $modiPoints"
+                        }
+
+                        modiPoints -= vBind.etPoints.text.toString().toInt()
+                        v.tag = vBind.etTonicLifeFenix.text.toString()
+                        var dist = asignedPoints()
+                        dist.tonicLifeId = vBind.etTonicLifeFenix.text.toString()
+                        dist.points = vBind.etPoints.text.toString().toInt()
+                        list.add(dist)
+                        vBind.etTonicLifeFenix.text?.clear()
+                        vBind.etPoints.text?.clear()
+                        vBind.llDistributors.addView(v)
+
+                        Log.i("Points", modiPoints.toString())
+                        vBind.txCurrentPoints.text = "Puntos: $modiPoints"
+                    } else {
+                        displayAlert("Atención", "Verifica tus datos")
+
+                    }
+                } else {
+                    displayAlert("Atención", "Verifica tus datos")
+                }
+
+            }
+
+        }
+
+        vBind.btnAssign.setOnClickListener {
+
+            if(list.isNotEmpty()) {
+
+
+
+            } else {
+                displayAlert("Atención", "Primero debes ingresar a los distribuidores")
             }
 
         }
@@ -69,9 +135,6 @@ class RegisterPointsActivity : AppCompatActivity() {
         toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_action_back)
         toolbar.setNavigationOnClickListener {
 
-            val i = Intent(MyFenixApp.getContext(), OrderShowActivity::class.java)
-            i.putExtra("orderId", orderId)
-            startActivity(i)
             finish()
 
         }
@@ -95,5 +158,18 @@ class RegisterPointsActivity : AppCompatActivity() {
     private fun clearErrors() {
         vBind.tlTonicLifeId.error = null
         vBind.tlPoints.error = null
+    }
+
+    private fun displayAlert(
+            title: String,
+            message: String?
+    ) {
+        val builder = AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+        builder.setPositiveButton("Ok") { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.create().show()
     }
 }

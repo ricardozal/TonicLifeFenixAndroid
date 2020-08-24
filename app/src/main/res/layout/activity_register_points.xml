@@ -24,7 +24,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-       <RelativeLayout
+       <ScrollView
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -115,9 +115,17 @@
                    android:orientation="vertical"
                    android:layout_marginTop="12dp"/>
 
+               <com.google.android.material.button.MaterialButton
+                   android:id="@+id/btn_assign"
+                   android:layout_width="match_parent"
+                   android:layout_marginHorizontal="10dp"
+                   android:layout_marginTop="10dp"
+                   android:layout_height="wrap_content"
+                   android:text="@string/assign" />
+
            </LinearLayout>
 
-       </RelativeLayout>
+       </ScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
