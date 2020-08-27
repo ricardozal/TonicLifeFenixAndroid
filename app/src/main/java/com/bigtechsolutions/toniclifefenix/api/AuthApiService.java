@@ -96,7 +96,7 @@ public interface AuthApiService {
     @GET("order/{orderId}/validate-register-points")
     Call<GenericResponse<String>> validateRegisterPoints(@Path("orderId") int orderId);
 
-    @POST("register-points")
+    @POST("distributor/register-points")
     Call<GenericResponse<String>> registerPoints(@Body RegisterPointsRequest request);
 
 }
