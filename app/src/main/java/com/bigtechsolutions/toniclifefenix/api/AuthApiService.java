@@ -5,6 +5,7 @@ import com.bigtechsolutions.toniclifefenix.api.requests.FirebaseTokenRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.GenerateIntentRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.NewDistributorRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.OrderRequest;
+import com.bigtechsolutions.toniclifefenix.api.requests.RegisterPointsRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.SelectAddressRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.UpsertAddressRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
@@ -94,5 +95,8 @@ public interface AuthApiService {
 
     @GET("order/{orderId}/validate-register-points")
     Call<GenericResponse<String>> validateRegisterPoints(@Path("orderId") int orderId);
+
+    @POST("register-points")
+    Call<GenericResponse<String>> registerPoints(@Body RegisterPointsRequest request);
 
 }

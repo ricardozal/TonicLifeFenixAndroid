@@ -1,24 +1,26 @@
 package com.bigtechsolutions.toniclifefenix.ui.profile.register_points
 
 import android.app.AlertDialog
-import android.content.Intent
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.bigtechsolutions.toniclifefenix.R
-import com.bigtechsolutions.toniclifefenix.commons.Constants
-import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp
-import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager
+import com.bigtechsolutions.toniclifefenix.api.requests.DistributorPointsRequest
+import com.bigtechsolutions.toniclifefenix.api.requests.RegisterPointsRequest
 import com.bigtechsolutions.toniclifefenix.databinding.ActivityRegisterPointsBinding
 import com.bigtechsolutions.toniclifefenix.databinding.ItemDistributorPointsBinding
-import com.bigtechsolutions.toniclifefenix.ui.profile.OrderShowActivity
+import com.bigtechsolutions.toniclifefenix.viewmodel.DistributorViewModel
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnResponse
 
 class RegisterPointsActivity : AppCompatActivity() {
 
     lateinit var vBind: ActivityRegisterPointsBinding
+    var loading: ProgressDialog? = null
 
     var modiPoints : Double = 0.0
 
@@ -33,6 +35,9 @@ class RegisterPointsActivity : AppCompatActivity() {
         val countryId = bundle!!.getInt("countryId")
 
         toolbarConfig(vBind.toolbar, orderId)
+
+        val distributorViewModel = ViewModelProvider(this)
+                .get(DistributorViewModel::class.java)
 
         /**
          * countryId = 1 : Mexico
@@ -103,11 +108,11 @@ class RegisterPointsActivity : AppCompatActivity() {
                         Log.i("Points", modiPoints.toString())
                         vBind.txCurrentPoints.text = "Puntos: $modiPoints"
                     } else {
-                        displayAlert("Atención", "Verifica tus datos")
+                        displayAlert("Atención", "Verifica tus datos", false)
 
                     }
                 } else {
-                    displayAlert("Atención", "Verifica tus datos")
+                    displayAlert("Atención", "Verifica tus datos", false)
                 }
 
             }
@@ -117,11 +122,34 @@ class RegisterPointsActivity : AppCompatActivity() {
         vBind.btnAssign.setOnClickListener {
 
             if(list.isNotEmpty()) {
+                loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false)
 
+                var request = RegisterPointsRequest()
+                val listDist: MutableList<DistributorPointsRequest> = ArrayList()
 
+                for (item in list){
+                    val dist = DistributorPointsRequest()
+                    dist.id = item.tonicLifeId
+                    dist.points = item.points.toDouble()
+                    listDist.add(dist)
+                }
+
+                request.orderId = orderId
+                request.distributors = listDist
+
+                distributorViewModel.registerPoints(request, object : OnResponse {
+                    override fun OnSuccess(title: String, message: String) {
+                        loading!!.dismiss()
+                        displayAlert("Éxito", message, true)
+                    }
+                    override fun OnError(title: String, message: String) {
+                        loading!!.dismiss()
+                        displayAlert(title, message, false)
+                    }
+                })
 
             } else {
-                displayAlert("Atención", "Primero debes ingresar a los distribuidores")
+                displayAlert("Atención", "Primero debes ingresar a los distribuidores", false)
             }
 
         }
@@ -162,14 +190,20 @@ class RegisterPointsActivity : AppCompatActivity() {
 
     private fun displayAlert(
             title: String,
-            message: String?
+            message: String?,
+            success: Boolean
     ) {
         val builder = AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(message)
         builder.setPositiveButton("Ok") { dialog, which ->
-            dialog.dismiss()
+            if(success){
+                finish()
+            } else {
+                dialog.dismiss()
+            }
         }
+        builder.setCancelable(false)
         builder.create().show()
     }
 }
