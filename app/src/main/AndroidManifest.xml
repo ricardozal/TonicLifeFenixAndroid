@@ -11,8 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar"
-        android:usesCleartextTraffic="true">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".ui.DocumentsViewActivity"></activity>
         <activity android:name=".ui.profile.register_points.RegisterPointsActivity" />
         <activity android:name=".ui.shoppingcart.PayPalPaymentActivity" />
