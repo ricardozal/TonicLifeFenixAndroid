@@ -100,5 +100,8 @@
     <string name="points_str">Puntos</string>
     <string name="error_points">Debe ingresar la cantidad de puntos</string>
     <string name="assign">Asignar</string>
+    <string name="option1">Distribuir puntos</string>
+    <string name="option2">Conservar puntos</string>
+    <string name="orderStr">Ordenar</string>
 
 </resources>

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +29,8 @@ import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
 import com.bigtechsolutions.toniclifefenix.ui.BottomNavigationActivity;
+import com.bigtechsolutions.toniclifefenix.ui.ChooseCountryFragment;
+import com.bigtechsolutions.toniclifefenix.ui.share_points.ChooseSharePoints;
 import com.bigtechsolutions.toniclifefenix.viewmodel.AddressViewModel;
 import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnResponse;
 import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnSuccess;
@@ -303,12 +306,22 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             orderViewModel.validateInventory(validateInvRequest, new OnResponse() {
                 @Override
                 public void OnSuccess(String title, String message) {
-                    Intent i = new Intent(MyFenixApp.getContext(), PaymentMethodActivity.class);
+//                    Intent i = new Intent(MyFenixApp.getContext(), PaymentMethodActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putInt("addressId", addressId);
+//                    i.putExtras(bundle);
+//                    startActivity(i);
+//                    finish();
+
                     Bundle bundle = new Bundle();
-                    bundle.putInt("addressId", addressId);
-                    i.putExtras(bundle);
-                    startActivity(i);
-                    finish();
+                    bundle.putInt("deliveryAddressId", addressId);
+
+                    FragmentManager fm = getSupportFragmentManager();
+                    ChooseSharePoints dialog = new ChooseSharePoints();
+                    dialog.setCancelable(false);
+                    dialog.setArguments(bundle);
+                    dialog.show(fm, "ChooseSharePoints");
+
                 }
 
                 @Override
