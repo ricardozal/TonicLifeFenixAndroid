@@ -45,7 +45,6 @@
                 android:paddingHorizontal="15dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/points_str"
-                app:endIconMode="clear_text"
                 app:errorEnabled="true"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 

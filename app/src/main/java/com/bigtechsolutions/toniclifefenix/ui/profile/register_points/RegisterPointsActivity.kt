@@ -205,7 +205,6 @@ class RegisterPointsActivity : AppCompatActivity() {
                                         vBind.txCurrentPoints.text = "Puntos sobrantes: $modiPoints"
 
                                         externalBinding.etPoints.isEnabled = false
-                                        externalBinding.etPoints.isFocusable = false
 
                                     } else{
                                         externalBinding.swActive.isChecked = false
@@ -237,8 +236,6 @@ class RegisterPointsActivity : AppCompatActivity() {
                                 vBind.txCurrentPoints.text = "Puntos: $modiPoints"
 
                                 externalBinding.etPoints.isEnabled = true
-                                externalBinding.etPoints.isFocusable = true
-
                             }
                         }
 
@@ -279,7 +276,6 @@ class RegisterPointsActivity : AppCompatActivity() {
                                         vBind.txCurrentPoints.text = "Puntos sobrantes: $modiPoints"
 
                                         externalBinding.etPoints.isEnabled = false
-                                        externalBinding.etPoints.isFocusable = false
 
                                     } else{
                                         externalBinding.swActive.isChecked = false
@@ -311,7 +307,6 @@ class RegisterPointsActivity : AppCompatActivity() {
                                 vBind.txCurrentPoints.text = "Puntos: $modiPoints"
 
                                 externalBinding.etPoints.isEnabled = true
-                                externalBinding.etPoints.isFocusable = true
 
                             }
                         }
