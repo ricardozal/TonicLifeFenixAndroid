@@ -40,6 +40,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.button.MaterialButton;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,6 +129,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
     private void setHeaderData() {
 
+        DecimalFormat f = new DecimalFormat("##.00");
+
         double totalOrder = productViewModel.getTotalOrder();
         int countProduct = productViewModel.getCountProducts();
         double shippingPrice = 0.0;
@@ -135,9 +138,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         double totalToPay = totalOrder + shippingPrice;
 
         String countProductStr = "Productos("+countProduct+")";
-        String totalPayStr = "$"+totalOrder;
-        String shippingPriceStr = "$"+shippingPrice;
-        String totalToPayStr = "$"+totalToPay;
+        String totalPayStr = "$"+f.format(totalOrder);
+        String shippingPriceStr = "$"+f.format(shippingPrice);
+        String totalToPayStr = "$"+f.format(totalToPay);
 
         countProductsCheckout.setText(countProductStr);
         totalPayCheckout.setText(totalPayStr);

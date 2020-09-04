@@ -25,6 +25,8 @@ import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
 import com.google.android.material.button.MaterialButton;
 
 import android.app.AlertDialog;
+
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class ShoppingCartActivity extends AppCompatActivity implements ShoppingCartRecyclerViewAdapter.OnRemovelistener,
@@ -71,7 +73,9 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
 
         double totalOrder = productViewModel.getTotalOrder() != null ? productViewModel.getTotalOrder() : 0.00;
 
-        String total = "$" + totalOrder;
+        DecimalFormat f = new DecimalFormat("##.00");
+
+        String total = "$" + f.format(totalOrder);
 
         totalCart.setText(total);
 

@@ -16,12 +16,14 @@ import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class CheckoutProductsRecyclerViewAdapter extends RecyclerView.Adapter<CheckoutProductsRecyclerViewAdapter.ViewHolder> {
 
     private Context ctx;
     private List<ShoppingCart> mValues;
+    DecimalFormat f = new DecimalFormat("##.00");
 
     public CheckoutProductsRecyclerViewAdapter(Context ctx, List<ShoppingCart> mValues) {
         this.ctx = ctx;
@@ -42,7 +44,7 @@ public class CheckoutProductsRecyclerViewAdapter extends RecyclerView.Adapter<Ch
         {
             holder.product = mValues.get(position);
 
-            String price = "$" + (holder.product.getPrice() * holder.product.getQuantity());
+            String price = "$" + f.format((holder.product.getPrice() * holder.product.getQuantity()));
             String points = "Puntos: " + (holder.product.getPoints() * holder.product.getQuantity());
             String quantity = holder.product.getQuantity() + "  unidad(es)";
 
