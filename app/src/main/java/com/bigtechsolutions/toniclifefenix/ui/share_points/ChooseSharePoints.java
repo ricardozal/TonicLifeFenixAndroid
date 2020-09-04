@@ -20,6 +20,7 @@ import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.ui.BottomNavigationActivity;
+import com.bigtechsolutions.toniclifefenix.ui.profile.register_points.RegisterPointsActivity;
 import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
 
 public class ChooseSharePoints extends DialogFragment {
@@ -53,7 +54,12 @@ public class ChooseSharePoints extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         switch (optionsRBtn.getCheckedRadioButtonId()){
                             case R.id.radioButtonShare:
-
+                                Intent intent = new Intent(MyFenixApp.getContext(), RegisterPointsActivity.class);
+                                Bundle bundles = new Bundle();
+                                bundles.putInt("addressId", addressId);
+                                intent.putExtras(bundles);
+                                startActivity(intent);
+                                getActivity().finish();
                                 break;
                             case R.id.radioButtonNotShare:
                                 Intent i = new Intent(MyFenixApp.getContext(), FinishProcessActivity.class);

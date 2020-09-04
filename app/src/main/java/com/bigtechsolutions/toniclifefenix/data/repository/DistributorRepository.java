@@ -8,13 +8,16 @@ import androidx.lifecycle.MutableLiveData;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
 import com.bigtechsolutions.toniclifefenix.api.requests.FirebaseTokenRequest;
+import com.bigtechsolutions.toniclifefenix.api.requests.GetCandidatesRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.RegisterPointsRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Promotion;
+import com.bigtechsolutions.toniclifefenix.api.responses.share_points.SharePointsResponse;
 import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnResponse;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnSharePointsResponse;
 
 import java.util.List;
 
@@ -127,6 +130,29 @@ public class DistributorRepository {
             @Override
             public void onFailure(Call<GenericResponse<String>> call, Throwable t) {
                 onResponse.OnError("Error", "Error de conexión");
+            }
+        });
+
+    }
+
+    public void getCandidates(GetCandidatesRequest request, OnSharePointsResponse onSharePointsResponse){
+
+        Call<SharePointsResponse> call = authApiService.getCandidates(request);
+
+        call.enqueue(new Callback<SharePointsResponse>() {
+            @Override
+            public void onResponse(Call<SharePointsResponse> call, Response<SharePointsResponse> response) {
+                if (response.isSuccessful())
+                {
+                    onSharePointsResponse.OnSuccess(response.body());
+                } else {
+                    onSharePointsResponse.OnError("Error", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SharePointsResponse> call, Throwable t) {
+                onSharePointsResponse.OnError("Error", t.getMessage());
             }
         });
 

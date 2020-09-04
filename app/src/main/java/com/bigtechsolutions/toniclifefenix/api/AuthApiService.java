@@ -1,8 +1,8 @@
 package com.bigtechsolutions.toniclifefenix.api;
 
-import com.bigtechsolutions.toniclifefenix.api.requests.AuthRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.FirebaseTokenRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.GenerateIntentRequest;
+import com.bigtechsolutions.toniclifefenix.api.requests.GetCandidatesRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.NewDistributorRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.OrderRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.RegisterPointsRequest;
@@ -10,7 +10,6 @@ import com.bigtechsolutions.toniclifefenix.api.requests.SelectAddressRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.UpsertAddressRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
-import com.bigtechsolutions.toniclifefenix.api.responses.Token;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Address;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Branch;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Order;
@@ -19,6 +18,7 @@ import com.bigtechsolutions.toniclifefenix.api.responses.models.OrderResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.PaymentMethod;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Promotion;
+import com.bigtechsolutions.toniclifefenix.api.responses.share_points.SharePointsResponse;
 
 import java.util.List;
 
@@ -98,5 +98,9 @@ public interface AuthApiService {
 
     @POST("distributor/register-points")
     Call<GenericResponse<String>> registerPoints(@Body RegisterPointsRequest request);
+
+    /* Share Points */
+    @POST("distributor/share-points")
+    Call<SharePointsResponse> getCandidates(@Body GetCandidatesRequest request);
 
 }

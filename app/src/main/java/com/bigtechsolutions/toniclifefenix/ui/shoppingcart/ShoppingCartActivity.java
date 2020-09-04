@@ -86,8 +86,6 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MyFenixApp.getContext(), BottomNavigationActivity.class);
-                startActivity(i);
                 finish();
             }
         });

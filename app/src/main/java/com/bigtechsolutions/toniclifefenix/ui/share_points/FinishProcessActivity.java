@@ -38,7 +38,6 @@ public class FinishProcessActivity extends AppCompatActivity {
     ShoppingCartViewModel productViewModel;
     ProgressDialog loading;
     List<ProductRequest> productsRequest = new ArrayList<>();
-//    MaterialButton orderFinishBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +46,6 @@ public class FinishProcessActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         deliveryAddressId = bundle.getInt("addressId");
-
-//        orderFinishBtn = findViewById(R.id.order_finish);
 
         orderViewModel = new ViewModelProvider(this)
                 .get(OrderViewModel.class);
