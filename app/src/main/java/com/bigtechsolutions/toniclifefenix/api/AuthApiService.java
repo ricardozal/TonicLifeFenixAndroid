@@ -6,6 +6,7 @@ import com.bigtechsolutions.toniclifefenix.api.requests.GetCandidatesRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.NewDistributorRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.OrderRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.RegisterPointsRequest;
+import com.bigtechsolutions.toniclifefenix.api.requests.SaveOrderWithDistRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.SelectAddressRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.UpsertAddressRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
@@ -102,5 +103,8 @@ public interface AuthApiService {
     /* Share Points */
     @POST("distributor/share-points")
     Call<SharePointsResponse> getCandidates(@Body GetCandidatesRequest request);
+
+    @POST("save-order-external-points")
+    Call<GenericResponse<OrderResponse>> saveOrderWithExternalPoints(@Body SaveOrderWithDistRequest request);
 
 }

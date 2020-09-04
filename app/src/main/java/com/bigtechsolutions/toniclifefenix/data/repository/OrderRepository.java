@@ -8,6 +8,7 @@ import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
 import com.bigtechsolutions.toniclifefenix.api.requests.GenerateIntentRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.OrderRequest;
+import com.bigtechsolutions.toniclifefenix.api.requests.SaveOrderWithDistRequest;
 import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Branch;
@@ -250,6 +251,35 @@ public class OrderRepository {
                 onOrderResponse.OnError("Error de conexión", "Algo salió mal, comprueba tu conexión a internet");
             }
         });
+    }
+
+    public void saveOrderWithExternalPoints(SaveOrderWithDistRequest request, OnOrderResponse onOrderResponse) {
+
+        Call<GenericResponse<OrderResponse>> call = authApiService.saveOrderWithExternalPoints(request);
+
+        call.enqueue(new Callback<GenericResponse<OrderResponse>>() {
+            @Override
+            public void onResponse(Call<GenericResponse<OrderResponse>> call, Response<GenericResponse<OrderResponse>> response) {
+                if (response.isSuccessful())
+                {
+                    if (response.body().isSuccess())
+                    {
+                        onOrderResponse.OnSuccess(response.body().getMessage(),response.body().getData().getMessage(), response.body().getData().getOrderId(), response.body().getData().getCurrentPoints());
+
+                    }else {
+                        onOrderResponse.OnError(response.body().getMessage(),response.body().getData().getMessage());
+                    }
+                } else {
+                    onOrderResponse.OnError("Error en el servidor",response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GenericResponse<OrderResponse>> call, Throwable t) {
+                onOrderResponse.OnError("Error de conexión", "Algo salió mal, comprueba tu conexión a internet");
+            }
+        });
+
     }
 
     public void validateRegisterPoints(Integer orderId, OnResponse onResponse) {
