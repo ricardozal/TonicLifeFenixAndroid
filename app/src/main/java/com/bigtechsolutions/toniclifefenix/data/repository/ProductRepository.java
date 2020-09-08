@@ -9,11 +9,13 @@ import androidx.lifecycle.MutableLiveData;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
 import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
+import com.bigtechsolutions.toniclifefenix.api.responses.models.ContentMobileResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
 import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.ui.MyProductRecyclerViewAdapter;
+import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnContentResponse;
 
 import java.util.List;
 
@@ -68,6 +70,29 @@ public class ProductRepository {
         });
 
         return data;
+    }
+
+    public void getContentMobileApp(OnContentResponse onContentResponse){
+
+        Call<List<ContentMobileResponse> > call = authApiService.getContentMobileApp();
+
+        call.enqueue(new Callback<List<ContentMobileResponse> >() {
+            @Override
+            public void onResponse(Call<List<ContentMobileResponse> > call, Response<List<ContentMobileResponse> > response) {
+                if (response.isSuccessful())
+                {
+                    onContentResponse.OnSuccess(response.body());
+                } else {
+                    onContentResponse.OnError("Error en el servidor", "Inténtelo más tarde");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ContentMobileResponse> > call, Throwable t) {
+                onContentResponse.OnError("Error de conexión", t.getMessage());
+            }
+        });
+
     }
 
     public MutableLiveData<Boolean> getDownloadFinished() {

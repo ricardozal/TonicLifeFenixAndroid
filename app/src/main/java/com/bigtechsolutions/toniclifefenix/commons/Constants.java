@@ -3,9 +3,9 @@ package com.bigtechsolutions.toniclifefenix.commons;
 public class Constants {
 
     // PROD
-    public static final String API_TONIC_LIFE_FENIX_URL = "https://gjana.com.mx";
+//    public static final String API_TONIC_LIFE_FENIX_URL = "https://gjana.com.mx";
     // DEV
-//    public static final String API_TONIC_LIFE_FENIX_URL = "http://192.168.100.20:8000";
+    public static final String API_TONIC_LIFE_FENIX_URL = "http://192.168.100.20:8000";
     public static final String API_TONIC_LIFE_FENIX_BASE_URL = Constants.API_TONIC_LIFE_FENIX_URL + Constants.BASE_API;
     public static final String BASE_API = "/api/";
 

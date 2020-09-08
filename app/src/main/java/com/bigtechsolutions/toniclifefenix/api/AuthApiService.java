@@ -13,6 +13,7 @@ import com.bigtechsolutions.toniclifefenix.api.requests.ValidateInvRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Address;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Branch;
+import com.bigtechsolutions.toniclifefenix.api.responses.models.ContentMobileResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Order;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.OrderItem;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.OrderResponse;
@@ -106,5 +107,8 @@ public interface AuthApiService {
 
     @POST("save-order-external-points")
     Call<GenericResponse<OrderResponse>> saveOrderWithExternalPoints(@Body SaveOrderWithDistRequest request);
+
+    @GET("content-app-mobile")
+    Call<List<ContentMobileResponse>> getContentMobileApp();
 
 }
