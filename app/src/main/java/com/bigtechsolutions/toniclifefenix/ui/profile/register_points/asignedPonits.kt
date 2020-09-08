@@ -3,7 +3,7 @@ package com.bigtechsolutions.toniclifefenix.ui.profile.register_points
 class asignedPoints {
 
     var tonicLifeId: String = ""
-    var points: Int = 0
+    var points: Double = 0.0
 
     get() = field
 

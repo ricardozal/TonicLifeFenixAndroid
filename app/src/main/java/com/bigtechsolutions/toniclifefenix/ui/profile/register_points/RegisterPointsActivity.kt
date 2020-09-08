@@ -31,6 +31,7 @@ import com.bigtechsolutions.toniclifefenix.viewmodel.OrderViewModel
 import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel
 import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnOrderResponse
 import com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnSharePointsResponse
+import kotlin.math.round
 
 class RegisterPointsActivity : AppCompatActivity() {
 
@@ -79,7 +80,7 @@ class RegisterPointsActivity : AppCompatActivity() {
                 for (item in list){
                     val dist = DistributorPointsRequest()
                     dist.id = item.tonicLifeId
-                    dist.points = item.points.toDouble()
+                    dist.points = item.points
                     listDist.add(dist)
                 }
 
@@ -187,19 +188,18 @@ class RegisterPointsActivity : AppCompatActivity() {
                         externalBinding.swActive.setOnCheckedChangeListener { _, isChecked ->
                             externalBinding.tlPoints.error = null
                             if (isChecked){
-                                val pattern = Regex("^[0-9]{1,4}$")
                                 if (externalBinding.etPoints.text.toString().trim().isEmpty()) {
                                     externalBinding.tlPoints.error = getString(R.string.error_points)
                                     externalBinding.swActive.isChecked = false
-                                } else if(pattern.containsMatchIn(externalBinding.etPoints.text.toString())) {
+                                } else {
 
-                                    if(((modiPoints - externalBinding.etPoints.text.toString().toInt()) >= 0)){
+                                    if(((modiPoints - externalBinding.etPoints.text.toString().toDouble()) >= 0)){
 
                                         modiPoints -= externalBinding.etPoints.text.toString().toInt()
                                         v.tag = candidate.id.toString()
                                         var dist = asignedPoints()
                                         dist.tonicLifeId = candidate.id.toString()
-                                        dist.points = externalBinding.etPoints.text.toString().toInt()
+                                        dist.points = externalBinding.etPoints.text.toString().toDouble()
                                         list.add(dist)
 
                                         vBind.txCurrentPoints.text = "Puntos sobrantes: $modiPoints"
@@ -208,12 +208,9 @@ class RegisterPointsActivity : AppCompatActivity() {
 
                                     } else{
                                         externalBinding.swActive.isChecked = false
-                                        displayAlert("Atención", "Verifica tus datos", false)
+                                        displayAlert("Atención", "Sin puntos dispoinibles para compartir", false)
                                     }
 
-                                } else {
-                                    externalBinding.swActive.isChecked = false
-                                    displayAlert("Atención", "Verifica tus datos", false)
                                 }
                             } else {
 
@@ -258,19 +255,18 @@ class RegisterPointsActivity : AppCompatActivity() {
                         externalBinding.swActive.setOnCheckedChangeListener { _, isChecked ->
                             externalBinding.tlPoints.error = null
                             if (isChecked){
-                                val pattern = Regex("^[0-9]{1,4}$")
                                 if (externalBinding.etPoints.text.toString().trim().isEmpty()) {
                                     externalBinding.tlPoints.error = getString(R.string.error_points)
                                     externalBinding.swActive.isChecked = false
-                                } else if(pattern.containsMatchIn(externalBinding.etPoints.text.toString())) {
+                                } else{
 
-                                    if(((modiPoints - externalBinding.etPoints.text.toString().toInt()) >= 0)){
+                                    if(((modiPoints - externalBinding.etPoints.text.toString().toDouble()) >= 0)){
 
                                         modiPoints -= externalBinding.etPoints.text.toString().toInt()
                                         v.tag = candidate.id.toString()
                                         var dist = asignedPoints()
                                         dist.tonicLifeId = candidate.id.toString()
-                                        dist.points = externalBinding.etPoints.text.toString().toInt()
+                                        dist.points = externalBinding.etPoints.text.toString().toDouble()
                                         list.add(dist)
 
                                         vBind.txCurrentPoints.text = "Puntos sobrantes: $modiPoints"
@@ -279,12 +275,9 @@ class RegisterPointsActivity : AppCompatActivity() {
 
                                     } else{
                                         externalBinding.swActive.isChecked = false
-                                        displayAlert("Atención", "Verifica tus datos", false)
+                                        displayAlert("Atención", "Sin puntos dispoinibles para compartir", false)
                                     }
 
-                                } else {
-                                    externalBinding.swActive.isChecked = false
-                                    displayAlert("Atención", "Verifica tus datos", false)
                                 }
                             } else {
 
