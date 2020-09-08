@@ -32,6 +32,9 @@ public class Product {
     @SerializedName("is_kit")
     @Expose
     private boolean isKit;
+    @SerializedName("inventory")
+    @Expose
+    private String inventory;
 
     /**
      * No args constructor for use in serialization
@@ -45,15 +48,15 @@ public class Product {
      * @param id
      * @param name
      * @param category
-     * @param total
      * @param imageUrl
-     * @param name
      * @param distributorPrice
      * @param tax
+     * @param total
      * @param points
+     * @param isKit
+     * @param inventory
      */
-    public Product(int id, String name, String category, String imageUrl, Double distributorPrice, Double tax, Double total, Integer points, boolean isKit) {
-        super();
+    public Product(int id, String name, String category, String imageUrl, Double distributorPrice, Double tax, Double total, Integer points, boolean isKit, String inventory) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -63,6 +66,7 @@ public class Product {
         this.total = total;
         this.points = points;
         this.isKit = isKit;
+        this.inventory = inventory;
     }
 
     public int getId() {
@@ -135,5 +139,13 @@ public class Product {
 
     public void setKit(boolean kit) {
         isKit = kit;
+    }
+
+    public String getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(String inventory) {
+        this.inventory = inventory;
     }
 }

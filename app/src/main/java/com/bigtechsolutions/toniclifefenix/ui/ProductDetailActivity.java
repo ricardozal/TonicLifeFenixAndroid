@@ -38,7 +38,7 @@ import retrofit2.Response;
 public class ProductDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText productNameHidden, productIdHidden, productImageUrlHidden, productPriceHidden, productPointsHidden;
-    TextView categoryTxt, distributorPriceTxt, taxTxt, totalTxt, pointsTxt;
+    TextView categoryTxt, distributorPriceTxt, taxTxt, totalTxt, pointsTxt, inventoryTxt;
     Toolbar toolbar;
     CollapsingToolbarLayout toolbarLayout;
     FloatingActionButton addToShoppingCart;
@@ -87,6 +87,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         taxTxt = findViewById(R.id.taxDetails);
         totalTxt = findViewById(R.id.totalDetails);
         pointsTxt = findViewById(R.id.pointsDetails);
+        inventoryTxt= findViewById(R.id.inventory);
 
         quantity = findViewById(R.id.quantity);
 
@@ -152,6 +153,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                         taxTxt.setText(tax);
                         totalTxt.setText(price);
                         pointsTxt.setText(points);
+                        inventoryTxt.setText(product.getInventory());
 
                         Glide.with(getApplicationContext())
                                 .load(product.getImageUrl()).into(productImage);
