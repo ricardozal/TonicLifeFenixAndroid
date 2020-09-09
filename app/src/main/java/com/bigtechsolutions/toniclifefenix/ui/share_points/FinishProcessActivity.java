@@ -83,7 +83,7 @@ public class FinishProcessActivity extends AppCompatActivity {
         int distributorId = SharedPreferencesManager.getIntValue(Constants.DISTRIBUTOR_ID);
         int branchId = SharedPreferencesManager.getIntValue(Constants.BRANCH_ID);
 
-        OrderRequest orderRequest = new OrderRequest(this.deliveryAddressId, distributorId, branchId, 1, this.productsRequest);
+        OrderRequest orderRequest = new OrderRequest(this.deliveryAddressId, distributorId, branchId, 2, this.productsRequest);
 
         orderViewModel.saveOrder(orderRequest, new OnOrderResponse() {
             @Override

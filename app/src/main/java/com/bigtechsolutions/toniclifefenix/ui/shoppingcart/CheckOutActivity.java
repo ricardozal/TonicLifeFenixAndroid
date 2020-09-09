@@ -133,14 +133,11 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
         double totalOrder = productViewModel.getTotalOrder();
         int countProduct = productViewModel.getCountProducts();
-        double shippingPrice = 0.0;
-
-        double totalToPay = totalOrder + shippingPrice;
 
         String countProductStr = "Productos("+countProduct+")";
         String totalPayStr = "$"+f.format(totalOrder);
-        String shippingPriceStr = "$"+f.format(shippingPrice);
-        String totalToPayStr = "$"+f.format(totalToPay);
+        String shippingPriceStr = "Costo de envío variable (Pendiente), en caso de entrega a domicilio";
+        String totalToPayStr = "$"+f.format(totalOrder);
 
         countProductsCheckout.setText(countProductStr);
         totalPayCheckout.setText(totalPayStr);
@@ -309,12 +306,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             orderViewModel.validateInventory(validateInvRequest, new OnResponse() {
                 @Override
                 public void OnSuccess(String title, String message) {
-//                    Intent i = new Intent(MyFenixApp.getContext(), PaymentMethodActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("addressId", addressId);
-//                    i.putExtras(bundle);
-//                    startActivity(i);
-//                    finish();
 
                     Bundle bundle = new Bundle();
                     bundle.putInt("deliveryAddressId", addressId);
