@@ -32,7 +32,7 @@ public class OrderShowActivity extends AppCompatActivity implements View.OnClick
     Double price, points;
     TextView id, date, totalPrice, totalPoints, totalTaxes, shippingPrice, products, status, paymentMethod, delivery;
     Toolbar toolbar;
-    MaterialButton pointsBtn;
+//    MaterialButton pointsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class OrderShowActivity extends AppCompatActivity implements View.OnClick
 
         findViews();
 
-        pointsBtn.setOnClickListener(this);
+//        pointsBtn.setOnClickListener(this);
 
         loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
 
@@ -126,7 +126,7 @@ public class OrderShowActivity extends AppCompatActivity implements View.OnClick
         status = findViewById(R.id.order_status);
         paymentMethod = findViewById(R.id.order_payment_method);
         delivery = findViewById(R.id.order_delivery);
-        pointsBtn = findViewById(R.id.pointsBtn);
+//        pointsBtn = findViewById(R.id.pointsBtn);
     }
 
     private void toolbarConfig() {
@@ -164,35 +164,35 @@ public class OrderShowActivity extends AppCompatActivity implements View.OnClick
 
         int id = v.getId();
 
-        if(id == R.id.pointsBtn){
-
-            loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
-
-
-            orderViewModel.validateRegisterPoints(orderId, new OnResponse() {
-                @Override
-                public void OnSuccess(String title, String message) {
-                    loading.dismiss();
-
-                    Intent i = new Intent(MyFenixApp.getContext(), RegisterPointsActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("orderId", orderId);
-                    bundle.putDouble("price", price);
-                    bundle.putDouble("points", points);
-                    bundle.putInt("countryId", countryId);
-                    i.putExtras(bundle);
-                    startActivity(i);
-
-                }
-
-                @Override
-                public void OnError(String title, String message) {
-                    loading.dismiss();
-                    displayAlert(title,message);
-                }
-            });
-
-        }
+//        if(id == R.id.pointsBtn){
+//
+//            loading = ProgressDialog.show(this, "Cargando", "Por favor espere...", false, false);
+//
+//
+//            orderViewModel.validateRegisterPoints(orderId, new OnResponse() {
+//                @Override
+//                public void OnSuccess(String title, String message) {
+//                    loading.dismiss();
+//
+//                    Intent i = new Intent(MyFenixApp.getContext(), RegisterPointsActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putInt("orderId", orderId);
+//                    bundle.putDouble("price", price);
+//                    bundle.putDouble("points", points);
+//                    bundle.putInt("countryId", countryId);
+//                    i.putExtras(bundle);
+//                    startActivity(i);
+//
+//                }
+//
+//                @Override
+//                public void OnError(String title, String message) {
+//                    loading.dismiss();
+//                    displayAlert(title,message);
+//                }
+//            });
+//
+//        }
 
     }
 }

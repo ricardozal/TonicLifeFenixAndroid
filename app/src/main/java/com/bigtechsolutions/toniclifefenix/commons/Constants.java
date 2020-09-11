@@ -24,6 +24,9 @@ public class Constants {
 
     public static final String NAME_PRODUCT_SEARCH = "NAME_PRODUCT_SEARCH";
 
+    public static final String STATE_NAME = "STATE_NAME";
+    public static final String CURRENT_COUNTRY = "CURRENT_COUNTRY";
+
     // APIs
 
     public static final String STRIPE_PUBLIC_KEY = "pk_test_51HB9ItGBCPqeJ6dQ6S1Z1s2vcPg7S75x0Zp9iEyIwcN1QZkQ55cDwMLNzIYDisU7rrOcT4uWzVAEoYgDzIOVtjhg00cnRpwmVZ";

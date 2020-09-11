@@ -20,7 +20,9 @@ import com.bigtechsolutions.toniclifefenix.api.AuthApiService;
 import com.bigtechsolutions.toniclifefenix.api.requests.ChangeQuantityRequest;
 import com.bigtechsolutions.toniclifefenix.api.responses.GenericResponse;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
+import com.bigtechsolutions.toniclifefenix.commons.Constants;
 import com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
+import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bigtechsolutions.toniclifefenix.data.entity.ShoppingCart;
 import com.bigtechsolutions.toniclifefenix.ui.shoppingcart.ShoppingCartActivity;
 import com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel;
@@ -140,12 +142,19 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                         productIdHidden.setText(String.valueOf(product.getId()));
                         productNameHidden.setText(product.getName());
                         productImageUrlHidden.setText(product.getImageUrl());
-                        productPriceHidden.setText(String.valueOf(product.getTotal()));
+
+                        String state = SharedPreferencesManager.getStringValue(Constants.STATE_NAME) == null ? "Estado de México" : SharedPreferencesManager.getStringValue(Constants.STATE_NAME);
+                        String country = SharedPreferencesManager.getStringValue(Constants.CURRENT_COUNTRY) == null ? "México" : SharedPreferencesManager.getStringValue(Constants.CURRENT_COUNTRY);
+
+                        productPriceHidden.setText(String.valueOf((state.equals("California") || country.equals("México")) ? product.getTotal() : product.getDistributorPrice() ));
+
                         productPointsHidden.setText(String.valueOf(product.getPoints()));
 
                         String distributorPrice = "Precio distribuidor: $" + product.getDistributorPrice();
-                        String tax = "Impuesto: $" + product.getTax();
-                        String price = "Precio neto: $" + product.getTotal();
+
+                        String tax = (state.equals("California") || country.equals("México")) ? "Impuesto: $" + product.getTax() : "";
+                        String price =(state.equals("California") || country.equals("México")) ? "Precio neto: $" + product.getTotal() : "";
+
                         String points = "Puntos: " + product.getPoints();
 
                         categoryTxt.setText(product.getCategory());
@@ -154,6 +163,11 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                         totalTxt.setText(price);
                         pointsTxt.setText(points);
                         inventoryTxt.setText(product.getInventory());
+
+                        if(!(state.equals("California") || country.equals("México"))){
+                            taxTxt.setVisibility(View.GONE);
+                            totalTxt.setVisibility(View.GONE);
+                        }
 
                         Glide.with(getApplicationContext())
                                 .load(product.getImageUrl()).into(productImage);

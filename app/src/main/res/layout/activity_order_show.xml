@@ -41,20 +41,19 @@ tools:context=".ui.profile.OrderShowActivity">
 
             <TextView
                 android:id="@+id/order_id"
-                android:layout_width="0dp"
-                android:layout_weight=".60"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
                 android:paddingHorizontal="15dp"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/pointsBtn"
-                android:layout_width="0dp"
-                android:layout_weight=".40"
-                android:layout_height="wrap_content"
-                android:text="@string/points_register" />
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/pointsBtn"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_weight=".40"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/points_register" />-->
 
         </LinearLayout>
 

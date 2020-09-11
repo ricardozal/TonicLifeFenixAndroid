@@ -195,7 +195,7 @@ class RegisterPointsActivity : AppCompatActivity() {
 
                                     if(((modiPoints - externalBinding.etPoints.text.toString().toDouble()) >= 0)){
 
-                                        modiPoints -= externalBinding.etPoints.text.toString().toInt()
+                                        modiPoints -= externalBinding.etPoints.text.toString().toDouble()
                                         v.tag = candidate.id.toString()
                                         var dist = asignedPoints()
                                         dist.tonicLifeId = candidate.id.toString()
@@ -262,7 +262,7 @@ class RegisterPointsActivity : AppCompatActivity() {
 
                                     if(((modiPoints - externalBinding.etPoints.text.toString().toDouble()) >= 0)){
 
-                                        modiPoints -= externalBinding.etPoints.text.toString().toInt()
+                                        modiPoints -= externalBinding.etPoints.text.toString().toDouble()
                                         v.tag = candidate.id.toString()
                                         var dist = asignedPoints()
                                         dist.tonicLifeId = candidate.id.toString()

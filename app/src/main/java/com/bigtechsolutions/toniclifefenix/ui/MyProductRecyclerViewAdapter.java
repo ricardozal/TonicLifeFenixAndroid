@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Product;
+import com.bigtechsolutions.toniclifefenix.commons.Constants;
+import com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import com.bumptech.glide.Glide;
 import java.util.Random;
 import java.util.List;
@@ -21,6 +23,9 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
     private Context ctx;
     private List<Product> mValues;
     private OnProductlistener mOnProductListener;
+
+    String state = SharedPreferencesManager.getStringValue(Constants.STATE_NAME) == null ? "Estado de México" : SharedPreferencesManager.getStringValue(Constants.STATE_NAME);
+    String country = SharedPreferencesManager.getStringValue(Constants.CURRENT_COUNTRY) == null ? "México" : SharedPreferencesManager.getStringValue(Constants.CURRENT_COUNTRY);
 
     public MyProductRecyclerViewAdapter(Context context, List<Product> items, OnProductlistener onProductListener) {
         mValues = items;
@@ -42,8 +47,10 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
             holder.product = mValues.get(position);
 
             String price = "Precio distribuidor: $" + holder.product.getDistributorPrice();
-            String tax = "Impuesto: $" + holder.product.getTax();
-            String total = "Precio final: $" + holder.product.getTotal();
+
+            String tax = (state.equals("California") || country.equals("México")) ? "Impuesto: $" + holder.product.getTax() : "";
+            String total = (state.equals("California") || country.equals("México")) ? "Precio final: $" + holder.product.getTotal() : "";
+
             String points = "Puntos: " + holder.product.getPoints();
 
             holder.nameProduct.setText(holder.product.getName());
@@ -51,6 +58,11 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
             holder.taxProduct.setText(tax);
             holder.totalProduct.setText(total);
             holder.pointsProduct.setText(points);
+
+            if(!(state.equals("California") || country.equals("México"))){
+                holder.taxProduct.setVisibility(View.GONE);
+                holder.totalProduct.setVisibility(View.GONE);
+            }
 
             Glide.with(ctx)
                     .load(holder.product.getImageUrl()).into(holder.imageProduct);

@@ -141,6 +141,8 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
                         SharedPreferencesManager.removeValue(Constants.DIST_COUNTRY);
                         SharedPreferencesManager.removeValue(Constants.CURRENT_POINTS);
                         SharedPreferencesManager.removeValue(Constants.NAME_PRODUCT_SEARCH);
+                        SharedPreferencesManager.removeValue(Constants.STATE_NAME);
+                        SharedPreferencesManager.removeValue(Constants.CURRENT_COUNTRY);
 
                         loading.dismiss();
 
