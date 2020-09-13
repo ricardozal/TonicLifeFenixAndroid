@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Address;
@@ -34,6 +35,7 @@ public class MyAddressesActivity extends AppCompatActivity implements MyAddresse
     ProgressDialog loading;
     AddressViewModel addressViewModel;
     MaterialButton addAddress;
+    TextView txtEmptyAddresses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class MyAddressesActivity extends AppCompatActivity implements MyAddresse
         recyclerView = findViewById(R.id.address_profile_list);
         toolbar = findViewById(R.id.toolbarAddressProfile);
         addAddress = findViewById(R.id.addAddressBtn);
+        txtEmptyAddresses = findViewById(R.id.txtEmptyAddressesTwo);
 
         addAddress.setOnClickListener(this);
 
@@ -74,6 +77,8 @@ public class MyAddressesActivity extends AppCompatActivity implements MyAddresse
             @Override
             public void onChanged(List<Address> addresses) {
                 addressList = addresses;
+                if(addressList.size() < 1)
+                    txtEmptyAddresses.setVisibility(View.VISIBLE);
                 adapter.setDataList(addresses);
             }
         });

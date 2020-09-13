@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.Order;
@@ -39,6 +40,7 @@ public class MyOrdersActivity extends AppCompatActivity implements MyOrdersAdapt
     Toolbar toolbar;
     MyOrdersAdapter adapter;
     List<OrderItem> orderItemList;
+    TextView txtEmptyPurchases;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class MyOrdersActivity extends AppCompatActivity implements MyOrdersAdapt
 
         recyclerView = findViewById(R.id.order_items_list);
         toolbar = findViewById(R.id.toolbarOrderItem);
+        txtEmptyPurchases = findViewById(R.id.txtEmptyPurchases);
 
         toolbarConfig();
 
@@ -77,6 +80,8 @@ public class MyOrdersActivity extends AppCompatActivity implements MyOrdersAdapt
             @Override
             public void onChanged(List<OrderItem> orderItems) {
                 orderItemList = orderItems;
+                if(orderItemList.size() < 1)
+                    txtEmptyPurchases.setVisibility(View.VISIBLE);
                 adapter.setDataList(orderItems);
             }
         });

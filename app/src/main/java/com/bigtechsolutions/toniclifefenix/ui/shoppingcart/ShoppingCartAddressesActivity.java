@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -33,6 +34,7 @@ public class ShoppingCartAddressesActivity extends AppCompatActivity implements 
     Toolbar toolbar;
     MaterialButton continueToPayBtn;
     ProgressDialog loading;
+    TextView txtEmptyAddresses;
 
 
     @Override
@@ -49,6 +51,7 @@ public class ShoppingCartAddressesActivity extends AppCompatActivity implements 
         recyclerView = findViewById(R.id.addresses_list);
         toolbar = findViewById(R.id.toolbarAddressCart);
         continueToPayBtn = findViewById(R.id.continueToPayBtn);
+        txtEmptyAddresses = findViewById(R.id.txtEmptyAddresses);
 
         continueToPayBtn.setOnClickListener(this);
 
@@ -88,6 +91,8 @@ public class ShoppingCartAddressesActivity extends AppCompatActivity implements 
             @Override
             public void onChanged(List<Address> addresses) {
                 addressesList = addresses;
+                if(addressesList.size() < 1)
+                    txtEmptyAddresses.setVisibility(View.VISIBLE);
                 adapter.setDataList(addresses);
             }
         });

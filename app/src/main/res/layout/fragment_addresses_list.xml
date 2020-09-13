@@ -33,6 +33,15 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/txtEmptyAddresses"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:layout_margin="20dp"
+                android:visibility="gone"
+                android:text="@string/without_addresses"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/addresses_list"
                 android:layout_width="match_parent"

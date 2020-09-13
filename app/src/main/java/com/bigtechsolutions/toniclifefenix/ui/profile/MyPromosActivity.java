@@ -10,6 +10,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bigtechsolutions.toniclifefenix.R;
 import com.bigtechsolutions.toniclifefenix.api.responses.models.OrderItem;
@@ -29,6 +30,7 @@ public class MyPromosActivity extends AppCompatActivity {
     Toolbar toolbar;
     MyPromosAdapter adapter;
     List<Promotion> promotionList;
+    TextView txtEmptyPromos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class MyPromosActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.promos_list);
         toolbar = findViewById(R.id.toolbarPromos);
+        txtEmptyPromos = findViewById(R.id.txtEmptyPromos);
 
         toolbarConfig();
 
@@ -66,6 +69,8 @@ public class MyPromosActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Promotion> promotions) {
                 promotionList = promotions;
+                if(promotionList.size() < 1)
+                    txtEmptyPromos.setVisibility(View.VISIBLE);
                 adapter.setDataList(promotions);
             }
         });

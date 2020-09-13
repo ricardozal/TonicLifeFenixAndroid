@@ -44,6 +44,15 @@
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 />
 
+            <TextView
+                android:id="@+id/txtEmptyPromos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="20sp"
+                android:layout_margin="20dp"
+                android:visibility="gone"
+                android:text="@string/without_promos"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/promos_list"
                 android:layout_width="match_parent"

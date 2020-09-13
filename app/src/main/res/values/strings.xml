@@ -103,5 +103,8 @@
     <string name="option1">Distribuir puntos</string>
     <string name="option2">Conservar puntos</string>
     <string name="orderStr">Ordenar</string>
+    <string name="without_addresses">Sin direcciones agregadas</string>
+    <string name="without_purchases">Aún no has realizado pedidos</string>
+    <string name="without_promos">Aún no has alcanzado promociones</string>
 
 </resources>
