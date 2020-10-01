@@ -45,7 +45,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/address_profile_list"
-                android:name="com.bigtechsolutions.toniclifefenix.ui.profile"
+                android:name="mx.com.bigtechsolutions.toniclifefenix.ui.profile"
                 android:layout_width="match_parent"
                 android:layout_weight=".90"
                 android:layout_height="0dp"
