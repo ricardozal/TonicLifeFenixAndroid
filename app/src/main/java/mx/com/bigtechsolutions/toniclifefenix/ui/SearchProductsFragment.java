@@ -41,7 +41,7 @@ public class SearchProductsFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle("Buscar productos");
-        builder.setMessage("Ecriba el nombre del producto")
+        builder.setMessage("Escriba el nombre del producto")
                 .setPositiveButton("Buscar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 

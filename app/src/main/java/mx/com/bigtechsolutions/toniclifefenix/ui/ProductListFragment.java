@@ -41,7 +41,7 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
     ProductViewModel productViewModel;
     AppCompatImageButton goShoppingCart, selectCountry, search;
     ProgressDialog loading;
-    TextView resultSearch, withoutResults;
+    TextView resultSearch;
     MaterialButton clearSearchBtn;
 
     public ProductListFragment() {
@@ -131,14 +131,7 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
         });
 
         if(SharedPreferencesManager.getStringValue(Constants.NAME_PRODUCT_SEARCH) != null){
-
-            clearSearchBtn.setVisibility(View.VISIBLE);
-            resultSearch.setVisibility(View.VISIBLE);
-
-            String result = "Resultados de la búsqueda: "+SharedPreferencesManager.getStringValue(Constants.NAME_PRODUCT_SEARCH);
-
-            resultSearch.setText(result);
-
+            showSearchResult("Resultados de la búsqueda: "+SharedPreferencesManager.getStringValue(Constants.NAME_PRODUCT_SEARCH));
         }
 
         clearSearchBtn.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +148,12 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
         return view;
     }
 
+    private void showSearchResult(String result) {
+        clearSearchBtn.setVisibility(View.VISIBLE);
+        resultSearch.setVisibility(View.VISIBLE);
+        resultSearch.setText(result);
+    }
+
     private void loadProductData() {
 
         productViewModel.getProducts().observe(getActivity(), new Observer<List<Product>>() {
@@ -163,7 +162,7 @@ public class ProductListFragment extends Fragment implements MyProductRecyclerVi
                 productList = products;
                 adapter.setDataList(productList);
                 if(productList.size() < 1)
-                    withoutResults.setVisibility(View.VISIBLE);
+                    showSearchResult("No se encontraron resultados");
             }
         });
 

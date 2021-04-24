@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     } else {
                         loading.dismiss();
-                        Toast.makeText(MainActivity.this, "Error en el servidor", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, response.message(), Toast.LENGTH_SHORT).show();
 
                     }
 
