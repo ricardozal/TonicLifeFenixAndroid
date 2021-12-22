@@ -129,15 +129,16 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
     private void setHeaderData() {
 
-        DecimalFormat f = new DecimalFormat("##.00");
+        DecimalFormat f = new DecimalFormat("##0.00");
 
         double totalOrder = productViewModel.getTotalOrder();
         int countProduct = productViewModel.getCountProducts();
+        double shippingPrice = countProduct * 0.90;
 
         String countProductStr = "Productos("+countProduct+")";
         String totalPayStr = "$"+f.format(totalOrder);
-        String shippingPriceStr = "Costo de envío variable (Pendiente), en caso de entrega a domicilio";
-        String totalToPayStr = "$"+f.format(totalOrder);
+        String shippingPriceStr = "$"+f.format(shippingPrice);
+        String totalToPayStr = "$"+f.format(totalOrder + shippingPrice);
 
         countProductsCheckout.setText(countProductStr);
         totalPayCheckout.setText(totalPayStr);

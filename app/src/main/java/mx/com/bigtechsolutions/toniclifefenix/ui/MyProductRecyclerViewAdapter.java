@@ -48,8 +48,10 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
 
             String price = "Precio distribuidor: $" + holder.product.getDistributorPrice();
 
-            String tax = (state.equals("California") || country.equals("México")) ? "Impuesto: $" + holder.product.getTax() : "";
-            String total = (state.equals("California") || country.equals("México")) ? "Precio final: $" + holder.product.getTotal() : "";
+//            String tax = (state.equals("California") || country.equals("México")) ? "Impuesto: $" + holder.product.getTax() : "";
+//            String total = (state.equals("California") || country.equals("México")) ? "Precio final: $" + holder.product.getTotal() : "";
+            String tax = "Impuesto: $" + holder.product.getTax();
+            String total = "Precio: $" + holder.product.getTotal();
 
             String points = "Puntos: " + holder.product.getPoints();
 
@@ -59,10 +61,10 @@ public class MyProductRecyclerViewAdapter extends RecyclerView.Adapter<MyProduct
             holder.totalProduct.setText(total);
             holder.pointsProduct.setText(points);
 
-            if(!(state.equals("California") || country.equals("México"))){
-                holder.taxProduct.setVisibility(View.GONE);
-                holder.totalProduct.setVisibility(View.GONE);
-            }
+//            if(!(state.equals("California") || country.equals("México"))){
+//                holder.taxProduct.setVisibility(View.GONE);
+//                holder.totalProduct.setVisibility(View.GONE);
+//            }
 
             Glide.with(ctx)
                     .load(holder.product.getImageUrl()).into(holder.imageProduct);
