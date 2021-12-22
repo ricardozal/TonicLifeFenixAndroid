@@ -2,12 +2,14 @@ package mx.com.bigtechsolutions.toniclifefenix.commons;
 
 public class Constants {
 
-    static boolean envProd = false;
+    static boolean envProd = true;
 
     public static final String API_TONIC_LIFE_FENIX_URL_PROD = "https://gjana.com.mx";
     public static final String API_TONIC_LIFE_FENIX_URL_DEV = "https://tonic-dev.bigtechsolutions.mx/public";
 
-    public static final String API_TONIC_LIFE_FENIX_BASE_URL = envProd ? Constants.API_TONIC_LIFE_FENIX_URL_PROD : Constants.API_TONIC_LIFE_FENIX_URL_DEV + Constants.BASE_API;
+    public static final String API_TONIC_LIFE_FENIX_URL = envProd ? Constants.API_TONIC_LIFE_FENIX_URL_PROD : Constants.API_TONIC_LIFE_FENIX_URL_DEV ;
+
+    public static final String API_TONIC_LIFE_FENIX_BASE_URL = API_TONIC_LIFE_FENIX_URL + Constants.BASE_API;
     public static final String BASE_API = "/api/";
 
     // Preferences
