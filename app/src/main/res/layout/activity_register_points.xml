@@ -50,7 +50,7 @@
                    android:layout_marginVertical="10dp"
                    android:paddingHorizontal="15dp"
                    android:gravity="center"
-                   android:textAppearance="?attr/textAppearanceHeadline6"
+                   android:textAppearance="?attr/textAppearanceSubtitle1"
                    />
 
                <TextView
@@ -60,8 +60,22 @@
                    android:layout_marginVertical="10dp"
                    android:paddingHorizontal="15dp"
                    android:gravity="center"
-                   android:textAppearance="?attr/textAppearanceHeadline6"
+                   android:textAppearance="?attr/textAppearanceSubtitle2"
                    />
+
+               <com.google.android.material.button.MaterialButton
+                   android:id="@+id/btn_assign"
+                   android:layout_width="match_parent"
+                   android:layout_marginHorizontal="10dp"
+                   android:layout_marginTop="5dp"
+                   android:layout_height="wrap_content"
+                   android:text="@string/assign" />
+
+               <androidx.appcompat.widget.SearchView
+                   android:id="@+id/dist_search"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:textCursorDrawable="@null" />
 
                <LinearLayout
                    android:id="@+id/ll_distributors"
@@ -69,14 +83,6 @@
                    android:layout_height="wrap_content"
                    android:orientation="vertical"
                    android:layout_marginTop="12dp"/>
-
-               <com.google.android.material.button.MaterialButton
-                   android:id="@+id/btn_assign"
-                   android:layout_width="match_parent"
-                   android:layout_marginHorizontal="10dp"
-                   android:layout_marginTop="10dp"
-                   android:layout_height="wrap_content"
-                   android:text="@string/assign" />
 
            </LinearLayout>
 

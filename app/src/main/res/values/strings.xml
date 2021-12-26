@@ -106,5 +106,6 @@
     <string name="without_addresses">Sin direcciones agregadas</string>
     <string name="without_purchases">Aún no has realizado pedidos</string>
     <string name="without_promos">Aún no has alcanzado promociones</string>
+    <string name="confirm">Confirmar</string>
 
 </resources>

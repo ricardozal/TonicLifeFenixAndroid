@@ -6,12 +6,16 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.android.synthetic.main.item_distributor_points.view.*
 import mx.com.bigtechsolutions.toniclifefenix.R
 import mx.com.bigtechsolutions.toniclifefenix.api.requests.DistributorPointsRequest
 import mx.com.bigtechsolutions.toniclifefenix.api.requests.GetCandidatesRequest
@@ -32,7 +36,8 @@ import mx.com.bigtechsolutions.toniclifefenix.viewmodel.OrderViewModel
 import mx.com.bigtechsolutions.toniclifefenix.viewmodel.ShoppingCartViewModel
 import mx.com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnOrderResponse
 import mx.com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnSharePointsResponse
-import kotlin.math.round
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RegisterPointsActivity : AppCompatActivity() {
 
@@ -69,6 +74,27 @@ class RegisterPointsActivity : AppCompatActivity() {
                 .get(ShoppingCartViewModel::class.java)
 
         getShoppingCart()
+
+        vBind.distSearch.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                vBind.llDistributors.children.forEach {
+                    if (newText != null) {
+                        if (it.dist_name.text.toString().toLowerCase(Locale.ROOT).contains(newText.toLowerCase(Locale.ROOT))) {
+                            it.visibility = View.VISIBLE
+                        } else {
+                            it.visibility = View.GONE
+                        }
+                    }
+
+                }
+                return false
+            }
+
+        })
 
         vBind.btnAssign.setOnClickListener {
 
@@ -183,7 +209,7 @@ class RegisterPointsActivity : AppCompatActivity() {
 
                         externalBinding.distName.text = candidate.name
                         externalBinding.pointsTonic.text = "Le faltan para calificar: "+candidate.difference
-                        externalBinding.itemRoot.setBackgroundColor(Color.parseColor(candidate.color))
+                        externalBinding.imageTag.setColorFilter(Color.parseColor(candidate.color))
 
 
                         externalBinding.swActive.setOnCheckedChangeListener { _, isChecked ->
@@ -250,7 +276,7 @@ class RegisterPointsActivity : AppCompatActivity() {
 
                         externalBinding.distName.text = candidate.name
                         externalBinding.pointsTonic.text = "Le faltan para alcanzar promoción: "+candidate.getPoints
-                        externalBinding.itemRoot.setBackgroundColor(Color.parseColor(candidate.color))
+                        externalBinding.imageTag.setColorFilter(Color.parseColor(candidate.color))
 
 
                         externalBinding.swActive.setOnCheckedChangeListener { _, isChecked ->
