@@ -56,6 +56,9 @@ public class MyOptionRecyclerViewAdapter extends RecyclerView.Adapter<MyOptionRe
                     imageResource = R.drawable.baseline_address_black_18dp;
                     break;
                 case 3:
+                    imageResource = R.drawable.baseline_payment_black_18dp;
+                    break;
+                case 4:
                     imageResource = R.drawable.baseline_logout_black_18dp;
                     break;
             }

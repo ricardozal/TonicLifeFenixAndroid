@@ -59,7 +59,7 @@ public class ChooseSharePoints extends DialogFragment {
                                 bundles.putInt("addressId", addressId);
                                 intent.putExtras(bundles);
                                 startActivity(intent);
-                                getActivity().finish();
+                                //getActivity().finish();
                                 break;
                             case R.id.radioButtonNotShare:
                                 Intent i = new Intent(MyFenixApp.getContext(), FinishProcessActivity.class);

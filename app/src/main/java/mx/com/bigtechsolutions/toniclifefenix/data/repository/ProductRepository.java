@@ -74,21 +74,21 @@ public class ProductRepository {
 
     public void getContentMobileApp(OnContentResponse onContentResponse){
 
-        Call<List<ContentMobileResponse> > call = authApiService.getContentMobileApp();
+        Call<GenericResponse<List<ContentMobileResponse>>> call = authApiService.getContentMobileApp();
 
-        call.enqueue(new Callback<List<ContentMobileResponse> >() {
+        call.enqueue(new Callback<GenericResponse<List<ContentMobileResponse>>>() {
             @Override
-            public void onResponse(Call<List<ContentMobileResponse> > call, Response<List<ContentMobileResponse> > response) {
+            public void onResponse(Call<GenericResponse<List<ContentMobileResponse>>> call, Response<GenericResponse<List<ContentMobileResponse>>> response) {
                 if (response.isSuccessful())
                 {
-                    onContentResponse.OnSuccess(response.body());
+                    onContentResponse.OnSuccess(response.body().getData());
                 } else {
                     onContentResponse.OnError("Error en el servidor", "Inténtelo más tarde");
                 }
             }
 
             @Override
-            public void onFailure(Call<List<ContentMobileResponse> > call, Throwable t) {
+            public void onFailure(Call<GenericResponse<List<ContentMobileResponse>>> call, Throwable t) {
                 onContentResponse.OnError("Error de conexión", t.getMessage());
             }
         });

@@ -4,9 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_bottom_navigation.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/activity_check_out.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/activity_my_bank_data.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/activity_new_distributor.xml" value="0.23777173913043478" />
         <entry key="app/src/main/res/layout/activity_register_points.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_upsert_address.xml" value="0.4036458333333333" />
+        <entry key="app/src/main/res/layout/choose_options_share.xml" value="0.4036458333333333" />
         <entry key="app/src/main/res/layout/fragment_distributors.xml" value="0.16210739614994935" />
         <entry key="app/src/main/res/layout/item_distributor_points.xml" value="0.33" />
         <entry key="app/src/main/res/layout/shpping_cart_item.xml" value="0.25" />

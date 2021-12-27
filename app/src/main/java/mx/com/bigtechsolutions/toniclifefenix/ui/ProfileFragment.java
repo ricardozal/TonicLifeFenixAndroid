@@ -28,6 +28,7 @@ import mx.com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import mx.com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
 import mx.com.bigtechsolutions.toniclifefenix.login.MainActivity;
 import mx.com.bigtechsolutions.toniclifefenix.ui.profile.MyAddressesActivity;
+import mx.com.bigtechsolutions.toniclifefenix.ui.profile.MyBankDataActivity;
 import mx.com.bigtechsolutions.toniclifefenix.ui.profile.MyOrdersActivity;
 import mx.com.bigtechsolutions.toniclifefenix.ui.profile.MyPromosActivity;
 import mx.com.bigtechsolutions.toniclifefenix.ui.shoppingcart.StripePayActivity;
@@ -87,6 +88,7 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
         options.add("Promociones");
         options.add("Mis compras");
         options.add("Direcciones");
+        options.add("Datos bancarios");
         options.add("Cerrar sesión");
 
         recyclerView.setAdapter(new MyOptionRecyclerViewAdapter(options, this));
@@ -112,6 +114,10 @@ public class ProfileFragment extends Fragment  implements MyOptionRecyclerViewAd
                 startActivity(intentAddress);
                 break;
             case 3:
+                Intent intentMyBankData = new Intent(MyFenixApp.getContext(), MyBankDataActivity.class);
+                startActivity(intentMyBankData);
+                break;
+            case 4:
                 logout();
                 break;
         }

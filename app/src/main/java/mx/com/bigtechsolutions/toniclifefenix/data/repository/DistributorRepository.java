@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import mx.com.bigtechsolutions.toniclifefenix.api.AuthApiClient;
 import mx.com.bigtechsolutions.toniclifefenix.api.AuthApiService;
+import mx.com.bigtechsolutions.toniclifefenix.api.requests.BankData;
 import mx.com.bigtechsolutions.toniclifefenix.api.requests.FirebaseTokenRequest;
 import mx.com.bigtechsolutions.toniclifefenix.api.requests.GetCandidatesRequest;
 import mx.com.bigtechsolutions.toniclifefenix.api.requests.RegisterPointsRequest;
@@ -16,6 +17,7 @@ import mx.com.bigtechsolutions.toniclifefenix.api.responses.share_points.SharePo
 import mx.com.bigtechsolutions.toniclifefenix.commons.Constants;
 import mx.com.bigtechsolutions.toniclifefenix.commons.MyFenixApp;
 import mx.com.bigtechsolutions.toniclifefenix.commons.SharedPreferencesManager;
+import mx.com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnBankDataResponse;
 import mx.com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnResponse;
 import mx.com.bigtechsolutions.toniclifefenix.viewmodel.interfaces.OnSharePointsResponse;
 
@@ -156,6 +158,62 @@ public class DistributorRepository {
             }
         });
 
+    }
+
+    public void getBankData(OnBankDataResponse onResponse){
+
+        int distributorId = SharedPreferencesManager.getIntValue(Constants.DISTRIBUTOR_ID);
+
+        Call<BankData> call = authApiService.getBankData(distributorId);
+
+        call.enqueue(new Callback<BankData>() {
+            @Override
+            public void onResponse(Call<BankData> call, Response<BankData> response) {
+
+                if (response.isSuccessful())
+                {
+                    onResponse.OnSuccess(response.body());
+                } else {
+                    onResponse.OnError("Algo salió mal", "Error en el servidor");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<BankData> call, Throwable t) {
+                onResponse.OnError("Algo salió mal", "Error de conexión");
+            }
+        });
+
+    }
+
+    public void saveBankData(BankData bankData, OnResponse onResponse) {
+
+        int distributorId = SharedPreferencesManager.getIntValue(Constants.DISTRIBUTOR_ID);
+
+        Call<GenericResponse<String>> call = authApiService.saveBankData(distributorId, bankData);
+
+        call.enqueue(new Callback<GenericResponse<String>>() {
+            @Override
+            public void onResponse(Call<GenericResponse<String>> call, Response<GenericResponse<String>> response) {
+                if (response.isSuccessful())
+                {
+                    if (response.body().isSuccess())
+                    {
+                        onResponse.OnSuccess("Datos guardados", response.body().getMessage());
+                    } else {
+                        onResponse.OnError("Algo salió mal", response.body().getMessage());
+                    }
+                } else {
+                    onResponse.OnError("Algo salió mal", "Error en el servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GenericResponse<String>> call, Throwable t) {
+                onResponse.OnError("Algo salió mal", "Error de conexión");
+            }
+        });
     }
 
     public MutableLiveData<Boolean> getDownloadFinished() {

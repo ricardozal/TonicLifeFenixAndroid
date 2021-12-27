@@ -1,5 +1,6 @@
 package mx.com.bigtechsolutions.toniclifefenix.api;
 
+import mx.com.bigtechsolutions.toniclifefenix.api.requests.BankData;
 import mx.com.bigtechsolutions.toniclifefenix.api.requests.FirebaseTokenRequest;
 import mx.com.bigtechsolutions.toniclifefenix.api.requests.GenerateIntentRequest;
 import mx.com.bigtechsolutions.toniclifefenix.api.requests.GetCandidatesRequest;
@@ -52,6 +53,13 @@ public interface AuthApiService {
 
     @POST("distributor/{distributorId}/save-address")
     Call<GenericResponse<String>> saveAddress(@Path("distributorId") int distributorId, @Body UpsertAddressRequest request);
+
+    /* BANK DATA APIs */
+    @GET("distributor/{distributorId}/bank-data/show")
+    Call<BankData> getBankData(@Path("distributorId") int distributorId);
+
+    @POST("distributor/{distributorId}/save-bank-data")
+    Call<GenericResponse<String>> saveBankData(@Path("distributorId") int distributorId, @Body BankData request);
 
     /* BRANCHES APIs */
     @GET("distributor/{distributorId}/all-branches")
@@ -109,6 +117,6 @@ public interface AuthApiService {
     Call<GenericResponse<OrderResponse>> saveOrderWithExternalPoints(@Body SaveOrderWithDistRequest request);
 
     @GET("content-app-mobile")
-    Call<List<ContentMobileResponse>> getContentMobileApp();
+    Call<GenericResponse<List<ContentMobileResponse>>> getContentMobileApp();
 
 }

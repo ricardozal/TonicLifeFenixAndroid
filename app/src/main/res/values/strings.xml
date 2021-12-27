@@ -107,5 +107,7 @@
     <string name="without_purchases">Aún no has realizado pedidos</string>
     <string name="without_promos">Aún no has alcanzado promociones</string>
     <string name="confirm">Confirmar</string>
+    <string name="ownerNameStr">Nombre del propietario</string>
+    <string name="countNumberStr">Número de cuenta</string>
 
 </resources>
