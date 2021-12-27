@@ -2,7 +2,7 @@ package mx.com.bigtechsolutions.toniclifefenix.commons;
 
 public class Constants {
 
-    static boolean envProd = false;
+    static boolean envProd = true;
 
     public static final String API_TONIC_LIFE_FENIX_URL_PROD = "https://gjana.com.mx";
     public static final String API_TONIC_LIFE_FENIX_URL_DEV = "https://tonic-dev.bigtechsolutions.mx/public";
